@@ -18,7 +18,7 @@ class tag {
 class recipe {
     var name: String
     var pic: String
-    var tags: [Int]
+    var tags: [UnsafePointer<Float>]
 }
 
 class user {
