@@ -25,6 +25,7 @@ class user {
     var name: String
     var longitude: Float
     var latitude: Float
+    var recipes: [UnsafePointer<Float>]
 }
 
 class ingredient_list {
