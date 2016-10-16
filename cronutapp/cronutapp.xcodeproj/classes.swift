@@ -8,38 +8,38 @@
 
 import Foundation
 
-class tag {
+class Tag {
     var name: String
     var color: String
     var category: Character
     var id: Int
 }
 
-class recipe {
+class Recipe {
     var name: String
     var pic: String
-    var tags: [UnsafePointer<Float>]
+    var tags: [UnsafePointer<Tag>]
 }
 
-class user {
+class User {
     var name: String
     var longitude: Float
     var latitude: Float
-    var recipes: [UnsafePointer<Float>]
+    var recipes: [UnsafePointer<Recipe>]
 }
 
-class ingredient_list {
+class Ingredient_list {
     var name: String
     var type: Bool
 }
 
-class ingredient {
+class Ingredient {
     var name: String
 }
 
-class connector {
+class Connector {
     var amount: Float
     var unit: Float
 }
 
-class scanner {}
+class Scanner {}
