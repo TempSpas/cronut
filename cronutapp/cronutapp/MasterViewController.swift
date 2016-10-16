@@ -39,7 +39,6 @@ class MasterViewController: UITableViewController {
 
     func insertNewObject(_ sender: AnyObject) {
         let str = "Hello, world!"
-
         objects.insert(str as AnyObject, at: 0)
         // objects.insert(Date() as AnyObject, at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
@@ -51,7 +50,7 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[(indexPath as NSIndexPath).row] as! Date
+                let object = objects[(indexPath as NSIndexPath).row] as! String
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object as AnyObject?
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
@@ -74,7 +73,7 @@ class MasterViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         // let object = objects[(indexPath as NSIndexPath).row] as! Date
-        let object = objects[(indexPath as NSIndexPath).row] as! Date
+        let object = objects[(indexPath as NSIndexPath).row] as! String
         
         cell.textLabel!.text = object.description
         return cell
