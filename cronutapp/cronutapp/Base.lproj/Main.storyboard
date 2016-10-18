@@ -40,7 +40,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
                                     <tabBarItem systemItem="favorites" id="E32-RU-GzX"/>
-                                    <tabBarItem systemItem="contacts" id="NGA-F1-EMo" userLabel="Contacts"/>
+                                    <tabBarItem title="Add Ingredients" image="44carrot_360.png" id="NGA-F1-EMo" userLabel="Add"/>
                                     <tabBarItem title="Share" image="quit.png" id="H9E-MC-vDl" userLabel="Share"/>
                                     <tabBarItem title="Edit" image="edit-alt-2.png" id="oe3-oV-gzU" userLabel="Edit"/>
                                     <tabBarItem systemItem="more" id="gjA-LO-gy1"/>
@@ -160,6 +160,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="44carrot_360.png" width="44" height="44"/>
         <image name="edit-alt-2.png" width="44" height="44"/>
         <image name="quit.png" width="32" height="32"/>
     </resources>
