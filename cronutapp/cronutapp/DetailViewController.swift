@@ -15,6 +15,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
     // Mark properties
     @IBOutlet weak var RecipeNameLabel: UILabel!
     @IBOutlet weak var EditRecipeLabel: UITextField!
+    @IBOutlet weak var photoImageView: UIImageView!
 
 
     var detailItem: AnyObject? {
@@ -56,6 +57,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         RecipeNameLabel.text = textField.text
     }
 
+    @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+    }
 
 }
 
