@@ -40,9 +40,9 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
                                     <tabBarItem systemItem="favorites" id="E32-RU-GzX"/>
-                                    <tabBarItem title="Item" id="NGA-F1-EMo" userLabel="Contacts"/>
-                                    <tabBarItem title="Item" id="H9E-MC-vDl" userLabel="Share"/>
-                                    <tabBarItem title="Edit" selectedImage="slack-imgs.com.png" id="oe3-oV-gzU" userLabel="Edit"/>
+                                    <tabBarItem systemItem="contacts" id="NGA-F1-EMo" userLabel="Contacts"/>
+                                    <tabBarItem title="Share" image="quit.png" id="H9E-MC-vDl" userLabel="Share"/>
+                                    <tabBarItem title="Edit" image="edit-alt-2.png" id="oe3-oV-gzU" userLabel="Edit"/>
                                     <tabBarItem systemItem="more" id="gjA-LO-gy1"/>
                                 </items>
                             </tabBar>
@@ -112,11 +112,11 @@
                                 <rect key="frame" x="0.0" y="86" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
-                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Arm-wq-HPj">
-                                            <frame key="frameInset" minX="15" width="345" height="43.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -160,7 +160,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="slack-imgs.com.png" width="210" height="210"/>
+        <image name="edit-alt-2.png" width="44" height="44"/>
+        <image name="quit.png" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Tll-UG-LXB"/>

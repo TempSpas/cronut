@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D04986C1DB6A1C00086704C /* 66EditIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D04986B1DB6A1C00086704C /* 66EditIcon.png */; };
+		6D04986E1DB6A2B90086704C /* edit-alt-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D04986D1DB6A2B90086704C /* edit-alt-2.png */; };
+		6D0498701DB6A3020086704C /* quit.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D04986F1DB6A3020086704C /* quit.png */; };
+		6D0498721DB6A3AF0086704C /* real_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D0498711DB6A3AF0086704C /* real_share.png */; };
 		6DB2636D1D887D61007BBBCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2636C1D887D61007BBBCF /* AppDelegate.swift */; };
 		6DB2636F1D887D61007BBBCF /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2636E1D887D61007BBBCF /* MasterViewController.swift */; };
 		6DB263711D887D61007BBBCF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB263701D887D61007BBBCF /* DetailViewController.swift */; };
@@ -37,6 +41,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D04986B1DB6A1C00086704C /* 66EditIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 66EditIcon.png; path = ../Images/66EditIcon.png; sourceTree = "<group>"; };
+		6D04986D1DB6A2B90086704C /* edit-alt-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit-alt-2.png"; path = "../Images/edit-alt-2.png"; sourceTree = "<group>"; };
+		6D04986F1DB6A3020086704C /* quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = quit.png; path = ../Images/quit.png; sourceTree = "<group>"; };
+		6D0498711DB6A3AF0086704C /* real_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = real_share.png; path = ../Images/real_share.png; sourceTree = "<group>"; };
 		6DB263691D887D61007BBBCF /* cronutapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cronutapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DB2636C1D887D61007BBBCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DB2636E1D887D61007BBBCF /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +91,10 @@
 		6DB263601D887D61007BBBCF = {
 			isa = PBXGroup;
 			children = (
+				6D0498711DB6A3AF0086704C /* real_share.png */,
+				6D04986F1DB6A3020086704C /* quit.png */,
+				6D04986D1DB6A2B90086704C /* edit-alt-2.png */,
+				6D04986B1DB6A1C00086704C /* 66EditIcon.png */,
 				BA6397381DB4162300C96B12 /* slack-imgs.com.png */,
 				BA4522061DB4097400E39551 /* splash.png */,
 				6DB2636B1D887D61007BBBCF /* cronutapp */,
@@ -242,10 +254,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA4522071DB4097400E39551 /* splash.png in Resources */,
+				6D0498721DB6A3AF0086704C /* real_share.png in Resources */,
 				6DB263791D887D61007BBBCF /* LaunchScreen.storyboard in Resources */,
+				6D04986C1DB6A1C00086704C /* 66EditIcon.png in Resources */,
 				6DB263761D887D61007BBBCF /* Assets.xcassets in Resources */,
 				BA6397391DB4162300C96B12 /* slack-imgs.com.png in Resources */,
 				6DB263741D887D61007BBBCF /* Main.storyboard in Resources */,
+				6D0498701DB6A3020086704C /* quit.png in Resources */,
+				6D04986E1DB6A2B90086704C /* edit-alt-2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
