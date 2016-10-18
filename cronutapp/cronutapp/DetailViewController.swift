@@ -58,6 +58,11 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     }
 
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+        EditRecipeLabel.resignFirstResponder()
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
     }
 
 }
