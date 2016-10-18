@@ -51,8 +51,8 @@
 		6DB2638A1D887D61007BBBCF /* cronutappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cronutappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DB2638E1D887D61007BBBCF /* cronutappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cronutappUITests.swift; sourceTree = "<group>"; };
 		6DB263901D887D61007BBBCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BA4522061DB4097400E39551 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ../../../../Desktop/splash.png; sourceTree = "<group>"; };
-		BA6397381DB4162300C96B12 /* slack-imgs.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slack-imgs.com.png"; path = "../../../../Downloads/slack-imgs.com.png"; sourceTree = "<group>"; };
+		BA4522061DB4097400E39551 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ../Images/splash.png; sourceTree = "<group>"; };
+		BA6397381DB4162300C96B12 /* slack-imgs.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slack-imgs.com.png"; path = "../Images/slack-imgs.com.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
