@@ -8,9 +8,13 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
+    
+    // Mark properties
+    @IBOutlet weak var RecipeNameLabel: UILabel!
+    @IBOutlet weak var EditRecipeLabel: UITextField!
 
 
     var detailItem: AnyObject? {
@@ -31,13 +35,25 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        EditRecipeLabel.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        RecipeNameLabel.text = textField.text
     }
 
 
