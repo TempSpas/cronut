@@ -217,6 +217,7 @@
 				TargetAttributes = {
 					6DB263681D887D61007BBBCF = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = E5FGRCA2YV;
 						LastSwiftMigration = 0800;
 					};
 					6DB2637E1D887D61007BBBCF = {
@@ -434,6 +435,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = E5FGRCA2YV;
 				INFOPLIST_FILE = cronutapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.23p.cronutapp;
@@ -446,6 +448,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = E5FGRCA2YV;
 				INFOPLIST_FILE = cronutapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.23p.cronutapp;
