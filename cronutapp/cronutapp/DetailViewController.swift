@@ -52,6 +52,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         dismiss(animated: true, completion:nil)
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        photoImageView.image = selectedImage
+        dismiss(animated: true, completion:nil)
+    }
+    
     //MARK ACTIONS
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
