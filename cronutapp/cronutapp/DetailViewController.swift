@@ -47,6 +47,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK UIImagePickerControllerDelegate
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion:nil)
+    }
+    
+    //MARK ACTIONS
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
