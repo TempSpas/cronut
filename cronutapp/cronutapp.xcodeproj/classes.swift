@@ -14,8 +14,8 @@ class Tag
     var color: String
     var category: Character
     var id: Int
+    var recipes: [UnsafePointer<Recipe>]()
     static var numTags = 0
-    static var allTags = [UnsafePointer<Tag>]()
 
     // Function to initialize a tag class instance
     init(label: String, col: String, cat: Character) 
@@ -31,19 +31,35 @@ class Tag
         category = cat 
         id = Tag.numTags + 1
         Tag.numTags += 1
-        Tag.addTag(&self)
-    }
-
-    // Helper function for initialization
-    private class func addTag(tagPointer: UnsafePointer<Tag>) 
-    {
-        allTags.append(tagPointer)
     }
 
     // Change the display color of the tag 
     func changeColor(newColor: String)
     {
         color = newColor 
+    }
+
+    // Add a recipe to the tag list 
+    func addRecipe(newRecipe: UnsafePointer<Recipe>)
+    {
+        // Check if a pointer exists in the recipes array with the same memory address (I think)
+        if let index = this.recipes.index(where: {$0 === newRecipe}) 
+        {
+            // Recipe already exists, do nothing
+            return
+        }
+        recipes.append(newRecipe)
+    }
+
+    // Remove a recipe from the tag list 
+    func removeRecipe(oldRecipe: UnsafePointer<Recipe>)
+    {
+        // Check if a pointer exists in the recipes array with the same memory address (I think)
+        if let index = this.recipes.index(where: {$0 === oldRecipe}) 
+        {
+            // Recipe no longer uses this tag, remove recipe from tag list
+            recipes.remove(at: index)
+        }
     }
 }
 
@@ -135,15 +151,20 @@ class Recipe
         }
 
         tags.append(newTag)
+
+        // Tell the tag that this recipe uses it (I think)
+        newTag.memory.addRecipe(&this)
     }
 
     // Remove a tag from the tag list
     func removeTag(oldTag: UnsafePointer<Tag>) 
     {
-        if let index = tags.index(where: {$0 === newTag}) 
+        if let index = tags.index(where: {$0 === oldTag}) 
         {
             // The tag is in the tag list, remove it.
             tags.remove(at: index)
+            // Tell the tag that this recipe doesn't use it anymore (I think)
+            oldTag.memory.removeRecipe(&this)
         }
     }
 
