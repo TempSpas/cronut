@@ -12,6 +12,9 @@
 		6D0498701DB6A3020086704C /* quit.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D04986F1DB6A3020086704C /* quit.png */; };
 		6D0498721DB6A3AF0086704C /* real_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D0498711DB6A3AF0086704C /* real_share.png */; };
 		6D0498741DB6A5410086704C /* 44carrot_360.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D0498731DB6A5410086704C /* 44carrot_360.png */; };
+		6D5D81681DB978C700A24CDE /* savedrecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D81671DB978C700A24CDE /* savedrecipe.swift */; };
+		6D5D81691DB978C700A24CDE /* savedrecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D81671DB978C700A24CDE /* savedrecipe.swift */; };
+		6D5D816A1DB978C700A24CDE /* savedrecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D81671DB978C700A24CDE /* savedrecipe.swift */; };
 		6DB2636D1D887D61007BBBCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2636C1D887D61007BBBCF /* AppDelegate.swift */; };
 		6DB2636F1D887D61007BBBCF /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2636E1D887D61007BBBCF /* MasterViewController.swift */; };
 		6DB263711D887D61007BBBCF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB263701D887D61007BBBCF /* DetailViewController.swift */; };
@@ -47,6 +50,7 @@
 		6D04986F1DB6A3020086704C /* quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = quit.png; path = ../Images/quit.png; sourceTree = "<group>"; };
 		6D0498711DB6A3AF0086704C /* real_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = real_share.png; path = ../Images/real_share.png; sourceTree = "<group>"; };
 		6D0498731DB6A5410086704C /* 44carrot_360.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 44carrot_360.png; path = ../Images/44carrot_360.png; sourceTree = "<group>"; };
+		6D5D81671DB978C700A24CDE /* savedrecipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = savedrecipe.swift; sourceTree = "<group>"; };
 		6DB263691D887D61007BBBCF /* cronutapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cronutapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DB2636C1D887D61007BBBCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DB2636E1D887D61007BBBCF /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +97,7 @@
 		6DB263601D887D61007BBBCF = {
 			isa = PBXGroup;
 			children = (
+				6D5D81671DB978C700A24CDE /* savedrecipe.swift */,
 				6D0498731DB6A5410086704C /* 44carrot_360.png */,
 				6D0498711DB6A3AF0086704C /* real_share.png */,
 				6D04986F1DB6A3020086704C /* quit.png */,
@@ -294,6 +299,7 @@
 				6DB263711D887D61007BBBCF /* DetailViewController.swift in Sources */,
 				6DB2636F1D887D61007BBBCF /* MasterViewController.swift in Sources */,
 				6DB2636D1D887D61007BBBCF /* AppDelegate.swift in Sources */,
+				6D5D81681DB978C700A24CDE /* savedrecipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DB263841D887D61007BBBCF /* cronutappTests.swift in Sources */,
+				6D5D81691DB978C700A24CDE /* savedrecipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DB2638F1D887D61007BBBCF /* cronutappUITests.swift in Sources */,
+				6D5D816A1DB978C700A24CDE /* savedrecipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
