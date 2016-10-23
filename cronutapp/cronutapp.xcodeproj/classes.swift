@@ -11,47 +11,70 @@ import Foundation
 class Tag 
 {
     var name: String
-    var color: String
+    var color: UIColor
     var category: Character
     var id: Int
+    // An array of recipe pointers who all use this tag
     var recipes: [UnsafePointer<Recipe>]()
     static var numTags = 0
 
-    // Function to initialize a tag class instance
-    init(label: String, col: String, cat: Character) 
+    // Creates a new tag object
+    // Params:   label is the String to be used as the tag name
+    //           col is the color that the tag background should be 
+    //           cat is the category that the tag falls under
+    // Modifies: name, color, category, id, numTags
+    // Effects:  name, color, and category are all assigned their corresponding parameter 
+    //           id is assigned (the number of tags that exists) + 1
+    //           numTags is incremented by one 
+    // Returns:  false if a tag with the name 'label' already exists
+    //           true if a new object is created
+    init(label: String, col: UIColor, cat: Character) -> Bool
     {
         if let index = Tag.allTags.index(where: {$0 == label}) 
         {
-            // A tag with this name already exists, do nothing
-            return
+            // A tag with this name already exists, return an error eventually
+            return false
         }
 
         name = label
-        color = col
+        color = UIColor(col)
         category = cat 
         id = Tag.numTags + 1
         Tag.numTags += 1
+        return true
     }
 
-    // Change the display color of the tag 
-    func changeColor(newColor: String)
+    // Changes the color of a tag
+    // Params:   newColor is the new color for the tag background
+    // Modifies: color
+    // Effects:  color takes on the value of newColor
+    func changeColor(newColor: UIColor)
     {
         color = newColor 
     }
 
-    // Add a recipe to the tag list 
-    func addRecipe(newRecipe: UnsafePointer<Recipe>)
+    // Adds a recipe pointer to the recipe array
+    // Params:   newRecipe is a pointer to an existing recipe to be added to the recipe array
+    // Modifies: recipes
+    // Effects:  recipes has the newRecipe pointer appended to the end
+    // Returns:  true if the recipe was successfully added, else false
+    func addRecipe(newRecipe: UnsafePointer<Recipe>) -> Bool
     {
         // Check if a pointer exists in the recipes array with the same memory address (I think)
         if let index = this.recipes.index(where: {$0 === newRecipe}) 
         {
             // Recipe already exists, do nothing
-            return
+            return false
         }
         recipes.append(newRecipe)
+        return true
     }
 
-    // Remove a recipe from the tag list 
+    // Removes a recipe pointer from the array list
+    // Params:   oldRecipe
+    // Modifies: recipes
+    // Effects:  The oldRecipe pointer is removed frmo the recipes array
+    // Returns:  true if the pointer was successfully removed, else false
     func removeRecipe(oldRecipe: UnsafePointer<Recipe>)
     {
         // Check if a pointer exists in the recipes array with the same memory address (I think)
@@ -59,7 +82,9 @@ class Tag
         {
             // Recipe no longer uses this tag, remove recipe from tag list
             recipes.remove(at: index)
+            return true
         }
+        return false
     }
 }
 
@@ -107,56 +132,93 @@ class Tag
 class Recipe 
 {
     var name: String
-    // (0,0) is the origin point for the start of the picture 
-    // in the frame of size (width: 100, length: 200)
-    var imageView: UIImageView
+    var image: UIImageView
+    // Array of tags that the recipe uses
     var tags: [UnsafePointer<Tag>]
-    var ingredients: [Ingredient: Connector]
+    // Maps an Ingredient to a pair (Amount, Measurement Type)
+    var ingredients: [String: (Float, String)]  
+    // Array of directions in order of use
+    var directions: [String]
 
-    // Function to initialize a recipe class instance with a picture
-    init(dish: String, picture: String, allTags: [UnsafePointer<Tag>]) 
+    // Creates a new recipe object
+    // Params:   dish is the name of the recipe 
+    //           picture is the file path of the picture to be used for the recipe  (optional)
+    //           allTags is the list of tags for the recipe (optional)
+    // Modifies: name, image, tags
+    // Effects:  name, image, and tags are all assigned their respective parameters
+    init(dish: String, picture: String? = nil, allTags: [UnsafePointer<Tag>]? = nil) 
     {
         name = dish 
-        imageView = UIImageView(image: UIImage(named: picture)!)
         tags = allTags 
+        if picture != nil 
+        {
+            image = UIImageView(image: UIImage(named: picture)!)
+        }
+        else 
+        {
+            image = nil
+        }
     }
 
-    // Function to initialize a recipe class instance without a picture 
-    init(dish: String, allTags: [UnsafePointer<Tag>]) 
+    // Creates a new recipe object from an old one
+    // Params:   oldRecipe is an existing recipe object to be duplicated
+    // Modifies: name, image, tags, ingredients, directions 
+    // Effects:  name, image, tags, ingredients, and directions are all assigned 
+    //           their respective values in oldRecipe
+    init(oldRecipe: Recipe)
     {
-        name = dish
-        tags = allTags
-        imageView = UIImageView(frame:CGRectMake(0, 0, 100, 200)) 
+        name = oldRecipe.name 
+        image = oldRecipe.image
+        tags = oldRecipe.tags 
+        ingredients = oldRecipe.ingredients 
+        directions = oldRecipe.directions 
     }
 
-    // Change the name of a recipe 
+    // Changes the name of a recipe
+    // Params:   newName is a string the change the recipe name to 
+    // Modifies: name
+    // Effects:  name is changed to newName 
     func rename(newName: String) 
     {
         name = newName
     }
 
-    // Change the picture associated with the recipe
-    func changePic(picFileName: String) 
+    // Changes the picture associated with a recipe
+    // Params:   picFileName is the file path to the new picture to be used
+    // Modifies: image
+    // Effects:  image is modified to take on the pic associated with picFileName
+    func changePic(picFileName: String)     
     {
-        imageView = UIImageView(image: UIImage(named:picFileName)!)
+        image = UIImageView(image: UIImage(named:picFileName)!)     //****check to make sure file exists****
     }
 
-    // Add a tag to the tag list 
+    // Add a new tag to this recipe
+    // Params:   newTag is a pointer to the new tag to be used by the recipe
+    // Modifies: tags, newTag
+    // Effects:  the newTag pointer is added to the tags array 
+    //           the newTag object has a reference to this recipe object added to its memory
+    // Returns:  true if the tag was added, else false
     func addTag(newTag: UnsafePointer<Tag>) 
     {
         if let index = tags.index(where: {$0 === newTag}) 
         {
             // The tag is already in the tag list, do nothing
-            return
+            return false
         }
 
         tags.append(newTag)
 
         // Tell the tag that this recipe uses it (I think)
         newTag.memory.addRecipe(&this)
+        return true
     }
 
-    // Remove a tag from the tag list
+    // Remove a tag from this recipe
+    // Params:   oldTag
+    // Modifies: tags, oldTag
+    // Effects:  tags has oldTag removed from itself 
+    //           oldTag has the reference to this recipe removed from its memory
+    // Returns:  true if the tag was removed, else false (tag already not in recipe)
     func removeTag(oldTag: UnsafePointer<Tag>) 
     {
         if let index = tags.index(where: {$0 === oldTag}) 
@@ -165,19 +227,77 @@ class Recipe
             tags.remove(at: index)
             // Tell the tag that this recipe doesn't use it anymore (I think)
             oldTag.memory.removeRecipe(&this)
+            return true 
         }
+        return false
     }
 
-    // Add ingredient to the recipe 
+    // Adds an ingredient to this recipe's ingredients list
+    // Params:   ingredient is the name of the ingredient 
+    //           amount is the numerical amount of the ingredient needed 
+    //           measurement is the unit of measurement (i.e. cup, ounce, liter)
+    // Modifies: ingredients
+    // Effects:  ingredients is appended with the new ingredient and its information
+    // Returns:  true if the information was added, else false 
     func addIngredient(ingredient: String, amount: Float, measurement: String)
     {
-        ingredients[ingredient] = Connector(amount, measurement)
+        if let keyExists = ingredients[ingredient] != nil 
+        {
+            return false
+        }
+        ingredients[ingredient] = (amount, measurement)
+        return true
     }
 
-    // Remove ingredient from the recipe
+    // Adds an ingredient to this recipe's ingredients list
+    // Params:   ingredient is the name of the ingredient 
+    // Modifies: ingredients
+    // Effects:  ingredients has key ingredient and its info removed
     func removeIngredient(ingredient: String)
     {
         ingredients[ingredient] = nil
+    }
+
+    // Modify an ingredient's information
+    // Params:   ingredient is the name of the ingredient 
+    //           amount is the numerical amount of the ingredient needed (optional)
+    //           measurement is the unit of measurement (i.e. cup, ounce, liter) (optional)
+    // Modifies: ingredients
+    // Effects:  ingredients[ingredient] is modified with its new data
+    // Returns:  true if the information was changed, else false 
+    func modIngredient(ingredient: String, amount: Float? = nil, measurement: String? = nil)
+    {
+        if let index = ingredients.index(where: {$0 == ingredient}) 
+        {
+            if amount == nil {amount = ingredients[ingredient].0}
+            if measurement == nil {measurement = ingredients[ingredient].1}
+            ingredients[ingredient] = (amount, measurement)
+            return true 
+        }
+        return false
+    }
+
+    // Adds a direction to this ingredient object
+    // Params:   direction is a string to be added to the directions array 
+    //           index is the index at which the direction should be added (optional)
+    // Modifies: directions
+    // Effects:  directions has the direction appended to it at the end or at index if specified
+    // Returns:  true if the information was added, else false 
+    func addDirection(direction: String, index: Int? = nil) -> Bool
+    {
+        if let index = directions.index(where: {$0 == direction}) 
+        {
+            // The direction is already in the directions, don't do anything
+            return false
+        }
+
+        if index == nil
+        {
+            directions.append(direction)
+            return true
+        }
+        directions.insert(direction, at: index)
+        return true
     }
 }
 
@@ -188,7 +308,10 @@ class User
     var latitude: Float?
     var recipes: [UnsafePointer<Recipe>]
 
-    // Function to initialize the user class instance 
+    // Initializes a new user object
+    // Params:   
+    // Modifies: 
+    // Effects:  
     init(user: String) 
     {
         name = user
@@ -220,55 +343,6 @@ class Ingredient_list
     func removeItem(ingredient: String)
     {
         myDict[ingredient] = nil
-    }
-}
-
-class Ingredient 
-{
-    var name: String
-
-    // Function to initialize an ingredient 
-    init(ingredient: String) 
-    {
-        name = ingredient 
-    }
-}
-
-    // Allows ingredients to be hashable
-    extension Ingredient: Hashable 
-    {
-        var hashValue: Int {
-            return name.hashValue
-        }
-    }
-    
-    // Allows tags to be equatable
-    extension Ingredient: Equatable {}
-    
-    func ==(lhs: Ingredient, rhs: Ingredient) -> Bool 
-    {
-        return lhs.name == rhs.name
-    }
-
-class Connector 
-{
-    var amount: Float
-    var unit: String
-
-    init(quantity: Float, ut: String) 
-    {
-        amount = quantity 
-        unit = ut 
-    }
-
-    func changeAmt(quantity: Float)
-    {
-        amount = quantity
-    }
-
-    func changeUnit(newUnit: String)
-    {
-        unit = newUnit
     }
 }
 
