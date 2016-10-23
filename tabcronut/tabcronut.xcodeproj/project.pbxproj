@@ -17,7 +17,7 @@
 		BA1EFE291DB69843009E892A /* tabcronutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1EFE281DB69843009E892A /* tabcronutUITests.swift */; };
 		BA1EFE371DB69931009E892A /* RecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1EFE361DB69931009E892A /* RecipesViewController.swift */; };
 		BA26B4CC1DBD43D500665E4C /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */; };
-		BABA1B6E1DBD41A0005B44AA /* 44plus.png in Resources */ = {isa = PBXBuildFile; fileRef = BABA1B6D1DBD419F005B44AA /* 44plus.png */; };
+		BA7828CE1DBD487C00CA0767 /* 44plus.png in Resources */ = {isa = PBXBuildFile; fileRef = BA7828CD1DBD487C00CA0767 /* 44plus.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +54,7 @@
 		BA1EFE2A1DB69843009E892A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA1EFE361DB69931009E892A /* RecipesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipesViewController.swift; sourceTree = "<group>"; };
 		BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
-		BABA1B6D1DBD419F005B44AA /* 44plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 44plus.png; path = ../cronut/Images/44plus.png; sourceTree = "<group>"; };
+		BA7828CD1DBD487C00CA0767 /* 44plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 44plus.png; path = ../Images/44plus.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +85,7 @@
 		BA1EFDFA1DB69843009E892A = {
 			isa = PBXGroup;
 			children = (
-				BABA1B6D1DBD419F005B44AA /* 44plus.png */,
+				BA7828CD1DBD487C00CA0767 /* 44plus.png */,
 				BA1EFE051DB69843009E892A /* tabcronut */,
 				BA1EFE1C1DB69843009E892A /* tabcronutTests */,
 				BA1EFE271DB69843009E892A /* tabcronutUITests */,
@@ -245,7 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA1EFE131DB69843009E892A /* LaunchScreen.storyboard in Resources */,
-				BABA1B6E1DBD41A0005B44AA /* 44plus.png in Resources */,
+				BA7828CE1DBD487C00CA0767 /* 44plus.png in Resources */,
 				BA1EFE101DB69843009E892A /* Assets.xcassets in Resources */,
 				BA1EFE0E1DB69843009E892A /* Main.storyboard in Resources */,
 			);
