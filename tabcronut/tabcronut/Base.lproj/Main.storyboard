@@ -132,6 +132,9 @@
                                 <frame key="frameInset" minX="170" minY="318" width="34" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveRecipeButton:" destination="5pI-1u-rOd" eventType="touchUpInside" id="az1-fb-ZcG"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -139,6 +142,7 @@
                     <tabBarItem key="tabBarItem" title="Add" image="44plus.png" id="KhO-Wz-5lu"/>
                     <connections>
                         <outlet property="recipeTitle" destination="cdH-IT-hdE" id="03s-LX-WvM"/>
+                        <outlet property="saveRecipeTitle" destination="YPo-5t-JOI" id="xaC-Jq-ahZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Web-Lr-Z5t" userLabel="First Responder" sceneMemberID="firstResponder"/>

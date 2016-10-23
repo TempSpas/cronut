@@ -18,6 +18,7 @@
 		BA1EFE371DB69931009E892A /* RecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1EFE361DB69931009E892A /* RecipesViewController.swift */; };
 		BA26B4CC1DBD43D500665E4C /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */; };
 		BA7828CE1DBD487C00CA0767 /* 44plus.png in Resources */ = {isa = PBXBuildFile; fileRef = BA7828CD1DBD487C00CA0767 /* 44plus.png */; };
+		BADB75A01DBD4DC400B12ED0 /* classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADB759F1DBD4DC400B12ED0 /* classes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		BA1EFE361DB69931009E892A /* RecipesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipesViewController.swift; sourceTree = "<group>"; };
 		BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		BA7828CD1DBD487C00CA0767 /* 44plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 44plus.png; path = ../Images/44plus.png; sourceTree = "<group>"; };
+		BADB759F1DBD4DC400B12ED0 /* classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = classes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 		BA1EFE051DB69843009E892A /* tabcronut */ = {
 			isa = PBXGroup;
 			children = (
+				BADB759F1DBD4DC400B12ED0 /* classes.swift */,
 				BA1EFE061DB69843009E892A /* AppDelegate.swift */,
 				BA1EFE081DB69843009E892A /* FirstViewController.swift */,
 				BA1EFE0A1DB69843009E892A /* SecondViewController.swift */,
@@ -272,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BADB75A01DBD4DC400B12ED0 /* classes.swift in Sources */,
 				BA1EFE371DB69931009E892A /* RecipesViewController.swift in Sources */,
 				BA1EFE0B1DB69843009E892A /* SecondViewController.swift in Sources */,
 				BA26B4CC1DBD43D500665E4C /* AddRecipeViewController.swift in Sources */,
