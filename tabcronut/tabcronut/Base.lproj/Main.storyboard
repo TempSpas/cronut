@@ -37,7 +37,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wPi-hU-Jen" id="HUa-5Y-g4g">
-                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <frame key="frameInset" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -133,7 +133,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
-                                    <action selector="saveRecipeButton:" destination="5pI-1u-rOd" eventType="touchUpInside" id="az1-fb-ZcG"/>
+                                    <action selector="saveRecipeButton:" destination="5pI-1u-rOd" eventType="touchUpInside" id="nWl-Q2-MzN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -141,8 +141,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Add" image="44plus.png" id="KhO-Wz-5lu"/>
                     <connections>
-                        <outlet property="recipeTitle" destination="cdH-IT-hdE" id="03s-LX-WvM"/>
-                        <outlet property="saveRecipeTitle" destination="YPo-5t-JOI" id="xaC-Jq-ahZ"/>
+                        <outlet property="recipeTitle" destination="cdH-IT-hdE" id="mBc-hA-adP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Web-Lr-Z5t" userLabel="First Responder" sceneMemberID="firstResponder"/>

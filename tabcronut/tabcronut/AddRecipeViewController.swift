@@ -11,6 +11,7 @@ import UIKit
 class AddRecipeViewController: UIViewController {
 
     // MARK: Properties
+    
     @IBOutlet weak var recipeTitle: UITextField!
     
     override func viewDidLoad() {
@@ -25,12 +26,14 @@ class AddRecipeViewController: UIViewController {
     }
     
     // MARK: Actions
+    
     @IBAction func saveRecipeButton(_ sender: UIButton) {
-        let r = Recipe()
-
-        r.name = recipeTitle.text
+        let r = Recipe(title: recipeTitle.text!)
+        
+        //
         print(r.name)
     }
+    
     
     
     
