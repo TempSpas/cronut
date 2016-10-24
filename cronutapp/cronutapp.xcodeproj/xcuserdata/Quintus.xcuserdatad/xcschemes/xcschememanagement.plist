@@ -4,17 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-cronutapp.xcscheme</key>
+		<key>cronutapp.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>B1D19350B905B13C77EF9A8A4AB87364</key>
+		<key>6DB263681D887D61007BBBCF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6DB2637E1D887D61007BBBCF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6DB263891D887D61007BBBCF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
