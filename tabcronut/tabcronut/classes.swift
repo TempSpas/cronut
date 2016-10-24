@@ -98,7 +98,8 @@ class Tag
     // Allows tags to be hashable
     extension Tag: Hashable 
     {
-        var hashValue: Int {
+        var hashValue: Int 
+        {
             return name.hashValue
         }
     }
@@ -424,3 +425,31 @@ class Ingredient_list
 //
 //    }
 //}
+
+/* CODE TO ADD CALENDAR EVENT, EXAMPLE FUNCTION CALL: addEventToCalendar(title: "Girlfriend birthday", description: "Remember or die!", startDate: NSDate(), endDate: NSDate())*/
+
+/*      MUST IMPORT 'EventKit'
+func addEventToCalendar(title title: String, description: String?, startDate: NSDate, endDate: NSDate, completion: ((success: Bool, error: NSError?) -> Void)? = nil) {
+    let eventStore = EKEventStore()
+
+    eventStore.requestAccessToEntityType(.Event, completion: { (granted, error) in
+        if (granted) && (error == nil) {
+            let event = EKEvent(eventStore: eventStore)
+            event.title = title
+            event.startDate = startDate
+            event.endDate = endDate
+            event.notes = description
+            event.calendar = eventStore.defaultCalendarForNewEvents
+            do {
+                try eventStore.saveEvent(event, span: .ThisEvent)
+            } catch let e as NSError {
+                completion?(success: false, error: e)
+                return
+            }
+            completion?(success: true, error: nil)
+        } else {
+            completion?(success: false, error: error)
+        }
+    })
+}
+*/
