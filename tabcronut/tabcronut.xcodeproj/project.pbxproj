@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6D4EDE4F1DBE81E00038CB66 /* RecipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */; };
+		A92A7FAC1DBED23E00099D71 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92A7FAB1DBED23E00099D71 /* MapKit.framework */; };
+		A92A7FAE1DBED2F500099D71 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */; };
 		BA1EFE071DB69843009E892A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1EFE061DB69843009E892A /* AppDelegate.swift */; };
 		BA1EFE091DB69843009E892A /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1EFE081DB69843009E892A /* FirstViewController.swift */; };
 		BA1EFE0B1DB69843009E892A /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1EFE0A1DB69843009E892A /* SecondViewController.swift */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeTableViewController.swift; sourceTree = "<group>"; };
+		A92A7FAB1DBED23E00099D71 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		BA1EFE031DB69843009E892A /* tabcronut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tabcronut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA1EFE061DB69843009E892A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA1EFE081DB69843009E892A /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A92A7FAC1DBED23E00099D71 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +91,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A92A7FAA1DBED23E00099D71 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A92A7FAB1DBED23E00099D71 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BA1EFDFA1DB69843009E892A = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +107,7 @@
 				BA1EFE1C1DB69843009E892A /* tabcronutTests */,
 				BA1EFE271DB69843009E892A /* tabcronutUITests */,
 				BA1EFE041DB69843009E892A /* Products */,
+				A92A7FAA1DBED23E00099D71 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,6 +128,7 @@
 				BA1EFE061DB69843009E892A /* AppDelegate.swift */,
 				BA1EFE081DB69843009E892A /* FirstViewController.swift */,
 				BA1EFE0A1DB69843009E892A /* SecondViewController.swift */,
+				A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */,
 				BA1EFE0C1DB69843009E892A /* Main.storyboard */,
 				6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */,
 				BA1EFE361DB69931009E892A /* RecipesViewController.swift */,
@@ -284,6 +299,7 @@
 				BA1EFE0B1DB69843009E892A /* SecondViewController.swift in Sources */,
 				BA26B4CC1DBD43D500665E4C /* AddRecipeViewController.swift in Sources */,
 				BA1EFE071DB69843009E892A /* AppDelegate.swift in Sources */,
+				A92A7FAE1DBED2F500099D71 /* ThirdViewController.swift in Sources */,
 				BA1EFE091DB69843009E892A /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
