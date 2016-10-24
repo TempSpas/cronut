@@ -28,8 +28,12 @@ class AddRecipeViewController: UIViewController {
     // MARK: Actions
     
     @IBAction func saveRecipeButton(_ sender: UIButton) {
-        let r = Recipe(title: recipeTitle.text!)
-        
+        var r = Recipe(title: recipeTitle.text!)
+        //let u = User(user: "generic")
+        //var new_recipe: UnsafePointer<Recipe> = &r
+        //new_recipe.memory = &r
+        let u = User(user: "generic")
+        u.recipes.append(&r)
         //
         print(r.name)
     }

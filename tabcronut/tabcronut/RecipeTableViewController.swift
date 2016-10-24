@@ -10,8 +10,13 @@ import UIKit
 
 class RecipeTableViewController: UITableViewController {
 
+    @IBOutlet var RecipeViews: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        RecipeViews.dataSource = self
+        RecipeViews.delegate = self
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -26,26 +31,42 @@ class RecipeTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->   UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath as IndexPath)
+        cell.textLabel?.text = "testing"
+        return cell
+    }
+    
+    /*override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 3
+        //return User(user:"generic").recipes.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        //let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) 
+        //cell.textLabel?.text = User(user: "generic").recipes[0].pointee.name
+        cell.textLabel?.text = "test!!!"
+        print(cell.textLabel?.text)
 
         // Configure the cell...
 
         return cell
-    }
-    */
+    }*/
+    
 
     /*
     // Override to support conditional editing of the table view.
