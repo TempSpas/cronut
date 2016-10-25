@@ -130,13 +130,14 @@ class Tag
 class Recipe 
 {
     var name: String
-    var image: UIImageView?=nil
+    var image: UIImageView? = nil
     // Array of tags that the recipe uses
     //var tags: [UnsafePointer<Tag>]
     // Maps an Ingredient to a pair (Amount, Measurement Type)
     var ingredients: [String: (Float, String)]  
     // Array of directions in order of use
     var directions: [String]
+    var tags: [UnsafePointer<Tag>]? = []
     var ID: Int
     static var NumRecipes: Int = 0
 
@@ -151,10 +152,13 @@ class Recipe
         name = title
         ingredients = [:]
         directions = []
-        //tags = []
         if picture != nil 
         {
             image = UIImageView(image: UIImage(named: picture!)!)
+        }
+        if allTags != nil 
+        {
+            tags = allTags
         }
         ID = Recipe.NumRecipes + 1
         Recipe.NumRecipes += 1
@@ -324,9 +328,9 @@ extension Recipe: Hashable {
 class User
 {
     var name: String
-    var longitude: Float?
-    var latitude: Float?
-    var recipes: [UnsafePointer<Recipe>]
+    var longitude: Float? = nil
+    var latitude: Float? = nil
+    var recipes: [UnsafePointer<Recipe>] = []
 
     // Initializes a new user object
     // Params:   
@@ -335,9 +339,6 @@ class User
     init(user: String) 
     {
         name = user
-        longitude = nil 
-        latitude = nil
-        recipes = []
     }
 }
 
@@ -427,6 +428,7 @@ class Ingredient_list
 //}
 
 /* CODE TO ADD CALENDAR EVENT, EXAMPLE FUNCTION CALL: addEventToCalendar(title: "Girlfriend birthday", description: "Remember or die!", startDate: NSDate(), endDate: NSDate())*/
+//http://stackoverflow.com/questions/28379603/how-to-add-an-event-in-the-device-calendar-using-swift
 
 /*      MUST IMPORT 'EventKit'
 func addEventToCalendar(title title: String, description: String?, startDate: NSDate, endDate: NSDate, completion: ((success: Bool, error: NSError?) -> Void)? = nil) {
