@@ -15,8 +15,10 @@ class ThirdViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.showsUserLocation = true
 
-        // set initial location in Honolulu
+        /*// set initial location in Honolulu
         let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788)
         
         let regionRadius: CLLocationDistance = 1000
@@ -26,9 +28,19 @@ class ThirdViewController: UIViewController {
             mapView.setRegion(coordinateRegion, animated: true)
         }
         
-        centerMapOnLocation(location: initialLocation)
+        centerMapOnLocation(location: initialLocation)*/
     }
-
+    
+    
+    @IBAction func currentLoc(_ sender: AnyObject) {
+        let userLocation = mapView.userLocation
+        
+        let region = MKCoordinateRegionMakeWithDistance(
+            (userLocation.location?.coordinate)!, 2000, 2000)
+        
+        mapView.setRegion(region, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

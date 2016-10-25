@@ -48,9 +48,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6QV-ng-y2Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2487" y="806"/>
+            <point key="canvasLocation" x="2770" y="1219"/>
         </scene>
-        <!--Third View Controller-->
+        <!--Map-->
         <scene sceneID="lCR-md-i2F">
             <objects>
                 <viewController id="Q6E-Wv-LwK" customClass="ThirdViewController" customModule="tabcronut" customModuleProvider="target" sceneMemberID="viewController">
@@ -62,28 +62,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Dc-nN-iwp">
-                                <frame key="frameInset" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Refresh" id="pcv-jo-FMD"/>
-                                </items>
-                            </toolbar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="U4d-5m-ZUv">
                                 <frame key="frameInset" minY="64" width="375" height="559"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uHf-jy-oGS">
+                                <frame key="frameInset" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem image="location" id="b3r-ze-7IQ">
+                                        <connections>
+                                            <action selector="currentLoc:" destination="Q6E-Wv-LwK" id="kTY-9G-uzB"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Exl-if-K4q"/>
+                    <navigationItem key="navigationItem" title="Map" id="VJr-EZ-m6A">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="aOh-M8-ttu">
+                            <connections>
+                                <segue destination="hgv-XL-h3y" kind="show" id="zI4-hh-iD2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="U4d-5m-ZUv" id="HvJ-yg-49B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gM8-c2-yMq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3216.8000000000002" y="813.64317841079469"/>
+            <point key="canvasLocation" x="866" y="1284"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="WxZ-dC-DeN">
@@ -95,7 +105,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="wPi-hU-Jen" customClass="RecipeTableViewCell" customModule="tabcronut" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wPi-hU-Jen" id="HUa-5Y-g4g">
                                     <frame key="frameInset" width="375" height="43.5"/>
@@ -135,6 +145,7 @@
             <objects>
                 <splitViewController id="hgv-XL-h3y" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="4pp-ek-z7H"/>
+                    <navigationItem key="navigationItem" id="qyd-s5-k4N"/>
                     <connections>
                         <segue destination="ZNg-JM-aYm" kind="relationship" relationship="masterViewController" id="pw0-mi-A3x"/>
                         <segue destination="jFT-Ld-iqM" kind="relationship" relationship="detailViewController" id="4m6-FG-X1f"/>
@@ -212,5 +223,9 @@
     </scenes>
     <resources>
         <image name="44plus.png" width="44" height="44"/>
+        <image name="location" width="32" height="32"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="zI4-hh-iD2"/>
+    </inferredMetricsTieBreakers>
 </document>
