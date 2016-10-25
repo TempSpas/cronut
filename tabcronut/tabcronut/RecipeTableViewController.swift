@@ -10,9 +10,18 @@ import UIKit
 
 class RecipeTableViewController: UITableViewController {
 
+    // MARK: Properties
+    @IBOutlet weak var addRecipeButton: UIBarButtonItem!
+    
+    var attractionNames = [String]()
+    var recipes = [Recipe]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        attractionNames = ["Big ben", "Eiffel Tower"]
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,23 +38,31 @@ class RecipeTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        
+//        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        // return 0
+        // return attractionNames.count
+        return recipes.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeTableCell", for: indexPath) as! RecipeViewCell
+        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
         // Configure the cell...
+        let row = indexPath.row
+        // cell.recipeLabel.text = attractionNames[row]
+        cell.recipeLabel.text = recipes[row].name
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -82,14 +99,46 @@ class RecipeTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//        
+//        if addRecipeButton === sender
+//        {
+//            let user = rec
+//        }
+//    }
+    
+    @IBAction func unwindToMealList(sender: UIStoryboardSegue)
+    {
+        if let sourceViewController = sender.source as? AddRecipeViewController, let r = sourceViewController.recipe
+        {
+            let newIndexPath = NSIndexPath(row: recipes.count, section: 0)
+            recipes.append(r)
+            
+            tableView.insertRows(at: [newIndexPath as IndexPath], with: .bottom)
+            
+            
+        }
     }
-    */
+ 
+    // MARK: NSCoding
 
+    // func saveRecipes()
+    // {
+    //     let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(user, toFile: User.ArchiveURL.path!)
+
+    //     if!isSuccessfulSave {
+    //         print("Failed to save recipes...")
+    //     }
+    // }
+
+    // func loadUserData() -> User?
+    // {
+    //     return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURl.path!) as? User
+    // }
 }
