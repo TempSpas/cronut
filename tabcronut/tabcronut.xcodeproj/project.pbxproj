@@ -22,6 +22,7 @@
 		BA26B4CC1DBD43D500665E4C /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */; };
 		BA7828CE1DBD487C00CA0767 /* 44plus.png in Resources */ = {isa = PBXBuildFile; fileRef = BA7828CD1DBD487C00CA0767 /* 44plus.png */; };
 		BADB75A01DBD4DC400B12ED0 /* classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADB759F1DBD4DC400B12ED0 /* classes.swift */; };
+		BAED16021DBFDC0900BAABD4 /* RecipeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED16011DBFDC0900BAABD4 /* RecipeViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		BA7828CD1DBD487C00CA0767 /* 44plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 44plus.png; path = ../Images/44plus.png; sourceTree = "<group>"; };
 		BADB759F1DBD4DC400B12ED0 /* classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = classes.swift; sourceTree = "<group>"; };
+		BAED16011DBFDC0900BAABD4 /* RecipeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				BA1EFE0A1DB69843009E892A /* SecondViewController.swift */,
 				A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */,
 				BA1EFE0C1DB69843009E892A /* Main.storyboard */,
+				BAED16011DBFDC0900BAABD4 /* RecipeViewCell.swift */,
 				6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */,
 				BA1EFE361DB69931009E892A /* RecipesViewController.swift */,
 				BA1EFE0F1DB69843009E892A /* Assets.xcassets */,
@@ -294,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BADB75A01DBD4DC400B12ED0 /* classes.swift in Sources */,
+				BAED16021DBFDC0900BAABD4 /* RecipeViewCell.swift in Sources */,
 				6D4EDE4F1DBE81E00038CB66 /* RecipeTableViewController.swift in Sources */,
 				BA1EFE371DB69931009E892A /* RecipesViewController.swift in Sources */,
 				BA1EFE0B1DB69843009E892A /* SecondViewController.swift in Sources */,
