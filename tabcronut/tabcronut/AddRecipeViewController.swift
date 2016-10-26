@@ -8,18 +8,20 @@
 
 import UIKit
 
-class AddRecipeViewController: UIViewController {
+class AddRecipeViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Properties
     
     @IBOutlet weak var recipeTitle: UITextField!
     @IBOutlet weak var saveRecipeButton: UIBarButtonItem!
     
+    
     var recipe: Recipe?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        recipeTitle.delegate = self
+        //checkValidRecipeName()
         // Do any additional setup after loading the view.
     }
 
@@ -29,17 +31,38 @@ class AddRecipeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Actions
+    //MARK: UITextFieldDelegate
     
-//    @IBAction func saveRecipeButton(_ sender: UIButton) {
-//        var r = Recipe(title: recipeTitle.text!)
-//        let u = User(user: "generic")
-//        u.recipes.append(&r)
-//        //
-//        print(r.name)
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+//    func textFieldDidEndEditing(textField: UITextField) {
+//        checkValidRecipeName()
+//        print(saveRecipeButton.isEnabled)
+//        navigationItem.title = recipeTitle.text
+//    }
+//    
+//    func textFieldDidBeginEditing(textField: UITextField) {
+//        // Disable the Save button while editing.
+//        saveRecipeButton.isEnabled = false
+//    }
+//    
+//    func checkValidRecipeName() {
+//        // Disable the Save button if the text field is empty.
+//        let text = recipeTitle.text ?? ""
+//        saveRecipeButton.isEnabled = !text.isEmpty
 //    }
     
+    
+
+    
     // MARK: Navigation
+    
+    @IBAction func cancelRecipe(_ sender: UIBarButtonItem) {
+        recipeTitle.text = ""
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,7 +70,8 @@ class AddRecipeViewController: UIViewController {
         // Pass the selected object to the new view controller.
         if saveRecipeButton === sender as AnyObject?
         {
-            recipe = Recipe(title: recipeTitle.text!)
+            let title = recipeTitle.text
+            recipe = Recipe(title: title!)
             
         }
     }
