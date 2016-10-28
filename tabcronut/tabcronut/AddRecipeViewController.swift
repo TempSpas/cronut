@@ -62,6 +62,10 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func cancelRecipe(_ sender: UIBarButtonItem) {
         recipeTitle.text = ""
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        
+//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "RecipeTableViewController") as! RecipeTableViewController
+//        self.present(nextViewController, animated:true, completion:nil)
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -72,7 +76,7 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
         {
             let title = recipeTitle.text
             recipe = Recipe(title: title!)
-            
+            recipeTitle.text=""
         }
     }
 }

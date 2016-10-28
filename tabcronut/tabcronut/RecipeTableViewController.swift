@@ -13,14 +13,22 @@ class RecipeTableViewController: UITableViewController {
     // MARK: Properties
     @IBOutlet weak var addRecipeButton: UIBarButtonItem!
     
-    var attractionNames = [String]()
+    
+    @IBOutlet var table: UITableView!
+    
+    //var attractionNames = [String]()
     var recipes = [Recipe]()
+    var objects = [AnyObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
-        attractionNames = ["Big ben", "Eiffel Tower"]
+        
+        //attractionNames = ["Big ben", "Eiffel Tower"]
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -49,7 +57,36 @@ class RecipeTableViewController: UITableViewController {
         // return attractionNames.count
         return recipes.count
     }
-
+    
+    var valueToPass:String!
+    
+//    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+//        print("HERE")
+//        //print("You selected cell #\(indexPath.row)!")
+//        
+//        // Get Cell Label
+//        let indexPath = tableView.indexPathForSelectedRow
+//        let currentCell = tableView.cellForRow(at: indexPath!) as UITableViewCell!;
+//        
+//        valueToPass = currentCell?.textLabel?.text
+//        performSegue(withIdentifier: "viewDetails", sender: self)
+//        
+//    }
+    
+    
+    
+//    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        
+//        if (segue.identifier == "viewDetails") {
+//            
+//            // initialize new view controller and cast it as your view controller
+//            let viewController = segue.destination as! IndividualRecipeViewController
+//            // your new view controller should have property that will store passed value
+//            viewController.passedValue = valueToPass
+//        }
+//        
+//    }
+//
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeTableCell", for: indexPath) as! RecipeViewCell
@@ -59,9 +96,13 @@ class RecipeTableViewController: UITableViewController {
         let row = indexPath.row
         // cell.recipeLabel.text = attractionNames[row]
         cell.recipeLabel.text = recipes[row].name
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
 
         return cell
     }
+    
+    
+
     
 
     /*
@@ -101,6 +142,41 @@ class RecipeTableViewController: UITableViewController {
 
     
     // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("here?")
+        print(segue.identifier)
+        if segue.identifier == "viewDetails" {
+            print("here!")
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                let recipe = recipes[indexPath.row]
+                //let row = self.table.indexPathForSelectedRow?.row
+                //let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell!;
+                //
+                //        valueToPass = currentCell?.textLabel?.text
+                //let controller = (segue.destination as! UINavigationController).topViewController as! IndividualRecipeViewController
+                
+                
+                let controller = (segue.destination as! IndividualRecipeViewController)
+
+                controller.passedValue = recipe
+                //controller.passedValue = "hi" as String!
+               
+                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+                controller.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
+    }
+    
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        print("here")
+//        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+//        let recipesViewController = storyboard?.instantiateViewController(withIdentifier: "IndividualRecipeViewController") as! IndividualRecipeViewController
+//        recipesViewController.passedValue = "hi"
+//        navigationController?.pushViewController(recipesViewController, animated: true)
+//        
+//        
+//    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
