@@ -8,21 +8,82 @@
 
 import UIKit
 
-class AddRecipeViewController: UIViewController, UITextFieldDelegate {
+class AddRecipeViewController: //UITableViewController, UITextFieldDelegate {
+UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+    var numRows = 1
+//    @available(iOS 2.0, *)
+//    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+//        return cell
+//    }
+//
+//    @available(iOS 2.0, *)
+//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 1
+//    }
+
 
     // MARK: Properties
+    
+    //var ingredients: [String: (Float, String)]
+    var test: [String] = []
+    
+    
+    @IBOutlet weak var ingrName: UITextField!
     
     @IBOutlet weak var recipeTitle: UITextField!
     @IBOutlet weak var saveRecipeButton: UIBarButtonItem!
     
+    @IBOutlet weak var ingredientTable: UITableView!
     
+    
+    @IBAction func addIngrs(_ sender: AnyObject) {
+        self.ingredientTable.beginUpdates()
+        print(ingrName.text)
+        test.append(ingrName.text!)
+        print(test)
+        ingredientTable.beginUpdates()
+        ingredientTable.insertRows(at: [
+            NSIndexPath(row: test.count-1, section: 0) as IndexPath
+            ], with: .automatic)
+        //ingredientTable.endUpdates()
+        //let newIndexPath = NSIndexPath(row: test.count, section: 0)
+        //self.ingredientTable.insertRows(at: [newIndexPath as IndexPath], with: .automatic)
+//        DispatchQueue.main.async {
+//            self.ingredientTable.reloadData()
+//        }
+        
+        ingrName.text=""
+        self.ingredientTable.endUpdates()
+    }
+
+
     var recipe: Recipe?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         recipeTitle.delegate = self
+        //self.ingredientTable.delegate = self
+        //self.ingredientTable.datasource = self
         //checkValidRecipeName()
         // Do any additional setup after loading the view.
+    }
+    
+//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//        return 1
+//    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return test.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = ingredientTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath as IndexPath) as! IngredientTableViewCell
+            
+        let row = indexPath.row
+        cell.ingrLabel.text = test[row]
+            
+        return cell
     }
 
 
@@ -33,7 +94,7 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
@@ -78,5 +139,6 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
             recipe = Recipe(title: title!)
             recipeTitle.text=""
         }
+        
     }
 }
