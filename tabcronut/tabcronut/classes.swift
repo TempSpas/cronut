@@ -232,6 +232,8 @@ class User: NSObject, NSCoding
 	var longitude: Float?
 	var latitude: Float?
 	var recipes: [UnsafePointer<Recipe>]
+	var groceries: [String: (Float, String)]
+	var inventory: [String: (Float, String)]
 
 	// MARK: Archiving Paths
 	static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in:
@@ -260,6 +262,84 @@ class User: NSObject, NSCoding
 		super.init()
 	}
 
+	// Attempts to add a grocery item to the grocery map
+	// Params:   ingredient is the name of the ingredient as a string 
+	//			 amount is a float indicating the numerical amount of the ingredient needed 
+	//			 unit is the measurement type of the amount, such as cup/kilogram/litre 
+	// Modifies: groceries
+	// Effects:  a new key-value pair is added to the grocery map
+	// Returns:  false if the item was already in the map, otherwise true
+	func addGrocery(ingredient: String, amount: Float, unit: String)
+	{
+		if groceries[ingredient] != nil
+		{
+			/* 
+
+			Should we then skip adding? Prompt the user to choose a new amount/measurement and 
+			then call removeGrocery followed by addGrocery again?
+
+			*/
+			return false
+		}
+
+		else
+		{
+			groceries[ingredient] = (amount, unit)
+			return true
+		}
+	}
+
+	// Attempts to remove a grocery item from the grocery map
+	// Params:   ingredient is the name of the ingredient to be removed from the map
+	// Modifies: groceries
+	// Effects:  the key 'ingredient' is removed from the groceries map if it exists
+	// Returns:  true if the item was removed, otherwise false
+	func removeGrocery(ingredient: String) -> Bool
+	{
+		if groceries[ingredient] == nil {return false}
+		groceries[ingredient] = nil 
+		return true
+	}
+
+	// Attempts to add an ingredient to the inventory map
+	// Params:   ingredient is the name of the ingredient as a string 
+	//			 amount is a float indicating the numerical amount of the ingredient needed 
+	//			 unit is the measurement type of the amount, such as cup/kilogram/litre 
+	// Modifies: inventory
+	// Effects:  a new key-value pair is added to the inventory map
+	// Returns:  false if the item was already in the map, otherwise true
+	func addInventory(ingredient: String, amount: Float, unit: String)
+	{
+		if inventory[ingredient] != nil
+		{
+			/* 
+
+			Should we then skip adding? Prompt the user to choose a new amount/measurement and 
+			then call removeGrocery followed by addGrocery again?
+
+			*/
+			return false
+		}
+
+		else
+		{
+			inventory[ingredient] = (amount, unit)
+			return true
+		}
+	}
+
+	// Attempts to remove an ingredient from the inventory map
+	// Params:   ingredient is the name of the ingredient to be removed from the map
+	// Modifies: inventory
+	// Effects:  the key 'ingredient' is removed from the inventory map if it exists
+	// Returns:  true if the item was removed, otherwise false
+	func removeInventory(ingredient: String) -> Bool
+	{
+		if inventory[ingredient] == nil {return false}
+		inventory[ingredient] = nil 
+		return true
+	}
+
 	func encodeWithCoder(aCoder: NSCoder)
 	{
 		aCoder.encode(name, forKey: PropertyKey.nameKey)
@@ -275,32 +355,6 @@ class User: NSObject, NSCoding
 		self.init(user: name)
 	}
 
-}
-
-// A user has two lists: a grocery list and an inventory list
-class Ingredient_list 
-{
-	var myDict: [String: (Float, String)]
-	var type: Bool
-
-	// Function to initialize a list. type == 0: grocery list. type == 1: inventory
-	init(boolean: Bool) 
-	{
-		type = boolean
-		myDict = [:]
-	}
-
-	// Add an ingredient to the list 
-	func addItem(ingredient: String, amount: Float, unit: String) 
-	{
-		myDict[ingredient] = (amount, unit)
-	}
-
-	// Remove an ingredient from the list 
-	func removeItem(ingredient: String)
-	{
-		myDict[ingredient] = nil
-	}
 }
 
 //class Scanner 
