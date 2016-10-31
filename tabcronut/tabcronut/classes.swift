@@ -62,6 +62,7 @@ class Recipe
 		}
 		ID = Recipe.NumRecipes + 1
 		Recipe.NumRecipes += 1
+        tags = [:]
 	}
 
 	// Creates a new recipe object from an old one
@@ -77,7 +78,8 @@ class Recipe
 		directions = oldRecipe.directions
 		ID = Recipe.NumRecipes + 1
 		Recipe.NumRecipes += 1
-	}
+        tags = oldRecipe.tags
+    }
 
 	// Adds a tag to the tag map for this recipe 
 	// Params:   newTag is a string that is the tag name 
@@ -93,10 +95,17 @@ class Recipe
 		{
 			if newColor == nil 
 			{
-				newColor = .randomColor()
+				var newC = UIColor()
+                newC = .randomColor()
+                tags[newTag] = (newC, newCat!)
+                return true
 			}
-			tags[newTag] = (newColor, newCat)
-			return true
+            
+            else
+            {
+                tags[newTag] = (newColor!, newCat!)
+                return true
+            }
 		}
 
 		return false
@@ -258,6 +267,8 @@ class User: NSObject, NSCoding
 		longitude = nil 
 		latitude = nil
 		recipes = []
+        groceries = [:]
+        inventory = [:]
 
 		super.init()
 	}
@@ -269,7 +280,7 @@ class User: NSObject, NSCoding
 	// Modifies: groceries
 	// Effects:  a new key-value pair is added to the grocery map
 	// Returns:  false if the item was already in the map, otherwise true
-	func addGrocery(ingredient: String, amount: Float, unit: String)
+	func addGrocery(ingredient: String, amount: Float, unit: String) -> Bool
 	{
 		if groceries[ingredient] != nil
 		{
@@ -308,7 +319,7 @@ class User: NSObject, NSCoding
 	// Modifies: inventory
 	// Effects:  a new key-value pair is added to the inventory map
 	// Returns:  false if the item was already in the map, otherwise true
-	func addInventory(ingredient: String, amount: Float, unit: String)
+	func addInventory(ingredient: String, amount: Float, unit: String) -> Bool
 	{
 		if inventory[ingredient] != nil
 		{
