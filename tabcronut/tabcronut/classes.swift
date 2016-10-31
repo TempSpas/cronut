@@ -9,134 +9,39 @@
 import UIKit
 import Foundation
 
-class Tag 
+// Used to create random numbers
+extension CGFloat 
 {
-	var name: String
-	var color: UIColor
-	var category: Character
-	var id: Int
-	// An array of recipe pointers who all use this tag
-	var recipes: [UnsafePointer<Recipe>]
-	static var numTags = 0
-
-	// Creates a new tag object
-	// Params:   label is the String to be used as the tag name
-	//           col is the color that the tag background should be 
-	//           cat is the category that the tag falls under
-	// Modifies: name, color, category, id, numTags
-	// Effects:  name, color, and category are all assigned their corresponding parameter 
-	//           id is assigned (the number of tags that exists) + 1
-	//           numTags is incremented by one 
-	// Returns:  false if a tag with the name 'label' already exists
-	//           true if a new object is created
-	init(label: String, col: UIColor, cat: Character)
-	{
-		name = label
-		color = col
-		category = cat 
-		id = Tag.numTags + 1
-		Tag.numTags += 1
-		recipes = []
-	}
-
-	// Changes the color of a tag
-	// Params:   newColor is the new color for the tag background
-	// Modifies: color
-	// Effects:  color takes on the value of newColor
-	func changeColor(newColor: UIColor)
-	{
-		color = newColor 
-	}
-
-	// Adds a recipe pointer to the recipe array
-	// Params:   newRecipe is a pointer to an existing recipe to be added to the recipe array
-	// Modifies: recipes
-	// Effects:  recipes has the newRecipe pointer appended to the end
-	// Returns:  true if the recipe was successfully added, else false
-	func addRecipe(newRecipe: UnsafePointer<Recipe>) -> Bool
-	{
-		// Check if a pointer exists in the recipes array with the same memory address (I think)
-		let ind = recipes.contains(newRecipe)
-		if ind
-		{
-			// Recipe already exists, do nothing
-			return false
-		}
-		recipes.append(newRecipe)
-		return true
-	}
-
-	// Removes a recipe pointer from the array list
-	// Params:   oldRecipe
-	// Modifies: recipes
-	// Effects:  The oldRecipe pointer is removed frmo the recipes array
-	// Returns:  true if the pointer was successfully removed, else false
-	func removeRecipe(oldRecipe: UnsafePointer<Recipe>) -> Bool
-	{
-		// Check if a pointer exists in the recipes array with the same memory address (I think)
-		let ind = recipes.contains(oldRecipe)
-		if ind
-		{
-			// Recipe no longer uses this tag, remove recipe from tag list
-			recipes.remove(at: recipes.index(of: oldRecipe)!)
-			return true
-		}
-		return false
-	}
+    static func random() -> CGFloat 
+    {
+        return CGFloat(arc4random()) / CGFloat(UInt32.max)
+    }
 }
 
-// The following is outside of the above class, allows class to be equatable, comparable, and hashable
-	
-	// Allows tags to be equatable
-	extension Tag: Equatable {}
-	
-	func ==(lhs: Tag, rhs: Tag) -> Bool 
-	{
-		return lhs.name == rhs.name
-	}
-	
-	// Allows tags to be hashable
-	extension Tag: Hashable 
-	{
-		var hashValue: Int 
-		{
-			return name.hashValue
-		}
-	}
-
-	// Allows tags to be sorted in alphabetical order, yes this is supposed to be empty
-	extension Tag: Comparable {}
-
-	func <=(lhs: Tag, rhs: Tag) -> Bool 
-	{
-		return lhs.name <= rhs.name
-	}
-
-	func >(lhs: Tag, rhs: Tag) -> Bool 
-	{
-		return lhs.name > rhs.name
-	}
-	
-	func <(lhs: Tag, rhs: Tag) -> Bool 
-	{
-		return lhs.name < rhs.name
-	}
-
-	func >=(lhs: Tag, rhs: Tag) -> Bool 
-	{
-		return lhs.name >= rhs.name
-	}
+// Used to create a random color with the above extension for CGFloat
+extension UIColor 
+{
+    static func randomColor() -> UIColor 
+    {
+        // If you wanted a random alpha, just create another
+        // random number for that too.
+        return UIColor(red:   .random(),
+                       green: .random(),
+                       blue:  .random(),
+                       alpha: 1.0)
+    }
+}
 
 class Recipe 
 {
 	var name: String
 	var image: UIImageView?=nil
-	// Array of tags that the recipe uses
-	//var tags: [UnsafePointer<Tag>]
-	// Maps an Ingredient to a pair (Amount, Measurement Type)
-	var ingredients: [String: (Float, String)]  
 	// Array of directions in order of use
 	var directions: [String]
+	// Maps an Ingredient to a pair (Amount, Measurement Type)
+	var ingredients: [String: (Float, String)]  
+	// Map of tags, associates them with a text color and a category indicator
+	var tags: [String: (UIColor, Character)]
 	var ID: Int
 	static var NumRecipes: Int = 0
 
@@ -146,12 +51,11 @@ class Recipe
 	//           allTags is the list of tags for the recipe (optional)
 	// Modifies: name, image, tags
 	// Effects:  name, image, and tags are all assigned their respective parameters
-	init(title: String, picture: String? = nil, allTags: [UnsafePointer<Tag>]? = nil)
+	init(title: String, picture: String? = nil)
 	{
 		name = title
 		ingredients = [:]
 		directions = []
-		//tags = []
 		if picture != nil 
 		{
 			image = UIImageView(image: UIImage(named: picture!)!)
@@ -169,11 +73,45 @@ class Recipe
 	{
 		name = oldRecipe.name 
 		image = oldRecipe.image
-		//tags = oldRecipe.tags
 		ingredients = oldRecipe.ingredients 
 		directions = oldRecipe.directions
 		ID = Recipe.NumRecipes + 1
 		Recipe.NumRecipes += 1
+	}
+
+	// Adds a tag to the tag map for this recipe 
+	// Params:   newTag is a string that is the tag name 
+	//			 newColor is the color that the tag should be displayed as on the recipe page (optional)
+	//				if a color is not provided, a random one is chosen
+	//			 newCat is a character indicating the category that the tag falls under (optional)
+	// Modifies: tags 
+	// Effects:  a new tag is added to the tags map 
+	// Returns:  false if a tag with the same name already exists for this recipe, else true
+	func addTag(newTag: String, newColor: UIColor? = nil, newCat: Character? = nil) -> Bool
+	{
+		if tags[newTag] == nil
+		{
+			if newColor == nil 
+			{
+				newColor = .randomColor()
+			}
+			tags[newTag] = (newColor, newCat)
+			return true
+		}
+
+		return false
+	}
+
+	// Removes a tag from the tag map for this recipe 
+	// Params:   oldTag is the name of the tag to be removed from this recipe
+	// Modifies: tags 
+	// Effects:  oldTag is removed from the tags map if it is in it
+	// Returns:  false if a tag with the same name already exists for this recipe, else true
+	func removeTag(oldTag: String) -> Bool 
+	{
+		if tags[oldTag] == nil {return false}
+		tags[oldTag] = nil 
+		return true
 	}
 
 	// Changes the name of a recipe
@@ -193,44 +131,6 @@ class Recipe
 	{
 		image = UIImageView(image: UIImage(named:picFileName)!)     //****check to make sure file exists****
 	}
-
-	// Add a new tag to this recipe
-	// Params:   newTag is a pointer to the new tag to be used by the recipe
-	// Modifies: tags, newTag
-	// Effects:  the newTag pointer is added to the tags array 
-	//           the newTag object has a reference to this recipe object added to its memory
-	// Returns:  true if the tag was added, else false
-	/*func addTag(newTag: UnsafePointer<Tag>) -> Bool
-	{
-		let ind = tags.contains(newTag)
-		if ind
-		{
-			// The tag is already in the tag list, do nothing
-			return false
-		}
-
-		tags.append(newTag)
-		return true
-	}
-
-	// Remove a tag from this recipe
-	// Params:   oldTag
-	// Modifies: tags, oldTag
-	// Effects:  tags has oldTag removed from itself 
-	//           oldTag has the reference to this recipe removed from its memory
-	// Returns:  true if the tag was removed, else false (tag already not in recipe)
-	func removeTag(oldTag: UnsafePointer<Tag>) -> Bool
-	{
-		let ind = tags.contains(oldTag)
-		if ind
-		{
-			// The tag is in the tag list, remove it.
-			tags.remove(at: tags.index(of: oldTag)!)
-			// Tell the tag that this recipe doesn't use it anymore (I think)
-			return true 
-		}
-		return false
-	}*/
 
 	// Adds an ingredient to this recipe's ingredients list
 	// Params:   ingredient is the name of the ingredient 
