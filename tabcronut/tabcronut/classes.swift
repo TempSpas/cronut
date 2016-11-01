@@ -218,7 +218,7 @@ class Recipe
 			directions.append(direction)
 			return true
 		}
-		
+
 		directions.insert(direction, at: index1!)
 		return true
 	}
@@ -418,7 +418,7 @@ class User: NSObject, NSCoding
 //    /* Code from the internet, URL: https://github.com/A9T9/code-snippets/blob/master/ocrapi.swift */
 //	let key = 4de28eea7e88957
 //
-//    func callOCRSpace() {
+//    func callOCRSpace(imageName: String) {
 //        // Create URL request
 //        var url: NSURL = NSURL(string: "https://api.ocr.space/Parse/Image")
 //        var request: NSMutableURLRequest = NSMutableURLRequest.requestWithURL(url)
@@ -428,11 +428,11 @@ class User: NSObject, NSCoding
 //        var session: NSURLSession = NSURLSession.sharedSession()
 //        
 //        // Image file and parameters
-//        var imageData: NSData = UIImageJPEGRepresentation(UIImage.imageNamed("yourImage"), 0.6)
-//        var parametersDictionary: [NSObject : AnyObject] = NSDictionary(objectsAndKeys: "yourKey","apikey","True","isOverlayRequired","eng","language",nil)
+//        var imageData: NSData = UIImageJPEGRepresentation(UIImage.imageNamed(imageName), 0.6)
+//        var parametersDictionary: [NSObject : AnyObject] = NSDictionary(objectsAndKeys: key,"apikey","False","isOverlayRequired","eng","language",nil)
 //        
 //        // Create multipart form body
-//        var data: NSData = self.createBodyWithBoundary(boundary, parameters: parametersDictionary, imageData: imageData, filename: "yourImage.jpg")
+//        var data: NSData = self.createBodyWithBoundary(boundary, parameters: parametersDictionary, imageData: imageData, filename: imageName)
 //        request.HTTPBody = data
 //        
 //        // Start data session
@@ -473,9 +473,9 @@ class User: NSObject, NSCoding
 //    }
 //}
 
-/* CODE TO ADD CALENDAR EVENT, EXAMPLE FUNCTION CALL: addEventToCalendar(title: "Girlfriend birthday", description: "Remember or die!", startDate: NSDate(), endDate: NSDate())*/
-
-/*      MUST IMPORT 'EventKit'
+/* CODE TO ADD CALENDAR EVENT, EXAMPLE FUNCTION CALL: addEventToCalendar(title: "Girlfriend birthday", description: "Remember or die!", startDate: NSDate(), endDate: NSDate())
+	http://stackoverflow.com/questions/28379603/how-to-add-an-event-in-the-device-calendar-using-swift
+	MUST IMPORT 'EventKit' 
 func addEventToCalendar(title title: String, description: String?, startDate: NSDate, endDate: NSDate, completion: ((success: Bool, error: NSError?) -> Void)? = nil) {
 	let eventStore = EKEventStore()
 
