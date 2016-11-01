@@ -36,16 +36,20 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     
     @IBOutlet weak var ingredientTable: UITableView!
     
+//    @IBOutlet var ingredientTable: UITableView!
+    
     
     @IBAction func addIngrs(_ sender: AnyObject) {
         self.ingredientTable.beginUpdates()
         print(ingrName.text)
         test.append(ingrName.text!)
-        print(test)
-        ingredientTable.beginUpdates()
+        //ingredientTable.beginUpdates()
         ingredientTable.insertRows(at: [
             NSIndexPath(row: test.count-1, section: 0) as IndexPath
             ], with: .automatic)
+        
+        print(test)
+        //
         //ingredientTable.endUpdates()
         //let newIndexPath = NSIndexPath(row: test.count, section: 0)
         //self.ingredientTable.insertRows(at: [newIndexPath as IndexPath], with: .automatic)
@@ -53,7 +57,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 //            self.ingredientTable.reloadData()
 //        }
         
-        ingrName.text=""
+        //ingrName.text=""
         self.ingredientTable.endUpdates()
     }
 
@@ -63,6 +67,8 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         recipeTitle.delegate = self
+        self.ingredientTable.delegate = self
+        self.ingredientTable.dataSource = self
         //self.ingredientTable.delegate = self
         //self.ingredientTable.datasource = self
         //checkValidRecipeName()
@@ -72,17 +78,29 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 //    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 //        return 1
 //    }
+    
+     func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return test.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = ingredientTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath as IndexPath) as! IngredientTableViewCell
+        let cell = ingredientTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath) as! IngredientTableViewCell
             
         let row = indexPath.row
-        cell.ingrLabel.text = test[row]
-            
+        print(test[row])
+        var label = cell.ingrLabel
+        label!.text = test[row]
+//        if let label = cell.ingrLabel   {
+//            label.text = test[row]
+//            print(label.text)
+//        }
+//        print(cell.ingrLabel.text)
+       // cell.ingrLabel.text = test[row]
+//        print(cell.ingrLabel.text)
         return cell
     }
 
