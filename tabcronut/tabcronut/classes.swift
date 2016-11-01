@@ -127,9 +127,12 @@ class Recipe
 	// Params:   newName is a string the change the recipe name to 
 	// Modifies: name
 	// Effects:  name is changed to newName 
-	func rename(newName: String) 
+	// Returns:  true if successful, else false
+	func rename(newName: String) -> Bool
 	{
+		if newName == nil || newName == "" {return false}
 		name = newName
+		return true
 	}
 
 	// Changes the picture associated with a recipe
@@ -150,6 +153,7 @@ class Recipe
 	// Returns:  true if the information was added, else false 
 	func addIngredient(ingredient: String, amount: Float, measurement: String) -> Bool
 	{
+		if ingredient == nil || ingredient == "" || amount == nil || amount == 0 || unit == nil || unit == "" {return false}
 		if ingredients[ingredient] != nil
 		{
 			return false
@@ -209,11 +213,12 @@ class Recipe
 			return false
 		}
 
-		if index1 == nil
+		if index1 == nil || index1 < 0
 		{
 			directions.append(direction)
 			return true
 		}
+		
 		directions.insert(direction, at: index1!)
 		return true
 	}
@@ -225,7 +230,6 @@ class Recipe
 	// Returns:  true if the information was removed, else false 
 	func removeDirection(direction: String) -> Bool
 	{
-		
 		if directions.contains(direction)
 		{
 			let index = directions.index(of: direction)
@@ -244,7 +248,7 @@ class Recipe
 	// Returns:  true if the information was added, else false 
 	func changeDirection(direction: String, newDirection: String) -> Bool
 	{
-		
+		if newDirection == nil || newDirection == "" {return false}
 		if directions.contains(direction)
 		{
 			let index = directions.index(of: direction)
@@ -316,9 +320,10 @@ class User: NSObject, NSCoding
 	//			 unit is the measurement type of the amount, such as cup/kilogram/litre 
 	// Modifies: groceries
 	// Effects:  a new key-value pair is added to the grocery map
-	// Returns:  false if the item was already in the map, otherwise true
+	// Returns:  false if the item was already in the map or one of the arguments is invalid, otherwise true
 	func addGrocery(ingredient: String, amount: Float, unit: String) -> Bool
 	{
+		if ingredient == nil || ingredient == "" || amount == nil || amount == 0 || unit == nil || unit == "" {return false}
 		if groceries[ingredient] != nil
 		{
 			/* 
@@ -344,6 +349,7 @@ class User: NSObject, NSCoding
 	// Returns:  true if the item was removed, otherwise false
 	func removeGrocery(ingredient: String) -> Bool
 	{
+		if ingredient == nil || ingredient == "" {return false}
 		if groceries[ingredient] == nil {return false}
 		groceries[ingredient] = nil 
 		return true
@@ -358,12 +364,13 @@ class User: NSObject, NSCoding
 	// Returns:  false if the item was already in the map, otherwise true
 	func addInventory(ingredient: String, amount: Float, unit: String) -> Bool
 	{
+		if ingredient == nil || ingredient == "" || amount == nil || amount == 0 || unit == nil || unit == "" {return false}
 		if inventory[ingredient] != nil
 		{
 			/* 
 
 			Should we then skip adding? Prompt the user to choose a new amount/measurement and 
-			then call removeGrocery followed by addGrocery again?
+			then call removeInventory followed by addInventory again?
 
 			*/
 			return false
@@ -383,6 +390,7 @@ class User: NSObject, NSCoding
 	// Returns:  true if the item was removed, otherwise false
 	func removeInventory(ingredient: String) -> Bool
 	{
+		if ingredient == nil || ingredient == "" {return false}
 		if inventory[ingredient] == nil {return false}
 		inventory[ingredient] = nil 
 		return true
