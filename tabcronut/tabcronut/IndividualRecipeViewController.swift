@@ -8,9 +8,11 @@
 
 import UIKit
 
-class IndividualRecipeViewController: UIViewController {
+class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var recipeTitle: String = ""
+    
+    @IBOutlet weak var ingrTable: UITableView!
     
     var passedValue: Recipe?
     
@@ -37,9 +39,11 @@ class IndividualRecipeViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        print("here")
+        self.ingrTable.delegate = self
+        self.ingrTable.dataSource = self
         title = self.passedValue?.name
         print(self.passedValue?.name)
+        print(self.passedValue?.ingredients)
 
         // Do any additional setup after loading the view.
     }
@@ -47,6 +51,29 @@ class IndividualRecipeViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (self.passedValue?.ingredients.count)!
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = ingrTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath) as! IngredientTableViewCell
+        
+        let row = indexPath.row
+        let ingreds = self.passedValue?.ingredients
+        let ingredientNames = [String](ingreds!.keys)
+        let ingredientValues = [(Float, String)](ingreds!.values)
+        
+        print(ingredientNames[row])
+        cell.ingrLabel2.text = String(ingredientNames[row])
+        cell.ingrAmount2.text = String(ingredientValues[row].0)
+        cell.ingrUnit2.text = ingredientValues[row].1
+        return cell
     }
     
 

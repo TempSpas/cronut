@@ -25,11 +25,16 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 
     // MARK: Properties
     
-    //var ingredients: [String: (Float, String)]
+    var ingredients: [String: (Float, String)] = [:]
     var test: [String] = []
+    var temp_ingredient: String = ""
+    var temp_amount: Float = 0.0
+    var temp_unit: String = ""
     
     
     @IBOutlet weak var ingrName: UITextField!
+    @IBOutlet weak var ingrAmt: UITextField!
+    @IBOutlet weak var ingrUnit: UITextField!
     
     @IBOutlet weak var recipeTitle: UITextField!
     @IBOutlet weak var saveRecipeButton: UIBarButtonItem!
@@ -42,13 +47,14 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     @IBAction func addIngrs(_ sender: AnyObject) {
         self.ingredientTable.beginUpdates()
         print(ingrName.text)
-        test.append(ingrName.text!)
+        //test.append(ingrName.text!)
+        ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
         //ingredientTable.beginUpdates()
         ingredientTable.insertRows(at: [
-            NSIndexPath(row: test.count-1, section: 0) as IndexPath
-            ], with: .automatic)
+            NSIndexPath(row: ingredients.count-1, section: 0) as IndexPath
+            ], with: .bottom)
         
-        print(test)
+        print(ingredients)
         //
         //ingredientTable.endUpdates()
         //let newIndexPath = NSIndexPath(row: test.count, section: 0)
@@ -56,8 +62,12 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 //        DispatchQueue.main.async {
 //            self.ingredientTable.reloadData()
 //        }
-        
-        //ingrName.text=""
+        temp_ingredient = ingrName.text!
+        temp_amount = Float(ingrAmt.text!)!
+        temp_unit = ingrUnit.text!
+        ingrName.text=""
+        ingrAmt.text=""
+        ingrUnit.text=""
         self.ingredientTable.endUpdates()
     }
 
@@ -83,17 +93,42 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return test.count
+        return ingredients.count
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = ingredientTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath) as! IngredientTableViewCell
             
+        print(indexPath)
         let row = indexPath.row
-        print(test[row])
-        var label = cell.ingrLabel
-        label!.text = test[row]
+        let ingredientNames = [String](ingredients.keys)
+        let ingredientValues = [(Float, String)](ingredients.values)
+        
+        print(ingredientNames[row])
+        
+        cell.ingrLabel.text = temp_ingredient
+        cell.ingrAmount.text = String(temp_amount)
+        cell.ingrUnit.text = temp_unit
+        
+        temp_ingredient = ""
+        temp_amount = 0.0
+        temp_unit = ""
+        
+//        cell.ingrLabel.text = ingredientNames[row]
+//        cell.ingrAmount.text = String(ingredientValues[row].0)
+//        cell.ingrUnit.text = ingredientValues[row].1
+        
+        
+        //let ingredient = ingredients[row]
+        
+//        print(test[row])
+//        let label = cell.ingrLabel
+//        label!.text = test[row]
+        
+        //cell.ingrLabel.text = ingredient[row][
+        
+        
 //        if let label = cell.ingrLabel   {
 //            label.text = test[row]
 //            print(label.text)
@@ -155,7 +190,10 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         {
             let title = recipeTitle.text
             recipe = Recipe(title: title!)
+            recipe?.ingredients = ingredients
             recipeTitle.text=""
+            ingredients.removeAll()
+            self.ingredientTable.reloadData()
         }
         
     }
