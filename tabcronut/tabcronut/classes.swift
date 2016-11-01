@@ -217,6 +217,43 @@ class Recipe
 		directions.insert(direction, at: index1!)
 		return true
 	}
+
+	// Removes a direction from this ingredient object
+	// Params:   direction is a string to be removed from the directions array 
+	// Modifies: directions
+	// Effects:  directions has the direction removed from it
+	// Returns:  true if the information was removed, else false 
+	func removeDirection(direction: String) -> Bool
+	{
+		
+		if directions.contains(direction)
+		{
+			let index = directions.index(of: direction)
+			directions.remove(at: index)
+			return true
+		}
+
+		return false
+	}
+
+	// Changes a direction in this ingredient object
+	// Params:   direction is a string to be changed in the directions array 
+	//           newDirection is the direction to take its place
+	// Modifies: directions
+	// Effects:  directions has the element direction changed to newDirection
+	// Returns:  true if the information was added, else false 
+	func changeDirection(direction: String, newDirection: String) -> Bool
+	{
+		
+		if directions.contains(direction)
+		{
+			let index = directions.index(of: direction)
+			directions[index] = newDirection
+			return true
+		}
+
+		return false
+	}
 }
 
 extension Recipe: Equatable {}
@@ -371,6 +408,7 @@ class User: NSObject, NSCoding
 //class Scanner 
 //{
 //    /* Code from the internet, URL: https://github.com/A9T9/code-snippets/blob/master/ocrapi.swift */
+//	let key = 4de28eea7e88957
 //
 //    func callOCRSpace() {
 //        // Create URL request
