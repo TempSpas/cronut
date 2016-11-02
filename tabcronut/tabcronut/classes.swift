@@ -153,7 +153,7 @@ class Recipe
 	// Returns:  true if the information was added, else false 
 	func addIngredient(ingredient: String, amount: Float, measurement: String) -> Bool
 	{
-		if ingredient == nil || ingredient == "" || amount == nil || amount == 0 || unit == nil || unit == "" {return false}
+		if ingredient == nil || ingredient == "" || amount == nil || amount == 0 || measurement == nil || measurement == "" {return false}
 		if ingredients[ingredient] != nil
 		{
 			return false
@@ -213,7 +213,7 @@ class Recipe
 			return false
 		}
 
-		if index1 == nil || index1 < 0
+		if index1 == nil || index1! < 0
 		{
 			directions.append(direction)
 			return true
@@ -233,7 +233,7 @@ class Recipe
 		if directions.contains(direction)
 		{
 			let index = directions.index(of: direction)
-			directions.remove(at: index)
+			directions.remove(at: index!)
 			return true
 		}
 
@@ -252,7 +252,7 @@ class Recipe
 		if directions.contains(direction)
 		{
 			let index = directions.index(of: direction)
-			directions[index] = newDirection
+			directions[index!] = newDirection
 			return true
 		}
 
