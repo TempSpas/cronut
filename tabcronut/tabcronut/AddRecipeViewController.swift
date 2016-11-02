@@ -76,6 +76,8 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let scrollView = UIScrollView(frame: view.bounds)
+        scrollView.backgroundColor = UIColor.black
         recipeTitle.delegate = self
         self.ingredientTable.delegate = self
         self.ingredientTable.dataSource = self
