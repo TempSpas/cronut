@@ -8,9 +8,12 @@
 
 import UIKit
 
-class IndividualRecipeViewController: UIViewController {
+class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var recipeTitle: String = ""
+    
+    @IBOutlet weak var ingrTable: UITableView!
+    @IBOutlet weak var dirTable: UITableView!
     
     var passedValue: Recipe?
     
@@ -37,9 +40,13 @@ class IndividualRecipeViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        print("here")
+        self.ingrTable.delegate = self
+        self.ingrTable.dataSource = self
+        self.dirTable.delegate = self
+        self.dirTable.dataSource = self
         title = self.passedValue?.name
         print(self.passedValue?.name)
+        print(self.passedValue?.ingredients)
 
         // Do any additional setup after loading the view.
     }
@@ -47,6 +54,46 @@ class IndividualRecipeViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count:Int?
+        if tableView == self.ingrTable  {
+            return (self.passedValue?.ingredients.count)!
+        }
+        if tableView == self.dirTable   {
+            return (self.passedValue?.directions.count)!
+        }
+        return count!
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell1: UITableViewCell?
+        if tableView == self.ingrTable  {
+            let cell = ingrTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath) as! IngredientTableViewCell
+            
+            let row = indexPath.row
+            let ingreds = self.passedValue?.ingredients
+            let ingredientNames = [String](ingreds!.keys)
+            let ingredientValues = [(Float, String)](ingreds!.values)
+            
+            print(ingredientNames[row])
+            cell.ingrLabel2.text = String(ingredientNames[row])
+            cell.ingrAmount2.text = String(ingredientValues[row].0)
+            cell.ingrUnit2.text = ingredientValues[row].1
+            return cell
+        }
+        if tableView == self.dirTable   {
+            let cell = dirTable.dequeueReusableCell(withIdentifier: "DirCell", for: indexPath) as! DirectionTableViewCell
+            let row = indexPath.row
+            let dirs = self.passedValue?.directions
+            cell.directionName2.text = dirs![row]
+            return cell
+        }
+        return cell1!
     }
     
 

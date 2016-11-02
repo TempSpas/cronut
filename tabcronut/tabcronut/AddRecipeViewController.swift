@@ -8,21 +8,178 @@
 
 import UIKit
 
-class AddRecipeViewController: UIViewController, UITextFieldDelegate {
+class AddRecipeViewController: //UITableViewController, UITextFieldDelegate {
+UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+    var numRows = 1
+//    @available(iOS 2.0, *)
+//    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+//        return cell
+//    }
+//
+//    @available(iOS 2.0, *)
+//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 1
+//    }
+
 
     // MARK: Properties
+    
+    var ingredients: [String: (Float, String)] = [:]
+    var directions: [String] = []
+    var test: [String] = []
+    var temp_ingredient: String = ""
+    var temp_amount: Float = 0.0
+    var temp_unit: String = ""
+    
+    
+    @IBOutlet weak var ingrName: UITextField!
+    @IBOutlet weak var ingrAmt: UITextField!
+    @IBOutlet weak var ingrUnit: UITextField!
     
     @IBOutlet weak var recipeTitle: UITextField!
     @IBOutlet weak var saveRecipeButton: UIBarButtonItem!
     
+    @IBOutlet weak var ingredientTable: UITableView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    
+    @IBOutlet weak var direction: UITextField!
+    
+    @IBOutlet weak var directionTable: UITableView!
+    
+    
+//    @IBOutlet var ingredientTable: UITableView!
+    
+    
+    @IBAction func addIngrs(_ sender: AnyObject) {
+        self.ingredientTable.beginUpdates()
+        print(ingrName.text)
+        //test.append(ingrName.text!)
+        ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
+        //ingredientTable.beginUpdates()
+        ingredientTable.insertRows(at: [
+            NSIndexPath(row: ingredients.count-1, section: 0) as IndexPath
+            ], with: .bottom)
+        
+        print(ingredients)
+        temp_ingredient = ingrName.text!
+        temp_amount = Float(ingrAmt.text!)!
+        temp_unit = ingrUnit.text!
+        ingrName.text=""
+        ingrAmt.text=""
+        ingrUnit.text=""
+        self.ingredientTable.endUpdates()
+    }
+    
+    
+    @IBAction func addDirection(_ sender: AnyObject) {
+        self.directionTable.beginUpdates()
+        directions.append(direction.text!)
+        print(direction.text)
+        //directions.append()
+        //print(ingrName.text)
+        //test.append(ingrName.text!)
+        //direction[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
+        //ingredientTable.beginUpdates()
+        directionTable.insertRows(at: [
+            NSIndexPath(row: directions.count-1, section: 0) as IndexPath
+            ], with: .bottom)
+        direction.text=""
+        self.directionTable.endUpdates()
+    }
+
+
     var recipe: Recipe?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollView.contentSize.height = 1000
+        
         recipeTitle.delegate = self
+        self.ingredientTable.delegate = self
+        self.ingredientTable.dataSource = self
+        self.directionTable.delegate = self
+        self.directionTable.dataSource = self
+        //self.ingredientTable.delegate = self
+        //self.ingredientTable.datasource = self
         //checkValidRecipeName()
         // Do any additional setup after loading the view.
+    }
+    
+//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//        return 1
+//    }
+    
+     func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count: Int?
+        if tableView == self.ingredientTable {
+            return ingredients.count
+        }
+        if tableView == self.directionTable{
+            return directions.count
+        }
+        return count!
+    }
+    
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        var cell1: UITableViewCell?
+        
+        if tableView == self.ingredientTable    {
+            let cell = ingredientTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath) as! IngredientTableViewCell
+            
+            print(indexPath)
+            let row = indexPath.row
+            let ingredientNames = [String](ingredients.keys)
+            let ingredientValues = [(Float, String)](ingredients.values)
+            
+            print(ingredientNames[row])
+            
+            cell.ingrLabel.text = temp_ingredient
+            cell.ingrAmount.text = String(temp_amount)
+            cell.ingrUnit.text = temp_unit
+            
+            temp_ingredient = ""
+            temp_amount = 0.0
+            temp_unit = ""
+            return cell
+        }
+        if tableView == self.directionTable    {
+            let cell = directionTable.dequeueReusableCell(withIdentifier: "DirCell", for: indexPath) as! DirectionTableViewCell
+            let row = indexPath.row
+            cell.directionName.text = directions[row]
+            return cell
+        }
+        return cell1!
+        
+        
+//        cell.ingrLabel.text = ingredientNames[row]
+//        cell.ingrAmount.text = String(ingredientValues[row].0)
+//        cell.ingrUnit.text = ingredientValues[row].1
+        
+        
+        //let ingredient = ingredients[row]
+        
+//        print(test[row])
+//        let label = cell.ingrLabel
+//        label!.text = test[row]
+        
+        //cell.ingrLabel.text = ingredient[row][
+        
+        
+//        if let label = cell.ingrLabel   {
+//            label.text = test[row]
+//            print(label.text)
+//        }
+//        print(cell.ingrLabel.text)
+       // cell.ingrLabel.text = test[row]
+//        print(cell.ingrLabel.text)
+        
     }
 
 
@@ -33,9 +190,32 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            if tableView == self.ingredientTable    {
+                let currentCell = tableView.cellForRow(at: indexPath)! as! IngredientTableViewCell
+                print(currentCell.ingrLabel.text)
+                ingredients.removeValue(forKey: currentCell.ingrLabel.text!)
+                //print(ingredients(at: indexPath.row))
+                //ingredients.remove(at: indexPath.row)
+                ingredientTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            if tableView == self.directionTable {
+                directions.remove(at: indexPath.row)
+                directionTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            //add code here for when you hit delete
+        }
     }
     
 //    func textFieldDidEndEditing(textField: UITextField) {
@@ -62,6 +242,14 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func cancelRecipe(_ sender: UIBarButtonItem) {
         recipeTitle.text = ""
+        ingrName.text = ""
+        ingrAmt.text = ""
+        ingrUnit.text = ""
+        direction.text = ""
+        ingredients.removeAll()
+        directions.removeAll()
+        self.ingredientTable.reloadData()
+        self.directionTable.reloadData()
 //        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
 //        
 //        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "RecipeTableViewController") as! RecipeTableViewController
@@ -76,7 +264,14 @@ class AddRecipeViewController: UIViewController, UITextFieldDelegate {
         {
             let title = recipeTitle.text
             recipe = Recipe(title: title!)
+            recipe?.ingredients = ingredients
+            recipe?.directions = directions
             recipeTitle.text=""
+            ingredients.removeAll()
+            directions.removeAll()
+            self.ingredientTable.reloadData()
+            self.directionTable.reloadData()
         }
+        
     }
 }

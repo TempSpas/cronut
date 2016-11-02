@@ -11,22 +11,22 @@ import MapKit
 
 class ThirdViewController: UIViewController {
 
+
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // set initial location in Honolulu
-        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788)
+        mapView.showsUserLocation = true
+    }
+    
+    
+    @IBAction func currentLoc(_ sender: AnyObject) {
+        let userLocation = mapView.userLocation
         
-        let regionRadius: CLLocationDistance = 1000
-        func centerMapOnLocation(location: CLLocation) {
-            let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                      regionRadius * 2.0, regionRadius * 2.0)
-            mapView.setRegion(coordinateRegion, animated: true)
-        }
+        let region = MKCoordinateRegionMakeWithDistance((userLocation.location?.coordinate)!, 2000, 2000)
         
-        centerMapOnLocation(location: initialLocation)
+        mapView.setRegion(region, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
