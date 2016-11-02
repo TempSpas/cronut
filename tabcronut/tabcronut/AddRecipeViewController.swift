@@ -195,6 +195,29 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         return true
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            if tableView == self.ingredientTable    {
+                let currentCell = tableView.cellForRow(at: indexPath)! as! IngredientTableViewCell
+                print(currentCell.ingrLabel.text)
+                ingredients.removeValue(forKey: currentCell.ingrLabel.text!)
+                //print(ingredients(at: indexPath.row))
+                //ingredients.remove(at: indexPath.row)
+                ingredientTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            if tableView == self.directionTable {
+                directions.remove(at: indexPath.row)
+                directionTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            //add code here for when you hit delete
+        }
+    }
+    
 //    func textFieldDidEndEditing(textField: UITextField) {
 //        checkValidRecipeName()
 //        print(saveRecipeButton.isEnabled)
