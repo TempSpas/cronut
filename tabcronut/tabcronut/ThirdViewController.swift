@@ -18,6 +18,7 @@ class ThirdViewController: UIViewController {
         super.viewDidLoad()
 
         mapView.showsUserLocation = true
+        
     }
     
     
