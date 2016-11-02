@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Hey, need to use your calendar.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Yo, need to use your reminder. Do you have a problem with that?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This information is required to show your current location.</string>
 	<key>CFBundleDevelopmentRegion</key>

@@ -202,6 +202,22 @@
                                     <outlet property="delegate" destination="O44-if-xGu" id="atT-Gp-QnU"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MT1-3O-LcK">
+                                <frame key="frameInset" minX="197" minY="379" width="79" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Event"/>
+                                <connections>
+                                    <action selector="addEvent:" destination="O44-if-xGu" eventType="touchUpInside" id="xhZ-Kt-ttb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B4I-P4-h5E">
+                                <frame key="frameInset" minX="183" minY="407" width="106" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Remove Event"/>
+                                <connections>
+                                    <action selector="removeEvent:" destination="O44-if-xGu" eventType="touchUpInside" id="gi6-AZ-q2f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

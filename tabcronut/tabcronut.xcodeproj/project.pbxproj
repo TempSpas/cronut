@@ -238,6 +238,7 @@
 				TargetAttributes = {
 					BA1EFE021DB69843009E892A = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = KU77FPUE8Z;
 						ProvisioningStyle = Automatic;
 					};
 					BA1EFE181DB69843009E892A = {
@@ -468,7 +469,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KU77FPUE8Z;
 				INFOPLIST_FILE = tabcronut/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.cs.tabcronut;
@@ -481,7 +482,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KU77FPUE8Z;
 				INFOPLIST_FILE = tabcronut/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.cs.tabcronut;
