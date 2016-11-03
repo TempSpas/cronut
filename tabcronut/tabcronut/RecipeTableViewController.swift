@@ -147,10 +147,10 @@ class RecipeTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("here?")
-        print(segue.identifier)
+        //print("here?")
+        //print(segue.identifier)
         if segue.identifier == "viewDetails" {
-            print("here!")
+            //print("here!")
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 let recipe = recipes[indexPath.row]
                 //let row = self.table.indexPathForSelectedRow?.row
@@ -167,6 +167,7 @@ class RecipeTableViewController: UITableViewController {
                
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
+                self.table.reloadData()
             }
         }
     }
@@ -220,4 +221,15 @@ class RecipeTableViewController: UITableViewController {
     // {
     //     return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURl.path!) as? User
     // }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

@@ -153,11 +153,25 @@ class Recipe
 	// Returns:  true if the information was added, else false 
 	func addIngredient(ingredient: String, amount: Float, measurement: String) -> Bool
 	{
-		if ingredient == nil || ingredient == "" || amount == nil || amount == 0 || measurement == nil || measurement == "" {return false}
+        //if ingredient == ""    { return false }
+        
+        if ingredient == nil || ingredient == "" || amount == nil || amount == 0 || measurement == nil || measurement == "" {return false}
 		if ingredients[ingredient] != nil
 		{
 			return false
 		}
+//        if amount == nil && measurement == nil  {
+//            //ingredients[ingredient] = (Float(nil!)!,"")
+//        }
+//        else if measurement == nil {
+//            ingredients[ingredient] = (amount!,"")
+//        }
+//        else if amount != nil && measurement != nil{
+//            ingredients[ingredient] = (amount!, measurement!)
+//        }
+//        else{
+//            return false
+//        }
 		ingredients[ingredient] = (amount, measurement)
 		return true
 	}

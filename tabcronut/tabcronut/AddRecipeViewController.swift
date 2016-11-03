@@ -25,6 +25,11 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 
     // MARK: Properties
     
+    var pre_title: String?
+    var pre_ingredients: [String: (Float, String)]?
+    var pre_directions: [String]?
+    var numIngrs: Int?
+    
     var ingredients: [String: (Float, String)] = [:]
     var directions: [String] = []
     var test: [String] = []
@@ -96,8 +101,21 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.contentSize.height = 1000
+        self.hideKeyboardWhenTappedAround()
+        
+        if pre_ingredients != nil   {
+            ingredients = pre_ingredients!
+        }
+        if pre_directions != nil    {
+            directions = pre_directions!
+        }
         
         recipeTitle.delegate = self
+        
+        if pre_title != nil {
+            self.recipeTitle.text = pre_title!
+        }
+        
         self.ingredientTable.delegate = self
         self.ingredientTable.dataSource = self
         self.directionTable.delegate = self
@@ -139,6 +157,13 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             let ingredientValues = [(Float, String)](ingredients.values)
             
             print(ingredientNames[row])
+            if numIngrs != nil && numIngrs == ingredients.count {
+                cell.ingrLabel.text = String(ingredientNames[row])
+                cell.ingrAmount.text = String(ingredientValues[row].0)
+                cell.ingrUnit.text = ingredientValues[row].1
+                return cell
+            }
+            
             
             cell.ingrLabel.text = temp_ingredient
             cell.ingrAmount.text = String(temp_amount)

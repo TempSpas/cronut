@@ -33,6 +33,11 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
 //        }
 //    }
 
+
+   
+    @IBOutlet weak var exportRecipe: UIButton!
+    @IBOutlet weak var editRecipe: UIButton!
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
@@ -97,14 +102,53 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "editRecipeSegue" {
+            print("H E R E ")
+            let controller = (segue.destination as! EditRecipeViewController)
+            let recipe = passedValue
+            controller.recipeValue = recipe
+            controller.numIngreds = recipe?.ingredients.count
+            controller.numDirs = recipe?.directions.count
+//            controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+//            controller.navigationItem.leftItemsSupplementBackButton = true
+        
+        }
+        if segue.identifier == "addRecipeSegue"  {
+            let controller = (segue.destination as! AddRecipeViewController)
+            let recipe = passedValue
+            controller.pre_title = (recipe?.name)! + " copy"
+            controller.pre_ingredients = recipe?.ingredients
+            controller.pre_directions = recipe?.directions
+            controller.numIngrs = recipe?.ingredients.count
+            
+        }
     }
-    */
+    
+    
+    
+    
+    @IBAction func unwindToIndividualRecipe(sender: UIStoryboardSegue)
+    {
+        if let sourceViewController = sender.source as? EditRecipeViewController, let r = sourceViewController.recipeValue
+        {
+            //let newIndexPath = NSIndexPath(row: recipes.count, section: 0)
+            //recipes.append(r)
+            passedValue = r
+            ingrTable.reloadData()
+            dirTable.reloadData()
+            self.title = r.name
+            //tableView.insertRows(at: [newIndexPath as IndexPath], with: .bottom)
+            
+            
+        }
+    }
+    
 
 }
