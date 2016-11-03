@@ -1,6 +1,10 @@
 //
 //  IndividualRecipeViewController.swift
 //  tabcronut
+// 
+//  This file represents the detail view of the screen
+//  when the user taps one of their recipes. The code displays
+//  thhe ingredients and directions.
 //
 //  Created by Aditi Nataraj on 10/27/16.
 //  Copyright © 2016 Cronut LLC. All rights reserved.
@@ -35,8 +39,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
 //        }
 //    }
 
-
-   
     @IBOutlet weak var exportRecipe: UIButton!
     @IBOutlet weak var editRecipe: UIButton!
     
@@ -44,6 +46,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         super.init(coder: aDecoder)!
     }
     
+    // Loads view controller
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -66,6 +69,9 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
+    // Loads correct number of rows in each table based on number of ingredients
+    // and directions in the recipe.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count:Int?
         if tableView == self.ingrTable  {
@@ -77,6 +83,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         return count!
     }
     
+    // Sets up cell values for ingredient and direction tables
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell1: UITableViewCell?
         if tableView == self.ingrTable  {
@@ -105,7 +112,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     
     
     // Creates an event in the EKEventStore. The method assumes the eventStore is created and
-    // accessible
+    // accessible.
     func createEvent(_ eventStore: EKEventStore, title: String, startDate: Date, endDate: Date) {
         
         let alertController = UIAlertController(title: "Add Reminder", message: "Fill the form and take a seat! Next!", preferredStyle: .alert)
@@ -139,7 +146,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
                 try eventStore.save(event, span: .thisEvent)
                 self.savedEventId = event.eventIdentifier
             } catch {
-                print("Bad things happened")
+                print("Bad things happened") // You bethca!
             }
             
             let alertController = UIAlertController(title: "Just to let you know", message: "Reminder was added successfully, yay!", preferredStyle: .alert)
@@ -198,8 +205,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         let startDate = Date()
         let endDate = startDate.addingTimeInterval(60 * 60) // One hour
         
-        
-        
+        // Checks for user permission to access iOS calendar.
         if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
             eventStore.requestAccess(to: .event, completion: {
                 granted, error in
@@ -243,7 +249,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "editRecipeSegue" {
-            print("H E R E ")
             let controller = (segue.destination as! EditRecipeViewController)
             let recipe = passedValue
             controller.recipeValue = recipe
@@ -264,9 +269,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    
-    
-    
+    // Receives values after the user edits the recipes.
     @IBAction func unwindToIndividualRecipe(sender: UIStoryboardSegue)
     {
         if let sourceViewController = sender.source as? EditRecipeViewController, let r = sourceViewController.recipeValue
@@ -279,9 +282,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             self.title = r.name
             //tableView.insertRows(at: [newIndexPath as IndexPath], with: .bottom)
             
-            
         }
     }
-    
-
 }

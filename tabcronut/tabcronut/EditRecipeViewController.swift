@@ -89,6 +89,9 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         return count!
     }
     
+    
+    // Prepopulates text fields in both the ingredient table and
+    // direction table.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell1: UITableViewCell?
         if tableView == self.ingrTable  {
@@ -96,6 +99,8 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             //recipeValue?.modIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!), measurement: cell.ingrUnit.text)
             let row = indexPath.row
             let ingreds = self.recipeValue?.ingredients
+            
+            // Fill with blanks
             if numIngreds! > (self.recipeValue?.ingredients.count)!    {
                 cell.ingrName.text = ""
                 cell.ingrAmt.text = ""
@@ -160,7 +165,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Function that saves recipe changes
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -173,6 +178,8 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             let ingreds = self.recipeValue?.ingredients
             let ingredientNames = [String](ingreds!.keys)
             var workingKeys: [String] = []
+            
+            // Saves information to the ingredient table
             if r != 0   {
                 for index in 0...(r-1)  {
                     let iPath = IndexPath(row: index, section: 0)
@@ -206,7 +213,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             
-            
+            // Saves information to the direction table
             let d = dirTable.numberOfRows(inSection: 0)
             let dirs = self.recipeValue?.directions
             if d != 0   {
