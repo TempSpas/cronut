@@ -195,7 +195,18 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                         workingKeys.append(cell.ingrName.text!)
                     }
                     else  {
-                        self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!)!, measurement: cell.ingrUnit.text!)
+                        if cell.ingrAmt.text == "" && cell.ingrUnit.text == ""  {
+                            self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(0), measurement: "")
+                        }
+                        else if cell.ingrAmt.text != "" && cell.ingrUnit.text == ""  {
+                            self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!)!, measurement: "")
+                        }
+                        else if cell.ingrAmt.text == "" && cell.ingrUnit.text != ""  {
+                            continue
+                        }
+                        else    {
+                            self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!)!, measurement: cell.ingrUnit.text!)
+                        }
                         workingKeys.append(cell.ingrName.text!)
                     }
                 }

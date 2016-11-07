@@ -158,7 +158,7 @@ class Recipe
 		{
 			return false
 		}
-		ingredients[ingredient] = (amount, measurement)
+		ingredients[ingredient] = (amount!, measurement!)
 		return true
 	}
 
@@ -213,7 +213,7 @@ class Recipe
 			return false
 		}
 
-		if index1 == nil || index1 < 0
+		if index1 == nil || index1! < 0
 		{
 			directions.append(direction)
 			return true
@@ -233,7 +233,7 @@ class Recipe
 		if directions.contains(direction)
 		{
 			let index = directions.index(of: direction)
-			directions.remove(at: index)
+			directions.remove(at: index!)
 			return true
 		}
 
@@ -252,7 +252,7 @@ class Recipe
 		if directions.contains(direction)
 		{
 			let index = directions.index(of: direction)
-			directions[index] = newDirection
+			directions[index!] = newDirection
 			return true
 		}
 
@@ -337,7 +337,7 @@ class User: NSObject, NSCoding
 
 		else
 		{
-			groceries[ingredient] = (amount, unit)
+			groceries[ingredient] = (amount!, unit!)
 			return true
 		}
 	}
@@ -381,7 +381,7 @@ class User: NSObject, NSCoding
 
 		else
 		{
-			inventory[ingredient] = (amount, unit)
+			inventory[ingredient] = (amount!, unit!)
 			return true
 		}
 	}
