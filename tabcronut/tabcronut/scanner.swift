@@ -46,8 +46,10 @@
 
 //         // Image file and parameters, get image down to 1MB file size
 //         var compressionRatio = 1
+//         var imageData: NSData
+
 //         do {
-//             var imageData: NSData = UIImageJPEGRepresentation(UIImage.imageNamed(imageName), compressionRatio)
+//             imageData = UIImageJPEGRepresentation(UIImage.imageNamed(imageName), compressionRatio)
 //             compressionRatio = compressionRatio - .05
 //         } while(imageData.length >= 1024)
 
@@ -75,8 +77,9 @@
 //            body.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding))
 //            body.appendData("Content-Disposition: form-data; name=\"\("file")\"; filename=\"\(filename)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding))
 //            body.appendData("Content-Type: image/jpeg\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding))
-//            body.appendData(data)
-//            body.appendData(".dataUsingEncoding(NSUTF8StringEncoding))
+            // body.appendData(data)
+            // body.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)) 
+
 //        }
        
 //        for key in parameters.allKeys {
