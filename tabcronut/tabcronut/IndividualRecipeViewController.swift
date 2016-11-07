@@ -40,6 +40,49 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var exportRecipe: UIButton!
     @IBOutlet weak var editRecipe: UIButton!
     
+    
+    @IBAction func modRecipe(_ sender: AnyObject) {
+        let alertController = UIAlertController(title: "Mod Recipe", message: "Write the factor by which you want to modify this recipe", preferredStyle: .alert)
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
+            //This is called when the user presses the cancel button.
+            print("You've pressed the cancel button");
+        }
+        let actionOK = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+            //This is called when the user presses the login button.
+            let textTitle = alertController.textFields![0] as UITextField;
+            //print(textTitle.text);
+            if textTitle.text != "" {
+                self.changeRecipe(factor: Float(textTitle.text!)!);
+            }
+        }
+        alertController.addTextField { (textField) -> Void in
+                //Configure the attributes of the first text box.
+            textField.placeholder = "1.5"
+        }
+        //Add the buttons
+        alertController.addAction(actionCancel)
+        alertController.addAction(actionOK)
+        
+        //Present the alert controller
+        self.present(alertController, animated: true, completion:nil)
+        
+
+    }
+    
+    func changeRecipe(factor: Float) {
+        if (self.passedValue?.ingredients.count)! > 0   {
+            let ingreds = self.passedValue?.ingredients
+            let ingr_list = [String](ingreds!.keys)
+            for index in 0...(ingr_list.count-1)   {
+                print("here");
+                let curr = ingr_list[index]
+                self.passedValue?.ingredients[curr]?.0 = factor*(self.passedValue?.ingredients[curr]?.0)!
+                ingrTable.reloadData()
+            }
+            
+        }
+    }
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
