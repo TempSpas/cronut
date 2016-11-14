@@ -9,7 +9,7 @@
 import UIKit
 
 class AddRecipeViewController: //UITableViewController, UITextFieldDelegate {
-UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var numRows = 1
 //    @available(iOS 2.0, *)
 //    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -24,6 +24,8 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 
 
     // MARK: Properties
+    
+    let picker = UIImagePickerController()
     
     var pre_title: String?
     var pre_ingredients: [String: (Float, String)]?
@@ -53,6 +55,38 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var direction: UITextField!
     
     @IBOutlet weak var directionTable: UITableView!
+    
+    @IBAction func addPhoto(_ sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+            //var imagePicker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+            picker.allowsEditing = true
+            self.present(picker, animated: true, completion: nil)
+            //let chosenImage = [UIImagePickerControllerOriginalImage]
+            Scanner.callOCRSpace(imageName: picker.image as! UIImage)
+        }
+//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+//            var imagePicker = UIImagePickerController()
+//            imagePicker.delegate = self
+//            imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
+//            imagePicker.allowsEditing = false
+//            self.present(imagePicker, animated: true, completion: nil)
+//        }
+        
+    }
+    
+//    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+//        self.dismiss(animated: true, completion: nil);
+//    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : AnyObject])
+    {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage //2
+        dismiss(animated:true, completion: nil) //5
+    }
+
     
     
 //    @IBOutlet var ingredientTable: UITableView!
@@ -156,6 +190,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         self.ingredientTable.dataSource = self
         self.directionTable.delegate = self
         self.directionTable.dataSource = self
+        self.picker.delegate = self
         //self.ingredientTable.delegate = self
         //self.ingredientTable.datasource = self
         //checkValidRecipeName()

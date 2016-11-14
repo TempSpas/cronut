@@ -8,6 +8,8 @@
 	<string>Access to the calendar is required to create recipe events.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This information is required to show your current location.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This information is required to access your camera roll</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

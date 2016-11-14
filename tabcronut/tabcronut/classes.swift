@@ -416,102 +416,108 @@ class User: NSObject, NSCoding
 
 }
 
-// import UIKit
-// import Foundation
+ import UIKit
+ import Foundation
 
-// extension UIImage {
-//     /// Scales an image to fit within a bounds with a size governed by the passed size. Also keeps the aspect ratio.
-//     /// Switch MIN to MAX for aspect fill instead of fit.
-//     ///
-//     /// - parameter newSize: newSize the size of the bounds the image must fit within.
-//     ///
-//     /// - returns: a new scaled image.
-//     func scaleImageToSize(newSize: CGSize) -> UIImage {
-//         var scaledImageRect = CGRect.zero
+ extension UIImage {
+     /// Scales an image to fit within a bounds with a size governed by the passed size. Also keeps the aspect ratio.
+     /// Switch MIN to MAX for aspect fill instead of fit.
+     ///
+     /// - parameter newSize: newSize the size of the bounds the image must fit within.
+     ///
+     /// - returns: a new scaled image.
+     func scaleImageToSize(newSize: CGSize) -> UIImage {
+         var scaledImageRect = CGRect.zero
 
-//         let aspectWidth = newSize.width/size.width
-//         let aspectheight = newSize.height/size.height
+         let aspectWidth = newSize.width/size.width
+         let aspectheight = newSize.height/size.height
 
-//         let aspectRatio = max(aspectWidth, aspectheight)
+         let aspectRatio = max(aspectWidth, aspectheight)
 
-//         scaledImageRect.size.width = size.width * aspectRatio;
-//         scaledImageRect.size.height = size.height * aspectRatio;
-//         scaledImageRect.origin.x = (newSize.width - scaledImageRect.size.width) / 2.0;
-//         scaledImageRect.origin.y = (newSize.height - scaledImageRect.size.height) / 2.0;
+         scaledImageRect.size.width = size.width * aspectRatio;
+         scaledImageRect.size.height = size.height * aspectRatio;
+         scaledImageRect.origin.x = (newSize.width - scaledImageRect.size.width) / 2.0;
+         scaledImageRect.origin.y = (newSize.height - scaledImageRect.size.height) / 2.0;
 
-//         UIGraphicsBeginImageContext(newSize)
-//         draw(in: scaledImageRect)
-//         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-//         UIGraphicsEndImageContext()
+         UIGraphicsBeginImageContext(newSize)
+         draw(in: scaledImageRect)
+         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+         UIGraphicsEndImageContext()
 
-//         return scaledImage!
-//     }
-// }
+         return scaledImage!
+     }
+ }
 
-// class Scanner 
-// {
-//     /* Code from the internet, URL: https://github.com/A9T9/code-snippets/blob/master/ocrapi.swift */
-// 	let key = 4de28eea7e88957
+ class Scanner 
+ {
+     /* Code from the internet, URL: https://github.com/A9T9/code-snippets/blob/master/ocrapi.swift */
 
-//     func callOCRSpace(imageName: String) {
-//         // Create URL request
-//         var url: NSURL = NSURL(string: "https://api.ocr.space/Parse/Image")
-//         var request: NSMutableURLRequest = NSMutableURLRequest.requestWithURL(url)
-//         request.HTTPMethod = "POST"
-//         var boundary: String = "randomString"
-//         request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-//         var session: NSURLSession = NSURLSession.sharedSession()
+     class func callOCRSpace(imageName: UIImage) {
+         // Create URL request
+        let key = "4de28eea7e88957"
+         var url: NSURL = NSURL(string: "https://api.ocr.space/Parse/Image")!
+        var request: URLRequest = URLRequest(url: url as URL)
+         request.httpMethod = "POST"
+         var boundary: String = "randomString"
+         request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+         var session: URLSession = URLSession.shared
 
-//         // Image file and parameters, get image down to 1MB file size
-//         var compressionRatio = 1
-//         var imageData: NSData
+         // Image file and parameters, get image down to 1MB file size
+         var compressionRatio = 1.0
+         var imageData: Data
 
-//         do {
-//             imageData = UIImageJPEGRepresentation(UIImage.imageNamed(imageName), compressionRatio)
-//             compressionRatio = compressionRatio - .05
-//         } while(imageData.length >= 1024)
+         repeat {
+            imageData = UIImageJPEGRepresentation(imageName, CGFloat(compressionRatio))!
+             compressionRatio = compressionRatio - 0.05
+         } while(imageData.count >= 1024)
 
-//         var parametersDictionary: [NSObject : AnyObject] = NSDictionary(objectsAndKeys: key,"apikey","False","isOverlayRequired","eng","language",nil)
+         var parametersDictionary: [NSObject : AnyObject] = NSDictionary(dictionaryLiteral:(key,"apikey"),("False","isOverlayRequired"),("eng","language")) as [NSObject : AnyObject]
 
-//         // Create multipart form body
-//         var data: NSData = self.createBodyWithBoundary(boundary, parameters: parametersDictionary, imageData: imageData, filename: imageName)
-//         request.HTTPBody = data
+         // Create multipart form body
+         var data: Data = self.createBodyWithBoundary(boundary: boundary, parameters: parametersDictionary, imageData: (imageData as Data) as Data, filename: "test") as Data
+         request.httpBody = data as Data
 
-//         // Start data session
-//         var task: NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (data: NSData, response: NSURLResponse, error: NSError) in 
-//            var myError: NSError
-//            var result: [NSObject : AnyObject] = NSJSONSerialization.JSONObjectWithData(data, options: kNilOptions, error: &myError)
-//            // Handle result
-//         })
+         // Start data session
+         var task: URLSessionDataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data, response: URLResponse, error: NSError) in
+            var myError: NSError
+            do {
+                let results = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [NSObject: String]
+            }
+            catch let error as NSError {
+                print("this doesn't work...\(error)")
+            }
+            //var result: [NSObject : AnyObject] = JSONSerialization.jsonObject(data, options: nil)
+            // Handle result
+         } as! (Data?, URLResponse?, Error?) -> Void)
 
-//         task.resume()
-//     }
+         task.resume()
+     }
    
-//    func createBodyWithBoundary(boundary: String, parameters parameters: [NSObject : AnyObject], imageData data: NSData, filename filename: String) -> NSData {
+    class func createBodyWithBoundary(boundary: String, parameters parameters: [NSObject : AnyObject], imageData data: Data, filename filename: String) -> Data {
        
-//        var body: NSMutableData = NSMutableData.data()
+        var body: Data = Data()
        
-//        if data {
-//            body.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding))
-//            body.appendData("Content-Disposition: form-data; name=\"\("file")\"; filename=\"\(filename)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding))
-//            body.appendData("Content-Type: image/jpeg\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding))
-            // body.appendData(data)
-            // body.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)) 
+        if !data.isEmpty {
+            body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+            body.append("Content-Disposition: form-data; name=\"\("file")\"; filename=\"\(filename)\"\r\n".data(using: String.Encoding.utf8)!)
+            body.append("Content-Type: image/jpeg\r\n\r\n".data(using: String.Encoding.utf8)!)
+             body.append(data as Data)
+             body.append("\r\n".data(using: String.Encoding.utf8)!)
 
-//        }
+        }
        
-//        for key in parameters.allKeys {
-//            body.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding))
-//            body.appendData("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding))
-//            body.appendData("\(parameters[key])\r\n".dataUsingEncoding(NSUTF8StringEncoding))
-//        }
+        for key in parameters.keys {
+            body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: String.Encoding.utf8)!)
+            body.append("\(parameters[key])\r\n".data(using: String.Encoding.utf8)!)
+        }
        
-//        body.appendData("--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding))
-//        return body
-//    }
+        body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
+        return body
+    }
 
-//    init() 
-//    {
+    init() 
+    {
 
-//    }
-// }
+    }
+ }
