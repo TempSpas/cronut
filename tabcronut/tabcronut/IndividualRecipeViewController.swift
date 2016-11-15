@@ -13,6 +13,13 @@
 import UIKit
 import EventKit
 
+//@objc
+//protocol IndividualRecipeViewControllerDelegate {
+//    @objc optional func toggleLeftPanel()
+//    @objc optional func collapseSidePanels()
+//}
+
+
 class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var recipeTitle: String = ""
@@ -21,7 +28,115 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var ingrTable: UITableView!
     @IBOutlet weak var dirTable: UITableView!
     
+    
+    
+//    var delegate: IndividualRecipeViewControllerDelegate?
+//
+//    @IBAction func revealMenu(_ sender: AnyObject) {
+//        print("HERE!")
+//        print(delegate)
+//        delegate?.toggleLeftPanel?()
+//    }
+    
     var passedValue: Recipe?
+    
+    @IBAction func showOptions(_ sender: AnyObject) {
+        let alertController = UIAlertController(title: "Hey man", message: "What do you want to do?", preferredStyle: .actionSheet)
+        
+        let defaultAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        //let dupRecipe = UIAlertAction(title: "Duplicate", style: .default, handler: nil)
+        let dupRecipe = UIAlertAction(title: "Duplicate", style: .default) { (action:UIAlertAction) in
+            self.performSegue(withIdentifier: "addRecipeSegue", sender: self)
+        }
+        let edRecipe = UIAlertAction(title: "Edit", style: .default)    { (action:UIAlertAction) in
+            self.performSegue(withIdentifier: "editRecipeSegue", sender: self)
+        }
+        let modRecipe = UIAlertAction(title: "Mod", style: .default) { (action:UIAlertAction) in
+            let alertController = UIAlertController(title: "Mod Recipe", message: "Write the factor by which you want to modify this recipe", preferredStyle: .alert)
+            let actionCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
+                //This is called when the user presses the cancel button.
+                print("You've pressed the cancel button");
+            }
+            let actionOK = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+                //This is called when the user presses the login button.
+                let textTitle = alertController.textFields![0] as UITextField;
+                //print(textTitle.text);
+                if textTitle.text != "" {
+                    self.changeRecipe(factor: Float(textTitle.text!)!);
+                }
+            }
+            alertController.addTextField { (textField) -> Void in
+                //Configure the attributes of the first text box.
+                textField.placeholder = "1.5"
+            }
+            //Add the buttons
+            alertController.addAction(actionCancel)
+            alertController.addAction(actionOK)
+            
+            //Present the alert controller
+            self.present(alertController, animated: true, completion:nil)
+        }
+        let addEvent = UIAlertAction(title: "Add Calendar Event", style: .default)  { (action:UIAlertAction) in
+            let eventStore = EKEventStore()
+            
+            let startDate = Date()
+            let endDate = startDate.addingTimeInterval(60 * 60) // One hour
+            
+            // Checks for user permission to access iOS calendar.
+            if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+                eventStore.requestAccess(to: .event, completion: {
+                    granted, error in
+                    self.createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
+                })
+            } else {
+                self.createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
+            }
+        }
+        let remEvent = UIAlertAction(title: "Remove Calendar Event", style: .default)   { (action:UIAlertAction) in
+            let eventStore = EKEventStore()
+            
+            if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+                eventStore.requestAccess(to: .event, completion: { (granted, error) -> Void in
+                    self.deleteEvent(eventStore, eventIdentifier: self.savedEventId)
+                })
+            } else {
+                self.deleteEvent(eventStore, eventIdentifier: self.savedEventId)
+            }
+            
+            let alertController = UIAlertController(title: "Just to let you know", message: "Reminder was removed successfully, yay!", preferredStyle: .alert)
+            
+            let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+                print("You've pressed OK button");
+            }
+            
+            alertController.addAction(OKAction)
+            self.present(alertController, animated: true, completion:nil)
+        }
+        alertController.addAction(dupRecipe)
+        alertController.addAction(edRecipe)
+        alertController.addAction(modRecipe)
+        alertController.addAction(addEvent)
+        alertController.addAction(remEvent)
+        alertController.addAction(defaultAction)
+        
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func changeRecipe(factor: Float) {
+        if (self.passedValue?.ingredients.count)! > 0   {
+            let ingreds = self.passedValue?.ingredients
+            let ingr_list = [String](ingreds!.keys)
+            for index in 0...(ingr_list.count-1)   {
+                print("here");
+                let curr = ingr_list[index]
+                self.passedValue?.ingredients[curr]?.0 = factor*(self.passedValue?.ingredients[curr]?.0)!
+                ingrTable.reloadData()
+            }
+            
+        }
+    }
+    
     
 //    var detailItem: AnyObject? {
 //        didSet {
@@ -41,6 +156,9 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
 
     @IBOutlet weak var exportRecipe: UIButton!
     @IBOutlet weak var editRecipe: UIButton!
+    
+    
+    
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
