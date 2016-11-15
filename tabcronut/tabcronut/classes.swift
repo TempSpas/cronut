@@ -501,7 +501,7 @@ class Scanner
         task.resume()
     }
    
-    class func createBodyWithBoundary(boundary: String, parameters parameters: [NSObject : AnyObject], imageData data: Data, filename filename: String) -> Data {
+    class func createBodyWithBoundary(boundary: String, parameters: [NSObject : AnyObject], imageData data: Data, filename: String) -> Data {
        
         var body: Data = Data()
        
