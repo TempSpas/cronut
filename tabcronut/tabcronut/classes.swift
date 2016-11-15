@@ -426,188 +426,6 @@ class User: NSObject, NSCoding
 		// Must call designated rnitializer
 		self.init(user: name)
 	}
-
-	/*
-
-	// Searches recipe list in one of 5 manners according to scope for searchText
-	// Params:   searchText is a string designating what should be searched for 
-	//			 scope is an integer indicating the scope that should be searched
-	// Returns:  an array of all recipes that fit the search parameters
-	func searchRecipes(searchText: String, scope: Int) -> Set<UnsafePointer<Recipe>>
-	{
-		var searchResults = Set<UnsafePointer<Recipe>>
-		if recipes.count == 0 {return searchResults}
-		var fieldToSearch: String?
-
-		// Call the appropriate function according to what we are searching for
-		switch (scope)
-		{
-			// Search only by recipe name
-			case (0):
-				searchResults = searchName(searchText)
-			// Search only by ingredient name
-			case (1):
-				searchResults = searchIngredient(searchText)
-			// Search only by tag
-			case (2):
-				searchResults = searchTag(searchText)
-			// Search excluding ingredient
-			case (3):
-				searchResults = searchNoIngredient(searchText)
-			// Search excluding tag 
-			case (4):
-				searchResults = searchNoTag(searchText)
-			// Search by all 3
-			default:
-				searchResults = searchAll(searchText)
-		}
-
-		return searchResults
-	}
-
-	// compares two strings for any matching words
-	// Params:   str is the first string to be compared
-	//			 arr1 is the second string to be compared
-	// Returns:  true if the two strings share any words (which are assumed to be seperated by spaces)
-	//			 false if the two strings share no words
-	func compareStrings(str: String, arr1: [String]) -> Bool
-	{
-		let arr2 = split(str1) {$0 == " "}
-
-		for word in arr1
-		{
-			if arr2.contains(word) {return true}
-		}
-
-		return false
-	}
-
-	// Searches for all recipes with searchText in the recipe name
-	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
-	func searchName(searchText: String) -> Set<UnsafePointer<Recipe>>
-	{
-		var results = Set<UnsafePointer<Recipe>>
-		if recipes.count == 0 {return results}
-
-		for recipe in recipes
-		{
-			if compareStrings(searchText, split(recipe!.name) {$0 == " "})
-			{
-				results.insert(recipe)
-			}
-		}
-
-		return results
-	}
-
-	// Searches for all recipes with searchText in the ingredients list for that recipe
-	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
-	func searchIngredient(searchText: String) -> Set<UnsafePointer<Recipe>>
-	{
-		var results = Set<UnsafePointer<Recipe>>
-		if recipes.count == 0 {return results}
-
-		for recipe in recipes
-		{
-			if compareStrings(searchText, recipe!.returnIngredients())
-			{
-				results.insert(recipe)
-			}
-		}
-
-		return results
-	}
-
-	// Searches for all recipes with searchText in the tags list for that recipe
-	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
-	func searchTag(searchText: String) -> Set<UnsafePointer<Recipe>>
-	{
-		var results = Set<UnsafePointer<Recipe>>
-		if recipes.count == 0 {return results}
-
-		for recipe in recipes
-		{
-			if compareStrings(searchText, recipe!.returnTags())	{results.insert(recipe)}
-		}
-
-		return results
-	}
-
-	// Searches for all recipes that do not have searchText in their ingredients
-	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoIngredient(searchText: String) -> Set<UnsafePointer<Recipe>>
-	{
-		var results = Set<UnsafePointer<Recipe>>
-		if recipes.count == 0 {return results}
-
-		for recipe in recipes
-		{
-			if !compareStrings(searchText, recipe!.returnIngredients())
-			{
-				results.insert(recipe)
-			}
-		}
-
-		return results
-	}
-
-	// Searches for all recipes with searchText in the tags list for that recipe
-	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoTag(searchText: String) -> Set<UnsafePointer<Recipe>>
-	{
-		var results = Set<UnsafePointer<Recipe>>
-		if recipes.count == 0 {return results}
-
-		for recipe in recipes
-		{
-			if !compareStrings(searchText, recipe!.returnTags()) 
-			{
-				results.insert(recipe)
-			}
-		}
-
-		return results
-	}
-
-	// Searches for all recipes that do not have searchText in their tags or ingredients
-	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoIngrTag(searchText: String) -> Set<UnsafePointer<Recipe>>
-	{
-		var results = Set<UnsafePointer<Recipe>>
-		if recipes.count == 0 {return results}
-
-		for recipe in recipes
-		{
-			if !compareStrings(searchText, recipe!.returnTags()) && !compareStrings(searchText, recipe!.returnIngredients())
-			{
-				results.insert(recipe)
-			}
-		}
-
-		return results
-	}
-
-	// Searches for all recipes with searchText in the name, tags list, or ingredients list for that recipe
-	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
-	func searchAll(searchText: String) -> Set<UnsafePointer<Recipe>>
-	{
-		var results = Set<UnsafePointer<Recipe>>
-		if recipes.count == 0 {return results}
-
-		results.union(searchName(searchText))
-		results.union(searchIngredient(searchText))
-		results.unions(earchTag(searchText))
-
-		return results
-	}
-	*/
 }
 
  import UIKit
@@ -715,3 +533,192 @@ class User: NSObject, NSCoding
 
     }
  }
+
+class Search
+{
+	var user: UnsafePointer<User>
+
+	// Searches recipe list in one of 5 manners according to scope for searchText
+	// Params:   searchText is a string designating what should be searched for 
+	//			 scope is an integer indicating the scope that should be searched
+	// Returns:  an array of all recipes that fit the search parameters
+	func searchRecipes(searchText: String, scope: Int) -> Set<UnsafePointer<Recipe>>
+	{
+		var searchResults = Set<UnsafePointer<Recipe>>
+		if user!.recipes.count == 0 {return searchResults}
+		var fieldToSearch: String?
+
+		// Call the appropriate function according to what we are searching for
+		switch (scope)
+		{
+			// Search only by recipe name
+			case (0):
+				searchResults = searchName(searchText)
+			// Search only by ingredient name
+			case (1):
+				searchResults = searchIngredient(searchText)
+			// Search only by tag
+			case (2):
+				searchResults = searchTag(searchText)
+			// Search excluding ingredient
+			case (3):
+				searchResults = searchNoIngredient(searchText)
+			// Search excluding tag 
+			case (4):
+				searchResults = searchNoTag(searchText)
+			// Search by all 3
+			default:
+				searchResults = searchAll(searchText)
+		}
+
+		return searchResults
+	}
+
+	// compares two strings for any matching words
+	// Params:   str is the first string to be compared
+	//			 arr1 is the second string to be compared
+	// Returns:  true if the two strings share any words (which are assumed to be seperated by spaces)
+	//			 false if the two strings share no words
+	func compareStrings(str: String, arr1: [String]) -> Bool
+	{
+		let arr2 = split(str1) {$0 == " "}
+
+		for word in arr1
+		{
+			if arr2.contains(word) {return true}
+		}
+
+		return false
+	}
+
+	// Searches for all recipes with searchText in the recipe name
+	// Params:   searchText is a string designating what should be searched for
+	// Returns:  an array of all recipes that fit the search parameter
+	func searchName(searchText: String) -> Set<UnsafePointer<Recipe>>
+	{
+		var results = Set<UnsafePointer<Recipe>>
+		if user!.recipes.count == 0 {return results}
+
+		for recipe in user!.recipes
+		{
+			if compareStrings(searchText, split(recipe!.name) {$0 == " "})
+			{
+				results.insert(recipe)
+			}
+		}
+
+		return results
+	}
+
+	// Searches for all recipes with searchText in the ingredients list for that recipe
+	// Params:   searchText is a string designating what should be searched for
+	// Returns:  an array of all recipes that fit the search parameter
+	func searchIngredient(searchText: String) -> Set<UnsafePointer<Recipe>>
+	{
+		var results = Set<UnsafePointer<Recipe>>
+		if user!.recipes.count == 0 {return results}
+
+		for recipe in user!.recipes
+		{
+			if compareStrings(searchText, recipe!.returnIngredients())
+			{
+				results.insert(recipe)
+			}
+		}
+
+		return results
+	}
+
+	// Searches for all recipes with searchText in the tags list for that recipe
+	// Params:   searchText is a string designating what should be searched for
+	// Returns:  an array of all recipes that fit the search parameter
+	func searchTag(searchText: String) -> Set<UnsafePointer<Recipe>>
+	{
+		var results = Set<UnsafePointer<Recipe>>
+		if user!.recipes.count == 0 {return results}
+
+		for recipe in user!.recipes
+		{
+			if compareStrings(searchText, recipe!.returnTags())	{results.insert(recipe)}
+		}
+
+		return results
+	}
+
+	// Searches for all recipes that do not have searchText in their ingredients
+	// Params:   searchText is a string designating what should be searched for
+	// Returns:  an array of all recipes that fit the search parameter
+	func searchNoIngredient(searchText: String) -> Set<UnsafePointer<Recipe>>
+	{
+		var results = Set<UnsafePointer<Recipe>>
+		if user!.recipes.count == 0 {return results}
+
+		for recipe in user!.recipes
+		{
+			if !compareStrings(searchText, recipe!.returnIngredients())
+			{
+				results.insert(recipe)
+			}
+		}
+
+		return results
+	}
+
+	// Searches for all recipes with searchText in the tags list for that recipe
+	// Params:   searchText is a string designating what should be searched for
+	// Returns:  an array of all recipes that fit the search parameter
+	func searchNoTag(searchText: String) -> Set<UnsafePointer<Recipe>>
+	{
+		var results = Set<UnsafePointer<Recipe>>
+		if user!.recipes.count == 0 {return results}
+
+		for recipe in user!.recipes
+		{
+			if !compareStrings(searchText, recipe!.returnTags()) 
+			{
+				results.insert(recipe)
+			}
+		}
+
+		return results
+	}
+
+	// Searches for all recipes that do not have searchText in their tags or ingredients
+	// Params:   searchText is a string designating what should be searched for
+	// Returns:  an array of all recipes that fit the search parameter
+	func searchNoIngrTag(searchText: String) -> Set<UnsafePointer<Recipe>>
+	{
+		var results = Set<UnsafePointer<Recipe>>
+		if user!.recipes.count == 0 {return results}
+
+		for recipe in user!.recipes
+		{
+			if !compareStrings(searchText, recipe!.returnTags()) && !compareStrings(searchText, recipe!.returnIngredients())
+			{
+				results.insert(recipe)
+			}
+		}
+
+		return results
+	}
+
+	// Searches for all recipes with searchText in the name, tags list, or ingredients list for that recipe
+	// Params:   searchText is a string designating what should be searched for
+	// Returns:  an array of all recipes that fit the search parameter
+	func searchAll(searchText: String) -> Set<UnsafePointer<Recipe>>
+	{
+		var results = Set<UnsafePointer<Recipe>>
+		if user!.recipes.count == 0 {return results}
+
+		results.union(searchName(searchText))
+		results.union(searchIngredient(searchText))
+		results.unions(searchTag(searchText))
+
+		return results
+	}
+
+	init(controller: UnsafePointer<User>)
+	{
+		user = controller
+	}
+}
