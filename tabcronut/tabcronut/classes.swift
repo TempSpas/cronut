@@ -546,7 +546,6 @@ class Search
 	{
 		var searchResults = Set<UnsafePointer<Recipe>>
 		if user!.recipes.count == 0 {return searchResults}
-		var fieldToSearch: String?
 
 		// Call the appropriate function according to what we are searching for
 		switch (scope)
@@ -566,6 +565,9 @@ class Search
 			// Search excluding tag 
 			case (4):
 				searchResults = searchNoTag(searchText)
+			// Search excluding tag and ingredient
+			case (5):
+				searchResults = searchNoIngrTag(searchText)
 			// Search by all 3
 			default:
 				searchResults = searchAll(searchText)
@@ -717,6 +719,7 @@ class Search
 		return results
 	}
 
+	// Initializer for the class, only need a user to search for
 	init(controller: UnsafePointer<User>)
 	{
 		user = controller
