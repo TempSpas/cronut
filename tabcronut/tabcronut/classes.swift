@@ -428,6 +428,7 @@ class User: NSObject, NSCoding
 	}
 
 	/*
+
 	// Searches recipe list in one of 5 manners according to scope for searchText
 	// Params:   searchText is a string designating what should be searched for 
 	//			 scope is an integer indicating the scope that should be searched
@@ -464,6 +465,23 @@ class User: NSObject, NSCoding
 		return searchResults
 	}
 
+	// compares two strings for any matching words
+	// Params:   str is the first string to be compared
+	//			 arr1 is the second string to be compared
+	// Returns:  true if the two strings share any words (which are assumed to be seperated by spaces)
+	//			 false if the two strings share no words
+	func compareStrings(str: String, arr1: [String]) -> Bool
+	{
+		let arr2 = split(str1) {$0 == " "}
+
+		for word in arr1
+		{
+			if arr2.contains(word) {return true}
+		}
+
+		return false
+	}
+
 	// Searches for all recipes with searchText in the recipe name
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
@@ -474,7 +492,7 @@ class User: NSObject, NSCoding
 
 		for recipe in recipes
 		{
-			if recipe!.name.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
+			if compareStrings(searchText, split(recipe!.name) {$0 == " "})
 			{
 				results.insert(recipe)
 			}
@@ -493,13 +511,9 @@ class User: NSObject, NSCoding
 
 		for recipe in recipes
 		{
-			for ingredient in recipe!.returnIngredients()
+			if compareStrings(searchText, recipe!.returnIngredients())
 			{
-				if ingredient.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
-				{
-					results.insert(recipe)
-					break
-				}
+				results.insert(recipe)
 			}
 		}
 
@@ -516,14 +530,7 @@ class User: NSObject, NSCoding
 
 		for recipe in recipes
 		{
-			for tag in recipe!.returnTags()
-			{
-				if tag.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
-				{
-					results.insert(recipe)
-					break
-				}
-			}
+			if compareStrings(searchText, recipe!.returnTags())	{results.insert(recipe)}
 		}
 
 		return results
@@ -539,17 +546,7 @@ class User: NSObject, NSCoding
 
 		for recipe in recipes
 		{
-			var hasIngredient = false
-			for ingredient in recipe!.returnIngredients()
-			{
-				if ingredient.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
-				{
-					hasIngredient = true
-					break
-				}
-			}
-
-			if !hasIngredient
+			if !compareStrings(searchText, recipe!.returnIngredients())
 			{
 				results.insert(recipe)
 			}
@@ -568,17 +565,7 @@ class User: NSObject, NSCoding
 
 		for recipe in recipes
 		{
-			var hasTag = false
-			for tag in recipe!.returnTags()
-			{
-				if tag.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
-				{
-					hasTag = true
-					break
-				}
-			}
-
-			if !hasTag 
+			if !compareStrings(searchText, recipe!.returnTags()) 
 			{
 				results.insert(recipe)
 			}
@@ -597,27 +584,7 @@ class User: NSObject, NSCoding
 
 		for recipe in recipes
 		{
-			var hasTag = false
-			var hasIngredient = false
-			for tag in recipe!.returnTags()
-			{
-				if tag.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
-				{
-					hasTag = true
-					break
-				}
-			}
-
-			for ingredient in recipe!.returnIngredients()
-			{
-				if ingredient.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
-				{
-					hasIngredient = true
-					break
-				}
-			}
-
-			if !hasTag && !hasIngredient
+			if !compareStrings(searchText, recipe!.returnTags()) && !compareStrings(searchText, recipe!.returnIngredients())
 			{
 				results.insert(recipe)
 			}
@@ -634,9 +601,9 @@ class User: NSObject, NSCoding
 		var results = Set<UnsafePointer<Recipe>>
 		if recipes.count == 0 {return results}
 
-		results.union(this.searchName(searchText))
-		results.union(this.searchIngredient(searchText))
-		results.union(this.searchTag(searchText))
+		results.union(searchName(searchText))
+		results.union(searchIngredient(searchText))
+		results.unions(earchTag(searchText))
 
 		return results
 	}
