@@ -587,6 +587,45 @@ class User: NSObject, NSCoding
 		return results
 	}
 
+	// Searches for all recipes that do not have searchText in their tags or ingredients
+	// Params:   searchText is a string designating what should be searched for
+	// Returns:  an array of all recipes that fit the search parameter
+	func searchNoIngrTag(searchText: String) -> Set<UnsafePointer<Recipe>>
+	{
+		var results = Set<UnsafePointer<Recipe>>
+		if recipes.count == 0 {return results}
+
+		for recipe in recipes
+		{
+			var hasTag = false
+			var hasIngredient = false
+			for tag in recipe!.returnTags()
+			{
+				if tag.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
+				{
+					hasTag = true
+					break
+				}
+			}
+
+			for ingredient in recipe!.returnIngredients()
+			{
+				if ingredient.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
+				{
+					hasIngredient = true
+					break
+				}
+			}
+
+			if !hasTag && !hasIngredient
+			{
+				results.insert(recipe)
+			}
+		}
+
+		return results
+	}
+
 	// Searches for all recipes with searchText in the name, tags list, or ingredients list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
