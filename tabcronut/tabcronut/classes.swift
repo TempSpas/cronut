@@ -735,3 +735,4 @@ class Search
 	{
 		user = controller
 	}
+}
