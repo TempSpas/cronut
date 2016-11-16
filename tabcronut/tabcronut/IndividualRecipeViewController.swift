@@ -214,7 +214,13 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             
             print(ingredientNames[row])
             cell.ingrLabel2.text = String(ingredientNames[row])
-            cell.ingrAmount2.text = String(ingredientValues[row].0)
+//            cell.ingrAmount2.text = String(ingredientValues[row].0)
+            if String(ingredientValues[row].0) != "0.0" {
+                cell.ingrAmount2.text = String(ingredientValues[row].0)
+            }
+            else    {
+                cell.ingrAmount2.text = ""
+            }
             cell.ingrUnit2.text = ingredientValues[row].1
             return cell
         }

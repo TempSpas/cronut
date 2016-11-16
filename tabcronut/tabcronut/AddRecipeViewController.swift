@@ -61,8 +61,39 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     @IBAction func addIngrs(_ sender: AnyObject) {
         self.ingredientTable.beginUpdates()
         print(ingrName.text)
+        print(ingrAmt.text)
+        print(ingrUnit.text)
+        if let tester = ingredients[ingrName.text!]  {
+            ingrName.text=""
+            ingrAmt.text=""
+            ingrUnit.text=""
+            print("Please enter an ingredient that doesn't exist...")
+            self.ingredientTable.endUpdates()
+            return
+        }
         //test.append(ingrName.text!)
-        ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
+//        ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
+        let emptyThings = (ingrAmt.text == nil || ingrAmt.text == "" || ingrUnit.text == nil || ingrUnit.text == "")
+        let badThings = (ingrAmt.text == "" && ingrUnit.text != "")
+        let someFilled = (ingrAmt.text != "" && ingrUnit.text == "")
+        if emptyThings  {
+            if badThings    {
+                ingrName.text=""
+                ingrAmt.text=""
+                ingrUnit.text=""
+                self.ingredientTable.endUpdates()
+                return
+            }
+            if someFilled   {
+                ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, "")
+            }
+            else    {
+                ingredients[ingrName.text!] = (Float(0), "")
+            }
+        }
+        else    {
+            ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
+        }
         //ingredientTable.beginUpdates()
         ingredientTable.insertRows(at: [
             NSIndexPath(row: ingredients.count-1, section: 0) as IndexPath
@@ -72,6 +103,13 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         temp_ingredient = ingrName.text!
         temp_amount = Float(ingrAmt.text!)!
         temp_unit = ingrUnit.text!
+        if emptyThings != true {
+            temp_amount = Float(ingrAmt.text!)!
+            temp_unit = ingrUnit.text!
+        }
+        if someFilled == true   {
+            temp_amount = Float(ingrAmt.text!)!
+        }
         ingrName.text=""
         ingrAmt.text=""
         ingrUnit.text=""
@@ -159,14 +197,24 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             print(ingredientNames[row])
             if numIngrs != nil && numIngrs == ingredients.count {
                 cell.ingrLabel.text = String(ingredientNames[row])
-                cell.ingrAmount.text = String(ingredientValues[row].0)
+//                cell.ingrAmount.text = String(ingredientValues[row].0)
+                if String(ingredientValues[row].0) != "0.0" {
+                    cell.ingrAmount.text = String(ingredientValues[row].0)
+                }
                 cell.ingrUnit.text = ingredientValues[row].1
                 return cell
             }
             
             
             cell.ingrLabel.text = temp_ingredient
-            cell.ingrAmount.text = String(temp_amount)
+//            cell.ingrAmount.text = String(temp_amount)
+            print(String(temp_amount))
+            if String(temp_amount) != "0.0" {
+                cell.ingrAmount.text = String(temp_amount)
+            }
+            else    {
+                cell.ingrAmount.text = ""
+            }
             cell.ingrUnit.text = temp_unit
             
             temp_ingredient = ""
