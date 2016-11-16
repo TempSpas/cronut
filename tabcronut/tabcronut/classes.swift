@@ -127,7 +127,8 @@ class Recipe
 	// Returns: An array containing all tags as strings used in this recipe 
 	func returnTags() -> [String]
 	{
-		return tags.keys
+		let answer = [String] (tags.keys)
+		return answer
 	}
 
 	// Changes the name of a recipe
@@ -209,7 +210,8 @@ class Recipe
 	// Returns:  an array of all ingredients used in this recipe
 	func returnIngredients() -> [String]
 	{
-		return ingredients.keys
+		let answer = [String] (ingredients.keys)
+		return answer
 	}
 
 	// Adds a direction to this ingredient object
@@ -555,7 +557,7 @@ class Search
 	func searchRecipes(searchText: String, scope: Int) -> Set<UnsafePointer<Recipe> >
 	{
 		var searchResults = Set<UnsafePointer<Recipe> >
-		if user!.recipes.count == 0 {return searchResults}
+		if !user.memory.recipes.count {return searchResults}
 
 		// Call the appropriate function according to what we are searching for
 		switch (scope)
@@ -609,9 +611,9 @@ class Search
 	func searchName(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
 		var results = Set<UnsafePointer<Recipe> >
-		if user!.recipes.count == 0 {return results}
+		if !user.memory.recipes.count {return results}
 
-		for recipe in user!.recipes
+		for recipe in user.memory.recipes
 		{
 			if compareStrings(searchText, split(recipe!.name) {$0 == " "})
 			{
@@ -628,9 +630,9 @@ class Search
 	func searchIngredient(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
 		var results = Set<UnsafePointer<Recipe> >
-		if user!.recipes.count == 0 {return results}
+		if !user.memory.recipes.count {return results}
 
-		for recipe in user!.recipes
+		for recipe in user.memory.recipes
 		{
 			if compareStrings(searchText, recipe!.returnIngredients())
 			{
@@ -647,9 +649,9 @@ class Search
 	func searchTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
 		var results = Set<UnsafePointer<Recipe> >
-		if user!.recipes.count == 0 {return results}
+		if !user.memory.recipes.count {return results}
 
-		for recipe in user!.recipes
+		for recipe in user.memory.recipes
 		{
 			if compareStrings(searchText, recipe!.returnTags())	{results.insert(recipe)}
 		}
@@ -663,9 +665,9 @@ class Search
 	func searchNoIngredient(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
 		var results = Set<UnsafePointer<Recipe> >
-		if user!.recipes.count == 0 {return results}
+		if !user.memory.recipes.count {return results}
 
-		for recipe in user!.recipes
+		for recipe in user.memory.recipes
 		{
 			if !compareStrings(searchText, recipe!.returnIngredients())
 			{
@@ -682,9 +684,9 @@ class Search
 	func searchNoTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
 		var results = Set<UnsafePointer<Recipe> >
-		if user!.recipes.count == 0 {return results}
+		if !user.memory.recipes.count {return results}
 
-		for recipe in user!.recipes
+		for recipe in user.memory.recipes
 		{
 			if !compareStrings(searchText, recipe!.returnTags()) 
 			{
@@ -701,9 +703,9 @@ class Search
 	func searchNoIngrTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
 		var results = Set<UnsafePointer<Recipe> >
-		if user!.recipes.count == 0 {return results}
+		if !user.memory.recipes.count {return results}
 
-		for recipe in user!.recipes
+		for recipe in user.memory.recipes
 		{
 			if !compareStrings(searchText, recipe!.returnTags()) && !compareStrings(searchText, recipe!.returnIngredients())
 			{
@@ -720,7 +722,7 @@ class Search
 	func searchAll(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
 		var results = Set<UnsafePointer<Recipe> >
-		if user!.recipes.count == 0 {return results}
+		if !user.memory.recipes.count {return results}
 
 		results.union(searchName(searchText))
 		results.union(searchIngredient(searchText))
