@@ -6,6 +6,7 @@
 //  Copyright © 2016 Jinxin Liu. All rights reserved.
 //
 
+import UIKit
 import Foundation
 
 // Used to create random numbers
