@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var locationManager: CLLocationManager?
+    
+    let currencyCode = "eur"
 
 //    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 //     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -52,6 +54,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // MARK: Custom Methods
+    
+    class func getAppDelegate() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    
+    func getStringValueFormattedAsCurrency(value: String) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.currency
+        numberFormatter.currencyCode = currencyCode
+        numberFormatter.maximumFractionDigits = 2
+        
+        let formattedValue = numberFormatter.string(from: NumberFormatter().number(from: value)!)
+        return formattedValue!
+    }
+    
+    
+    func getDocDir() -> String {
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    }
 
 }
 
