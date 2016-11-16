@@ -71,6 +71,20 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             self.ingredientTable.endUpdates()
             return
         }
+        if let isfloat = Float(ingrAmt.text!)    {
+            print("got float")
+        }
+        else    {
+//            let alertController = UIAlertController(title: "Error", message:
+//                "Please enter float amount", preferredStyle: UIAlertControllerStyle.alert)
+            let alertController = UIAlertController(title: "Error", message: "PLEASE enter a FLOAT value for AMOUNT you IDIOT", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+            self.present(alertController, animated: true, completion:nil)
+
+            ingrAmt.text=""
+            self.ingredientTable.endUpdates()
+            return
+        }
         //test.append(ingrName.text!)
 //        ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
         let emptyThings = (ingrAmt.text == nil || ingrAmt.text == "" || ingrUnit.text == nil || ingrUnit.text == "")
@@ -119,7 +133,8 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     
     @IBAction func addDirection(_ sender: AnyObject) {
         self.directionTable.beginUpdates()
-        directions.append(direction.text!)
+        var dirtext = String(directions.count+1) + ". " +  direction.text!
+        directions.append(dirtext)
         print(direction.text)
         //directions.append()
         //print(ingrName.text)
