@@ -228,7 +228,7 @@
             </objects>
             <point key="canvasLocation" x="3397.5999999999999" y="122.78860569715144"/>
         </scene>
-        <!--Fourth View Controller-->
+        <!--camera-->
         <scene sceneID="uWZ-19-g97">
             <objects>
                 <viewController id="BOm-U0-z2D" customClass="FourthViewController" customModule="tabcronut" customModuleProvider="target" sceneMemberID="viewController">
@@ -263,7 +263,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="camera" id="aEQ-5f-xeL"/>
+                    <tabBarItem key="tabBarItem" title="camera" id="aEQ-5f-xeL"/>
                     <connections>
                         <outlet property="imageView" destination="suo-Em-A3B" id="0n8-7I-JDH"/>
                     </connections>
@@ -773,7 +773,6 @@
         <image name="44carrot_360.png" width="44" height="44"/>
         <image name="44plus.png" width="44" height="44"/>
         <image name="Map44.png" width="44" height="44"/>
-        <image name="camera" width="32" height="32"/>
         <image name="location" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
