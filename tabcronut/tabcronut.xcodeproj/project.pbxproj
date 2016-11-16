@@ -31,6 +31,7 @@
 		BA26B4CC1DBD43D500665E4C /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */; };
 		BA7828CE1DBD487C00CA0767 /* 44plus.png in Resources */ = {isa = PBXBuildFile; fileRef = BA7828CD1DBD487C00CA0767 /* 44plus.png */; };
 		BADB75A01DBD4DC400B12ED0 /* classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADB759F1DBD4DC400B12ED0 /* classes.swift */; };
+		BADE0D671DDCF5B3006A1F80 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE0D661DDCF5B3006A1F80 /* CameraViewController.swift */; };
 		BAED16021DBFDC0900BAABD4 /* RecipeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED16011DBFDC0900BAABD4 /* RecipeViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +83,7 @@
 		BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		BA7828CD1DBD487C00CA0767 /* 44plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 44plus.png; path = ../Images/44plus.png; sourceTree = "<group>"; };
 		BADB759F1DBD4DC400B12ED0 /* classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = classes.swift; sourceTree = "<group>"; };
+		BADE0D661DDCF5B3006A1F80 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		BAED16011DBFDC0900BAABD4 /* RecipeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +158,7 @@
 				BA1EFE0A1DB69843009E892A /* SecondViewController.swift */,
 				A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */,
 				BA1EFE0C1DB69843009E892A /* Main.storyboard */,
+				BADE0D661DDCF5B3006A1F80 /* CameraViewController.swift */,
 				6D1E04DF1DCA772F0069AD62 /* EditDirectionsTableViewCell.swift */,
 				6D1E04DD1DCA65170069AD62 /* EditIngredientTableViewCell.swift */,
 				6D1E04D31DC983A60069AD62 /* DirectionTableViewCell.swift */,
@@ -339,6 +342,7 @@
 				6DE9DBAD1DC2B5F80018CB1A /* IndividualRecipeViewController.swift in Sources */,
 				6D1E04DC1DCA5FB80069AD62 /* EditRecipeViewController.swift in Sources */,
 				6D725A511DC6DF5000F987AD /* IngredientTableViewCell.swift in Sources */,
+				BADE0D671DDCF5B3006A1F80 /* CameraViewController.swift in Sources */,
 				6D1E04DE1DCA65170069AD62 /* EditIngredientTableViewCell.swift in Sources */,
 				6D1E04D41DC983A60069AD62 /* DirectionTableViewCell.swift in Sources */,
 			);
