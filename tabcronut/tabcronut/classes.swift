@@ -552,9 +552,9 @@ class Search
 	// Params:   searchText is a string designating what should be searched for 
 	//			 scope is an integer indicating the scope that should be searched
 	// Returns:  an array of all recipes that fit the search parameters
-	func searchRecipes(searchText: String, scope: Int) -> Set<UnsafePointer<Recipe>>
+	func searchRecipes(searchText: String, scope: Int) -> Set<UnsafePointer<Recipe> >
 	{
-		var searchResults = Set<UnsafePointer<Recipe>>
+		var searchResults = Set<UnsafePointer<Recipe> >
 		if user!.recipes.count == 0 {return searchResults}
 
 		// Call the appropriate function according to what we are searching for
@@ -606,9 +606,9 @@ class Search
 	// Searches for all recipes with searchText in the recipe name
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchName(searchText: String) -> Set<UnsafePointer<Recipe>>
+	func searchName(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe>>
+		var results = Set<UnsafePointer<Recipe> >
 		if user!.recipes.count == 0 {return results}
 
 		for recipe in user!.recipes
@@ -625,9 +625,9 @@ class Search
 	// Searches for all recipes with searchText in the ingredients list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchIngredient(searchText: String) -> Set<UnsafePointer<Recipe>>
+	func searchIngredient(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe>>
+		var results = Set<UnsafePointer<Recipe> >
 		if user!.recipes.count == 0 {return results}
 
 		for recipe in user!.recipes
@@ -644,9 +644,9 @@ class Search
 	// Searches for all recipes with searchText in the tags list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchTag(searchText: String) -> Set<UnsafePointer<Recipe>>
+	func searchTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe>>
+		var results = Set<UnsafePointer<Recipe> >
 		if user!.recipes.count == 0 {return results}
 
 		for recipe in user!.recipes
@@ -660,9 +660,9 @@ class Search
 	// Searches for all recipes that do not have searchText in their ingredients
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoIngredient(searchText: String) -> Set<UnsafePointer<Recipe>>
+	func searchNoIngredient(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe>>
+		var results = Set<UnsafePointer<Recipe> >
 		if user!.recipes.count == 0 {return results}
 
 		for recipe in user!.recipes
@@ -679,9 +679,9 @@ class Search
 	// Searches for all recipes with searchText in the tags list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoTag(searchText: String) -> Set<UnsafePointer<Recipe>>
+	func searchNoTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe>>
+		var results = Set<UnsafePointer<Recipe> >
 		if user!.recipes.count == 0 {return results}
 
 		for recipe in user!.recipes
@@ -698,9 +698,9 @@ class Search
 	// Searches for all recipes that do not have searchText in their tags or ingredients
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoIngrTag(searchText: String) -> Set<UnsafePointer<Recipe>>
+	func searchNoIngrTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe>>
+		var results = Set<UnsafePointer<Recipe> >
 		if user!.recipes.count == 0 {return results}
 
 		for recipe in user!.recipes
@@ -717,9 +717,9 @@ class Search
 	// Searches for all recipes with searchText in the name, tags list, or ingredients list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchAll(searchText: String) -> Set<UnsafePointer<Recipe>>
+	func searchAll(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe>>
+		var results = Set<UnsafePointer<Recipe> >
 		if user!.recipes.count == 0 {return results}
 
 		results.union(searchName(searchText))
