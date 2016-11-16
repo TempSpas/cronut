@@ -317,48 +317,48 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     
     // Responds to button to add event. This checks that we have permission first, before adding the
     // event
-    @IBAction func addEvent(_ sender: UIButton) {
-        let eventStore = EKEventStore()
-        
-        let startDate = Date()
-        let endDate = startDate.addingTimeInterval(60 * 60) // One hour
-        
-        // Checks for user permission to access iOS calendar.
-        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-            eventStore.requestAccess(to: .event, completion: {
-                granted, error in
-                self.createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
-            })
-        } else {
-            createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
-        }
-        
-    }
+//    @IBAction func addEvent(_ sender: UIButton) {
+//        let eventStore = EKEventStore()
+//        
+//        let startDate = Date()
+//        let endDate = startDate.addingTimeInterval(60 * 60) // One hour
+//        
+//        // Checks for user permission to access iOS calendar.
+//        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+//            eventStore.requestAccess(to: .event, completion: {
+//                granted, error in
+//                self.createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
+//            })
+//        } else {
+//            createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
+//        }
+//        
+//    }
     
     
     // Responds to button to remove event. This checks that we have permission first, before removing the
     // event
-    @IBAction func removeEvent(_ sender: UIButton) {
-        let eventStore = EKEventStore()
-        
-        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-            eventStore.requestAccess(to: .event, completion: { (granted, error) -> Void in
-                self.deleteEvent(eventStore, eventIdentifier: self.savedEventId)
-            })
-        } else {
-            deleteEvent(eventStore, eventIdentifier: savedEventId)
-        }
-        
-        let alertController = UIAlertController(title: "Just to let you know", message: "Reminder was removed successfully, yay!", preferredStyle: .alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
-            print("You've pressed OK button");
-        }
-        
-        alertController.addAction(OKAction)
-        self.present(alertController, animated: true, completion:nil)
-        
-    }
+//    @IBAction func removeEvent(_ sender: UIButton) {
+//        let eventStore = EKEventStore()
+//        
+//        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+//            eventStore.requestAccess(to: .event, completion: { (granted, error) -> Void in
+//                self.deleteEvent(eventStore, eventIdentifier: self.savedEventId)
+//            })
+//        } else {
+//            deleteEvent(eventStore, eventIdentifier: savedEventId)
+//        }
+//        
+//        let alertController = UIAlertController(title: "Just to let you know", message: "Reminder was removed successfully, yay!", preferredStyle: .alert)
+//        
+//        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+//            print("You've pressed OK button");
+//        }
+//        
+//        alertController.addAction(OKAction)
+//        self.present(alertController, animated: true, completion:nil)
+//        
+//    }
     
     // MARK: - Navigation
 
