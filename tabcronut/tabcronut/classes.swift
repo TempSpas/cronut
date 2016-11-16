@@ -271,6 +271,20 @@ class Recipe
 
 		return false
 	}
+
+	// Gets all of the ingredients in a format to be displayed, [ingredient: amount] ie flour, 2 cups
+	// Returns:  a dictionary of type [String: String] where each pair is for example ("flour", "2 cups")
+	func getIngredientsToDisplay() -> [String: String]
+	{
+		var result = [String: String]()
+		for (ingredient, (amount, measurement)) in ingredients 
+		{
+			let string = amount.description + measurement
+			result[ingredient] = string
+		}	
+
+		return result
+	}
 }
 
 extension Recipe: Equatable {}
