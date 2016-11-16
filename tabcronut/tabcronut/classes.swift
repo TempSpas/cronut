@@ -6,7 +6,6 @@
 //  Copyright © 2016 Jinxin Liu. All rights reserved.
 //
 
-import UIKit
 import Foundation
 
 // Used to create random numbers
@@ -127,8 +126,7 @@ class Recipe
 	// Returns: An array containing all tags as strings used in this recipe 
 	func returnTags() -> [String]
 	{
-		let answer = [String] (tags.keys)
-		return answer
+		return tags.keys
 	}
 
 	// Changes the name of a recipe
@@ -138,7 +136,7 @@ class Recipe
 	// Returns:  true if successful, else false
 	func rename(newName: String) -> Bool
 	{
-		if newName == nil || newName == "" {return false}
+		if newName == "" {return false}
 		name = newName
 		return true
 	}
@@ -161,7 +159,7 @@ class Recipe
 	// Returns:  true if the information was added, else false 
 	func addIngredient(ingredient: String, amount: Float? = nil, measurement: String? = nil) -> Bool
 	{
-		if ingredient == nil || ingredient == "" {return false}
+		if ingredient == "" {return false}
 		if ingredients[ingredient] != nil
 		{
 			return false
@@ -210,7 +208,7 @@ class Recipe
 	// Returns:  an array of all ingredients used in this recipe
 	func returnIngredients() -> [String]
 	{
-		let answer = [String] (ingredients.keys)
+	    let answer = [String] (ingredients.keys)
 		return answer
 	}
 
@@ -263,7 +261,7 @@ class Recipe
 	// Returns:  true if the information was added, else false 
 	func changeDirection(direction: String, newDirection: String) -> Bool
 	{
-		if newDirection == nil || newDirection == "" {return false}
+		if newDirection == "" {return false}
 		if directions.contains(direction)
 		{
 			let index = directions.index(of: direction)
@@ -352,7 +350,7 @@ class User: NSObject, NSCoding
 	// Returns:  false if the item was already in the map or one of the arguments is invalid, otherwise true
 	func addGrocery(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool
 	{
-		if ingredient == nil || ingredient == "" {return false}
+		if ingredient == "" {return false}
 		if groceries[ingredient] != nil
 		{
 			/* 
@@ -378,7 +376,7 @@ class User: NSObject, NSCoding
 	// Returns:  true if the item was removed, otherwise false
 	func removeGrocery(ingredient: String) -> Bool
 	{
-		if ingredient == nil || ingredient == "" {return false}
+		if ingredient == "" {return false}
 		if groceries[ingredient] == nil {return false}
 		else 
 		{
@@ -396,7 +394,7 @@ class User: NSObject, NSCoding
 	// Returns:  false if the item was already in the map, otherwise true
 	func addInventory(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool
 	{
-		if ingredient == nil || ingredient == "" {return false}
+		if ingredient == "" {return false}
 		if inventory[ingredient] != nil
 		{
 			/* 
@@ -422,7 +420,7 @@ class User: NSObject, NSCoding
 	// Returns:  true if the item was removed, otherwise false
 	func removeInventory(ingredient: String) -> Bool
 	{
-		if ingredient == nil || ingredient == "" {return false}
+		if ingredient == "" {return false}
 		if inventory[ingredient] == nil {return false}
 		inventory[ingredient] = nil 
 		return true
@@ -444,7 +442,7 @@ class User: NSObject, NSCoding
 	}
 }
 
-extension UIImage {
+/*extension UIImage {
     // Scales an image to fit within a bounds with a size governed by the passed size. Also keeps the aspect ratio.
     // Switch MIN to MAX for aspect fill instead of fit.
     //
@@ -470,7 +468,7 @@ extension UIImage {
 
         return scaledImage!
     }
-}
+}*/
 
 class Scanner 
 {
@@ -554,35 +552,35 @@ class Search
 	// Params:   searchText is a string designating what should be searched for 
 	//			 scope is an integer indicating the scope that should be searched
 	// Returns:  an array of all recipes that fit the search parameters
-	func searchRecipes(searchText: String, scope: Int) -> Set<UnsafePointer<Recipe> >
+	func searchRecipes(text: String, scope: Int) -> Set<UnsafePointer<Recipe> >
 	{
-		var searchResults = Set<UnsafePointer<Recipe> >
-		if !user.memory.recipes.count {return searchResults}
+		var searchResults = Set<UnsafePointer<Recipe> >()
+		if user.pointee.recipes.count == 0 {return searchResults}
 
 		// Call the appropriate function according to what we are searching for
 		switch (scope)
 		{
 			// Search only by recipe name
 			case (0):
-				searchResults = searchName(searchText)
+				searchResults = searchName(searchText: text)
 			// Search only by ingredient name
 			case (1):
-				searchResults = searchIngredient(searchText)
+				searchResults = searchIngredient(searchText: text)
 			// Search only by tag
 			case (2):
-				searchResults = searchTag(searchText)
+				searchResults = searchTag(searchText: text)
 			// Search excluding ingredient
 			case (3):
-				searchResults = searchNoIngredient(searchText)
+				searchResults = searchNoIngredient(searchText: text)
 			// Search excluding tag 
 			case (4):
-				searchResults = searchNoTag(searchText)
+				searchResults = searchNoTag(searchText: text)
 			// Search excluding tag and ingredient
 			case (5):
-				searchResults = searchNoIngrTag(searchText)
+				searchResults = searchNoIngrTag(searchText: text)
 			// Search by all 3
 			default:
-				searchResults = searchAll(searchText)
+				searchResults = searchAll(searchText: text)
 		}
 
 		return searchResults
@@ -595,7 +593,7 @@ class Search
 	//			 false if the two strings share no words
 	func compareStrings(str: String, arr1: [String]) -> Bool
 	{
-		let arr2 = split(str1) {$0 == " "}
+		let arr2 = str.components(separatedBy: " ")
 
 		for word in arr1
 		{
@@ -610,12 +608,12 @@ class Search
 	// Returns:  an array of all recipes that fit the search parameter
 	func searchName(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe> >
-		if !user.memory.recipes.count {return results}
+		var results = Set<UnsafePointer<Recipe> >()
+		if user.pointee.recipes.count == 0 {return results}
 
-		for recipe in user.memory.recipes
+		for recipe in user.pointee.recipes
 		{
-			if compareStrings(searchText, split(recipe!.name) {$0 == " "})
+			if compareStrings(str: searchText, arr1: recipe.pointee.name.components(separatedBy: " "))
 			{
 				results.insert(recipe)
 			}
@@ -629,12 +627,12 @@ class Search
 	// Returns:  an array of all recipes that fit the search parameter
 	func searchIngredient(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe> >
-		if !user.memory.recipes.count {return results}
+		var results = Set<UnsafePointer<Recipe> >()
+		if user.pointee.recipes.count == 0 {return results}
 
-		for recipe in user.memory.recipes
+		for recipe in user.pointee.recipes
 		{
-			if compareStrings(searchText, recipe!.returnIngredients())
+			if compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
 			{
 				results.insert(recipe)
 			}
@@ -648,12 +646,12 @@ class Search
 	// Returns:  an array of all recipes that fit the search parameter
 	func searchTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe> >
-		if !user.memory.recipes.count {return results}
+		var results = Set<UnsafePointer<Recipe> >()
+		if user.pointee.recipes.count == 0 {return results}
 
-		for recipe in user.memory.recipes
+		for recipe in user.pointee.recipes
 		{
-			if compareStrings(searchText, recipe!.returnTags())	{results.insert(recipe)}
+			if compareStrings(str: searchText, arr1: recipe.pointee.returnTags())	{results.insert(recipe)}
 		}
 
 		return results
@@ -664,12 +662,12 @@ class Search
 	// Returns:  an array of all recipes that fit the search parameter
 	func searchNoIngredient(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe> >
-		if !user.memory.recipes.count {return results}
+		var results = Set<UnsafePointer<Recipe> >()
+		if user.pointee.recipes.count == 0 {return results}
 
-		for recipe in user.memory.recipes
+		for recipe in user.pointee.recipes
 		{
-			if !compareStrings(searchText, recipe!.returnIngredients())
+			if !compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
 			{
 				results.insert(recipe)
 			}
@@ -683,12 +681,12 @@ class Search
 	// Returns:  an array of all recipes that fit the search parameter
 	func searchNoTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe> >
-		if !user.memory.recipes.count {return results}
+		var results = Set<UnsafePointer<Recipe> >()
+		if user.pointee.recipes.count == 0 {return results}
 
-		for recipe in user.memory.recipes
+		for recipe in user.pointee.recipes
 		{
-			if !compareStrings(searchText, recipe!.returnTags()) 
+			if !compareStrings(str: searchText, arr1: recipe.pointee.returnTags()) 
 			{
 				results.insert(recipe)
 			}
@@ -702,12 +700,12 @@ class Search
 	// Returns:  an array of all recipes that fit the search parameter
 	func searchNoIngrTag(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe> >
-		if !user.memory.recipes.count {return results}
+		var results = Set<UnsafePointer<Recipe> >()
+		if user.pointee.recipes.count == 0 {return results}
 
-		for recipe in user.memory.recipes
+		for recipe in user.pointee.recipes
 		{
-			if !compareStrings(searchText, recipe!.returnTags()) && !compareStrings(searchText, recipe!.returnIngredients())
+			if !compareStrings(str: searchText, arr1: recipe.pointee.returnTags()) && !compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
 			{
 				results.insert(recipe)
 			}
@@ -721,12 +719,12 @@ class Search
 	// Returns:  an array of all recipes that fit the search parameter
 	func searchAll(searchText: String) -> Set<UnsafePointer<Recipe> >
 	{
-		var results = Set<UnsafePointer<Recipe> >
-		if !user.memory.recipes.count {return results}
+		var results = Set<UnsafePointer<Recipe> >()
+		if user.pointee.recipes.count == 0 {return results}
 
-		results.union(searchName(searchText))
-		results.union(searchIngredient(searchText))
-		results.unions(searchTag(searchText))
+		results = results.union(searchName(searchText: searchText))
+		results = results.union(searchIngredient(searchText: searchText))
+		results = results.union(searchTag(searchText: searchText))
 
 		return results
 	}
@@ -736,4 +734,3 @@ class Search
 	{
 		user = controller
 	}
-}
