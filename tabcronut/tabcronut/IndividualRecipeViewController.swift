@@ -157,9 +157,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var exportRecipe: UIButton!
     @IBOutlet weak var editRecipe: UIButton!
     
-    
-    
-    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
@@ -283,6 +280,19 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             self.present(alertController, animated: true, completion:nil)
             
             //print("The user entered:%@ & %@",textUser.text!,textPW.text!);
+            
+            
+            /*********/
+            // Attempt to add location based alarm
+            let structuredLocation = EKStructuredLocation(title: "Walmart")
+//            structuredLocation.geoLocation = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
+            structuredLocation.geoLocation = CLLocation(latitude: 42.7457131, longitude: -73.6410101)
+            structuredLocation.radius = 5.0
+            let alarm = EKAlarm()
+            alarm.structuredLocation = structuredLocation
+            alarm.proximity = .enter
+            event.addAlarm(alarm)
+            /*********/
         }
         
         alertController.addTextField { (textField) -> Void in

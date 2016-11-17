@@ -309,10 +309,11 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 //    }
     
     
-
-    
     // MARK: Navigation
     
+    // Function that corresponds to the cancel button. Upon hitting
+    // the cancel button, all of the text fields are cleared and any data
+    // the user previously submitted is cleared.
     @IBAction func cancelRecipe(_ sender: UIBarButtonItem) {
         recipeTitle.text = ""
         ingrName.text = ""
@@ -330,9 +331,10 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if saveRecipeButton === sender as AnyObject?
         {
             let title = recipeTitle.text
@@ -345,6 +347,5 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             self.ingredientTable.reloadData()
             self.directionTable.reloadData()
         }
-        
     }
 }
