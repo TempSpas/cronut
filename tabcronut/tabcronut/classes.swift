@@ -34,16 +34,16 @@ extension UIColor
 
 class Recipe 
 {
-	var name: String
-	var image: UIImageView?=nil
+	fileprivate var name: String
+	fileprivate var image: UIImageView?=nil
 	// Array of directions in order of use
-	var directions: [String]
+	fileprivate var directions: [String]
 	// Maps an Ingredient to a pair (Amount, Measurement Type)
-	var ingredients: [String: (Float, String)]  
+	fileprivate var ingredients: [String: (Float, String)]  
 	// Map of tags, associates them with a text color and a category indicator
-	var tags: [String: (UIColor, Character)]
-	var ID: Int
-	static var NumRecipes: Int = 0
+	fileprivate var tags: [String: (UIColor, Character)]
+	fileprivate var ID: Int
+	fileprivate static var NumRecipes: Int = 0
 
 	// Creates a new recipe object
 	// Params:   dish is the name of the recipe 
@@ -77,7 +77,7 @@ class Recipe
 		ingredients = oldRecipe.ingredients 
 		directions = oldRecipe.directions
 		ID = Recipe.NumRecipes + 1
-		Recipe.NumRecipes += 1
+		Recipe.NumRecipes = ID
         tags = oldRecipe.tags
     }
 
@@ -306,12 +306,10 @@ class User: NSObject, NSCoding
     }
 
 	// MARK: Properties
-	var name: String
-	var longitude: Float?
-	var latitude: Float?
-	var recipes: [UnsafePointer<Recipe>]
-	var groceries: [String: (Float, String)]
-	var inventory: [String: (Float, String)]
+	fileprivate var name: String
+	fileprivate var recipes: [UnsafePointer<Recipe>]
+	fileprivate var groceries: [String: (Float, String)]
+	fileprivate var inventory: [String: (Float, String)]
 
 	// MARK: Archiving Paths
 	static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in:
@@ -333,8 +331,6 @@ class User: NSObject, NSCoding
     init(user: String)
 	{
 		name = user
-		longitude = nil 
-		latitude = nil
 		recipes = []
         groceries = [:]
         inventory = [:]
@@ -385,6 +381,27 @@ class User: NSObject, NSCoding
 			return true
 		}
 	}
+	
+	// gets all groceries and returns to the caller
+	// Returns:  a dictionary of format [ingredient: (amount, unit)]
+	func getGroceries() -> [String: (Float, String)]
+	{
+	    let newGroceryList = groceries
+	    return newGroceryList
+	}
+	
+	// Attempts to change a grocery item in the grocery map
+	// Params:   ingredient is the name of the ingredient to be changed
+	//           amount is the numerical amount of the ingredient needed (optional)
+	//           unit is the unit type of the ingredient (ie ounce) (optional)
+	// Modifies: groceries
+	// Effects:  the key 'ingredient' has its amount and unit changed in the groceries dictionary
+	// Returns:  a boolean indicating if the process succeeded or not
+	func changeGrocery(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool 
+	{
+	    removeGrocery(ingredient: ingredient)
+	    return addGrocery(ingredient: ingredient, amount: amount, unit: unit)
+	}
 
 	// Attempts to add an ingredient to the inventory map
 	// Params:   ingredient is the name of the ingredient as a string 
@@ -421,11 +438,33 @@ class User: NSObject, NSCoding
 	// Returns:  true if the item was removed, otherwise false
 	func removeInventory(ingredient: String) -> Bool
 	{
-		if ingredient == "" {return false}
 		if inventory[ingredient] == nil {return false}
 		inventory[ingredient] = nil 
 		return true
 	}
+	
+	// gets all items in the inventory and returns to the caller
+	// Returns:  a dictionary of format [ingredient: (amount, unit)]
+	func getInventory() -> [String: (Float, String)]
+	{
+	    let newGroceryList = groceries
+	    return newGroceryList
+	}
+	
+	// Attempts to change an item in the inventory map
+	// Params:   ingredient is the name of the ingredient to be changed
+	//           amount is the numerical amount of the ingredient needed (optional)
+	//           unit is the unit type of the ingredient (ie ounce) (optional)
+	// Modifies: inventory
+	// Effects:  the key 'ingredient' has its amount and unit changed in the inventory dictionary
+	// Returns:  a boolean indicating if the process succeeded or not
+	func changeInventory(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool 
+	{
+	    removeGrocery(ingredient: ingredient)
+	    return addGrocery(ingredient: ingredient, amount: amount, unit: unit)
+	}
+
+
 
 	func encodeWithCoder(aCoder: NSCoder)
 	{
@@ -477,31 +516,31 @@ class Scanner
 
      class func callOCRSpace(imageName: UIImage) {
         // Create URL request
-        let key = "4de28eea7e88957"
-        var url: NSURL = NSURL(string: "https://api.ocr.space/Parse/Image")!
-        var request: URLRequest = URLRequest(url: url as URL)
+        private let key = "4de28eea7e88957"
+        private var url: NSURL = NSURL(string: "https://api.ocr.space/Parse/Image")!
+        private var request: URLRequest = URLRequest(url: url as URL)
         request.httpMethod = "POST"
-        var boundary: String = "randomString"
+        private var boundary: String = "randomString"
         request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        var session: URLSession = URLSession.shared
+        private var session: URLSession = URLSession.shared
 
         // Image file and parameters, get image down to 1MB file size
-        var compressionRatio = 1.0
-        var imageData: Data
+        private var compressionRatio = 1.0
+        private var imageData: Data
 
         repeat {
             imageData = UIImageJPEGRepresentation(imageName, CGFloat(compressionRatio))!
             compressionRatio = compressionRatio - 0.05
         } while(imageData.count >= 1024)
 
-        var parametersDictionary: [NSObject : AnyObject] = NSDictionary(dictionaryLiteral:(key,"apikey"),("False","isOverlayRequired"),("eng","language")) as [NSObject : AnyObject]
+        private var parametersDictionary: [NSObject : AnyObject] = NSDictionary(dictionaryLiteral:(key,"apikey"),("False","isOverlayRequired"),("eng","language")) as [NSObject : AnyObject]
 
         // Create multipart form body
-        var data: Data = self.createBodyWithBoundary(boundary: boundary, parameters: parametersDictionary, imageData: (imageData as Data) as Data, filename: "test") as Data
+        private var data: Data = self.createBodyWithBoundary(boundary: boundary, parameters: parametersDictionary, imageData: (imageData as Data) as Data, filename: "test") as Data
         request.httpBody = data as Data
 
          // Start data session
-        var task: URLSessionDataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data, response: URLResponse, error: NSError) in
+        private var task: URLSessionDataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data, response: URLResponse, error: NSError) in
             var myError: NSError
             do {
                 let results = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [NSObject: String]
@@ -518,7 +557,7 @@ class Scanner
    
     class func createBodyWithBoundary(boundary: String, parameters: [NSObject : AnyObject], imageData data: Data, filename: String) -> Data {
        
-        var body: Data = Data()
+        private var body: Data = Data()
        
         if !data.isEmpty {
             body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
@@ -547,7 +586,7 @@ class Scanner
 
 class Search
 {
-	var user: UnsafePointer<User>
+	private var user: UnsafePointer<User>
 
 	// Searches recipe list in one of 5 manners according to scope for searchText
 	// Params:   searchText is a string designating what should be searched for 
