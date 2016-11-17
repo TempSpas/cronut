@@ -67,23 +67,30 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             ingrName.text=""
             ingrAmt.text=""
             ingrUnit.text=""
+            let alertController = UIAlertController(title: "Error", message: "Please enter an ingredient that doesn't exist!", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+            self.present(alertController, animated: true, completion:nil)
             print("Please enter an ingredient that doesn't exist...")
             self.ingredientTable.endUpdates()
             return
         }
-        if let isfloat = Float(ingrAmt.text!)    {
-            print("got float")
-        }
-        else    {
+        if ingrAmt.text != ""  {
+            if let isfloat = Float(ingrAmt.text!)    {
+                print("got float")
+            }
+            else    {
+            
+                let alertController = UIAlertController(title: "Error", message: "PLEASE enter a FLOAT value for AMOUNT you IDIOT", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+                self.present(alertController, animated: true, completion:nil)
+                
+                ingrAmt.text=""
+                self.ingredientTable.endUpdates()
+                return
+            }
 //            let alertController = UIAlertController(title: "Error", message:
 //                "Please enter float amount", preferredStyle: UIAlertControllerStyle.alert)
-            let alertController = UIAlertController(title: "Error", message: "PLEASE enter a FLOAT value for AMOUNT you IDIOT", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
-            self.present(alertController, animated: true, completion:nil)
-
-            ingrAmt.text=""
-            self.ingredientTable.endUpdates()
-            return
+            
         }
         //test.append(ingrName.text!)
 //        ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
@@ -115,8 +122,8 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         
         print(ingredients)
         temp_ingredient = ingrName.text!
-        temp_amount = Float(ingrAmt.text!)!
-        temp_unit = ingrUnit.text!
+        //temp_amount = Float(ingrAmt.text!)!
+        //temp_unit = ingrUnit.text!
         if emptyThings != true {
             temp_amount = Float(ingrAmt.text!)!
             temp_unit = ingrUnit.text!
