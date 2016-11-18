@@ -76,6 +76,9 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             //Present the alert controller
             self.present(alertController, animated: true, completion:nil)
         }
+        let addToInventoryList = UIAlertAction(title: "Add Ingredients to Inventory", style: .default)  { (action:UIAlertAction) in
+            self.performSegue(withIdentifier: "addToInventory", sender:self)
+        }
         let addEvent = UIAlertAction(title: "Add Calendar Event", style: .default)  { (action:UIAlertAction) in
             let eventStore = EKEventStore()
             
@@ -115,6 +118,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         alertController.addAction(dupRecipe)
         alertController.addAction(edRecipe)
         alertController.addAction(modRecipe)
+        alertController.addAction(addToInventoryList)
         alertController.addAction(addEvent)
         alertController.addAction(remEvent)
         alertController.addAction(defaultAction)
@@ -390,6 +394,12 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             controller.pre_directions = recipe?.directions
             controller.numIngrs = recipe?.ingredients.count
             
+        }
+        if segue.identifier == "addToInventory" {
+            let controller = (segue.destination as! AddInventoryViewController)
+            let recipe = passedValue
+            controller.recipeValue = recipe
+            controller.numIngreds = recipe?.ingredients.count
         }
     }
     

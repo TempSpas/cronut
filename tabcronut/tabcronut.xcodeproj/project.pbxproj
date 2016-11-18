@@ -16,7 +16,9 @@
 		6D1E04E01DCA772F0069AD62 /* EditDirectionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1E04DF1DCA772F0069AD62 /* EditDirectionsTableViewCell.swift */; };
 		6D4EDE4F1DBE81E00038CB66 /* RecipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */; };
 		6D725A511DC6DF5000F987AD /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D725A501DC6DF5000F987AD /* IngredientTableViewCell.swift */; };
+		6DA7D7CF1DDE76790088BAB3 /* AddInventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA7D7CE1DDE76790088BAB3 /* AddInventoryViewController.swift */; };
 		6DBE1B4E1DDCFF17002D8E1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DBE1B4D1DDCFF17002D8E1A /* Main.storyboard */; };
+		6DCE3D411DDE96CF000C9E8E /* InventoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCE3D401DDE96CE000C9E8E /* InventoryTableViewController.swift */; };
 		6DE9DBAD1DC2B5F80018CB1A /* IndividualRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE9DBAC1DC2B5F80018CB1A /* IndividualRecipeViewController.swift */; };
 		A92A7FAC1DBED23E00099D71 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92A7FAB1DBED23E00099D71 /* MapKit.framework */; };
 		A92A7FAE1DBED2F500099D71 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */; };
@@ -62,7 +64,9 @@
 		6D1E04DF1DCA772F0069AD62 /* EditDirectionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDirectionsTableViewCell.swift; sourceTree = "<group>"; };
 		6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeTableViewController.swift; sourceTree = "<group>"; };
 		6D725A501DC6DF5000F987AD /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
-		6DBE1B4D1DDCFF17002D8E1A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../../../Downloads/Main.storyboard; sourceTree = "<group>"; };
+		6DA7D7CE1DDE76790088BAB3 /* AddInventoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInventoryViewController.swift; sourceTree = "<group>"; };
+		6DBE1B4D1DDCFF17002D8E1A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		6DCE3D401DDE96CE000C9E8E /* InventoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryTableViewController.swift; sourceTree = "<group>"; };
 		6DE9DBAC1DC2B5F80018CB1A /* IndividualRecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualRecipeViewController.swift; sourceTree = "<group>"; };
 		A92A7FAB1DBED23E00099D71 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				BADB759F1DBD4DC400B12ED0 /* classes.swift */,
+				6DCE3D401DDE96CE000C9E8E /* InventoryTableViewController.swift */,
 				6DE9DBAC1DC2B5F80018CB1A /* IndividualRecipeViewController.swift */,
 				6D725A501DC6DF5000F987AD /* IngredientTableViewCell.swift */,
 				6D1E04DB1DCA5FB80069AD62 /* EditRecipeViewController.swift */,
@@ -157,6 +162,7 @@
 				BA1EFE081DB69843009E892A /* FirstViewController.swift */,
 				BA1EFE0A1DB69843009E892A /* SecondViewController.swift */,
 				6DBE1B4D1DDCFF17002D8E1A /* Main.storyboard */,
+				6DA7D7CE1DDE76790088BAB3 /* AddInventoryViewController.swift */,
 				A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */,
 				BADE0D661DDCF5B3006A1F80 /* CameraViewController.swift */,
 				6D1E04DF1DCA772F0069AD62 /* EditDirectionsTableViewCell.swift */,
@@ -337,6 +343,7 @@
 				BA26B4CC1DBD43D500665E4C /* AddRecipeViewController.swift in Sources */,
 				BA1EFE071DB69843009E892A /* AppDelegate.swift in Sources */,
 				6D1E04E01DCA772F0069AD62 /* EditDirectionsTableViewCell.swift in Sources */,
+				6DCE3D411DDE96CF000C9E8E /* InventoryTableViewController.swift in Sources */,
 				A92A7FAE1DBED2F500099D71 /* ThirdViewController.swift in Sources */,
 				BA1EFE091DB69843009E892A /* FirstViewController.swift in Sources */,
 				6DE9DBAD1DC2B5F80018CB1A /* IndividualRecipeViewController.swift in Sources */,
@@ -344,6 +351,7 @@
 				6D725A511DC6DF5000F987AD /* IngredientTableViewCell.swift in Sources */,
 				BADE0D671DDCF5B3006A1F80 /* CameraViewController.swift in Sources */,
 				6D1E04DE1DCA65170069AD62 /* EditIngredientTableViewCell.swift in Sources */,
+				6DA7D7CF1DDE76790088BAB3 /* AddInventoryViewController.swift in Sources */,
 				6D1E04D41DC983A60069AD62 /* DirectionTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
