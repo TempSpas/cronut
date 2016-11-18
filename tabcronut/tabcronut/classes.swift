@@ -588,7 +588,7 @@ class Search
 {
 	private var user: UnsafePointer<User>
 
-	// Searches recipe list in one of 5 manners according to scope for searchText
+	// Searches recipe list in one of 7 manners according to scope for searchText
 	// Params:   searchText is a string designating what should be searched for 
 	//			 scope is an integer indicating the scope that should be searched
 	// Returns:  an array of all recipes that fit the search parameters
@@ -622,7 +622,7 @@ class Search
 			// Search excluding tag and ingredient
 			case (5):
 				searchResults = searchNoIngrTag(searchText: text)
-			// Search by all 3
+			// Search by recipe name, ingredient name, and tag
 			default:
 				searchResults = searchAll(searchText: text)
 		}
@@ -638,8 +638,10 @@ class Search
 	// compares two strings for any matching words
 	// Params:   str is the first string to be compared
 	//			 arr1 is the second string to be compared
-	// Returns:  true if the two strings share any words (which are assumed to be seperated by spaces)
-	//			 false if the two strings share no words
+	// Returns:  a pair:
+	//			 	true if the two strings share any words (which are assumed to be seperated by spaces)
+	//			 	false if the two strings share no words
+	//				the Float is 0 if false, else 0 <= Float <= 1 where 1 = all words in arr1 are in str
 	func compareStrings(str: String, arr1: [String]) -> (Bool, Float)
 	{
 		let arr2 = str.components(separatedBy: " ")
@@ -661,7 +663,7 @@ class Search
 
 	// Searches for all recipes with searchText in the recipe name
 	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
+	// Returns:  a dictionary of all recipes that fit the search parameter, mapped to their score from compareStrings
 	func searchName(searchText: String) -> [Recipe:Float]
 	{
 		var results = [Recipe:Float]()
@@ -681,7 +683,7 @@ class Search
 
 	// Searches for all recipes with searchText in the ingredients list for that recipe
 	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
+	// Returns:  a dictionary of all recipes that fit the search parameter, mapped to their score from compareStrings
 	func searchIngredient(searchText: String) -> [Recipe:Float]
 	{
 		var results = [Recipe:Float]()
@@ -701,7 +703,7 @@ class Search
 
 	// Searches for all recipes with searchText in the tags list for that recipe
 	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
+	// Returns:  a dictionary of all recipes that fit the search parameter, mapped to their score from compareStrings
 	func searchTag(searchText: String) -> [Recipe:Float]
 	{
 		var results = [Recipe:Float]()
@@ -721,7 +723,7 @@ class Search
 
 	// Searches for all recipes that do not have searchText in their ingredients
 	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
+	// Returns:  a dictionary of all recipes that fit the search parameter, mapped to their score from compareStrings
 	func searchNoIngredient(searchText: String) -> [Recipe:Float]
 	{
 		var results = [Recipe:Float]()
@@ -741,7 +743,7 @@ class Search
 
 	// Searches for all recipes with searchText in the tags list for that recipe
 	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
+	// Returns:  a dictionary of all recipes that fit the search parameter, mapped to their score from compareStrings
 	func searchNoTag(searchText: String) -> [Recipe:Float]
 	{
 		var results = [Recipe:Float]()
@@ -761,7 +763,7 @@ class Search
 
 	// Searches for all recipes that do not have searchText in their tags or ingredients
 	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
+	// Returns:  a dictionary of all recipes that fit the search parameter, mapped to their score from compareStrings
 	func searchNoIngrTag(searchText: String) -> [Recipe:Float]
 	{
 		var results = [Recipe:Float]()
@@ -782,7 +784,7 @@ class Search
 
 	// Searches for all recipes with searchText in the name, tags list, or ingredients list for that recipe
 	// Params:   searchText is a string designating what should be searched for
-	// Returns:  an array of all recipes that fit the search parameter
+	// Returns:  a dictionary of all recipes that fit the search parameter, mapped to their score from compareStrings
 	func searchAll(searchText: String) -> [Recipe:Float]
 	{
 		var finalResults = [Recipe:Float]()
