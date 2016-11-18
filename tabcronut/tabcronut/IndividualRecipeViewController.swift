@@ -4,7 +4,8 @@
 // 
 //  This file represents the detail view of the screen
 //  when the user taps one of their recipes. The code displays
-//  thhe ingredients and directions.
+//  the ingredients, directions, contains a Menu, and all code
+//  related to functionality of the menu items.
 //
 //  Created by Aditi Nataraj on 10/27/16.
 //  Copyright © 2016 Cronut LLC. All rights reserved.
