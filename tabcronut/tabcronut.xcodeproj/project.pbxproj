@@ -19,6 +19,7 @@
 		6DA7D7CF1DDE76790088BAB3 /* AddInventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA7D7CE1DDE76790088BAB3 /* AddInventoryViewController.swift */; };
 		6DBE1B4E1DDCFF17002D8E1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DBE1B4D1DDCFF17002D8E1A /* Main.storyboard */; };
 		6DCE3D411DDE96CF000C9E8E /* InventoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCE3D401DDE96CE000C9E8E /* InventoryTableViewController.swift */; };
+		6DCE3D431DDEC48B000C9E8E /* inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE3D421DDEC48B000C9E8E /* inventory.png */; };
 		6DE9DBAD1DC2B5F80018CB1A /* IndividualRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE9DBAC1DC2B5F80018CB1A /* IndividualRecipeViewController.swift */; };
 		A92A7FAC1DBED23E00099D71 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92A7FAB1DBED23E00099D71 /* MapKit.framework */; };
 		A92A7FAE1DBED2F500099D71 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */; };
@@ -67,6 +68,7 @@
 		6DA7D7CE1DDE76790088BAB3 /* AddInventoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInventoryViewController.swift; sourceTree = "<group>"; };
 		6DBE1B4D1DDCFF17002D8E1A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6DCE3D401DDE96CE000C9E8E /* InventoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryTableViewController.swift; sourceTree = "<group>"; };
+		6DCE3D421DDEC48B000C9E8E /* inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inventory.png; path = ../Images/inventory.png; sourceTree = "<group>"; };
 		6DE9DBAC1DC2B5F80018CB1A /* IndividualRecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualRecipeViewController.swift; sourceTree = "<group>"; };
 		A92A7FAB1DBED23E00099D71 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				6D1E04D91DCA5D920069AD62 /* 44carrot_360.png */,
 				BA7828CD1DBD487C00CA0767 /* 44plus.png */,
 				6D1E04D51DCA5CB50069AD62 /* Map44.png */,
+				6DCE3D421DDEC48B000C9E8E /* inventory.png */,
 				6D1E04D71DCA5D1B0069AD62 /* RecipeList36.png */,
 				BA1EFE051DB69843009E892A /* tabcronut */,
 				BA1EFE1C1DB69843009E892A /* tabcronutTests */,
@@ -310,6 +313,7 @@
 				6D1E04D81DCA5D1B0069AD62 /* RecipeList36.png in Resources */,
 				6D1E04D61DCA5CB50069AD62 /* Map44.png in Resources */,
 				BA1EFE101DB69843009E892A /* Assets.xcassets in Resources */,
+				6DCE3D431DDEC48B000C9E8E /* inventory.png in Resources */,
 				6D1E04DA1DCA5D920069AD62 /* 44carrot_360.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
