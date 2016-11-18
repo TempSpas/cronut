@@ -516,31 +516,31 @@ class Scanner
 
      class func callOCRSpace(imageName: UIImage) {
         // Create URL request
-        private let key = "4de28eea7e88957"
-        private var url: NSURL = NSURL(string: "https://api.ocr.space/Parse/Image")!
-        private var request: URLRequest = URLRequest(url: url as URL)
+        let key = "4de28eea7e88957"
+        var url: NSURL = NSURL(string: "https://api.ocr.space/Parse/Image")!
+        var request: URLRequest = URLRequest(url: url as URL)
         request.httpMethod = "POST"
-        private var boundary: String = "randomString"
+        var boundary: String = "randomString"
         request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        private var session: URLSession = URLSession.shared
+        var session: URLSession = URLSession.shared
 
         // Image file and parameters, get image down to 1MB file size
-        private var compressionRatio = 1.0
-        private var imageData: Data
+        var compressionRatio = 1.0
+        var imageData: Data
 
         repeat {
             imageData = UIImageJPEGRepresentation(imageName, CGFloat(compressionRatio))!
             compressionRatio = compressionRatio - 0.05
         } while(imageData.count >= 1024)
 
-        private var parametersDictionary: [NSObject : AnyObject] = NSDictionary(dictionaryLiteral:(key,"apikey"),("False","isOverlayRequired"),("eng","language")) as [NSObject : AnyObject]
+        var parametersDictionary: [NSObject : AnyObject] = NSDictionary(dictionaryLiteral:(key,"apikey"),("False","isOverlayRequired"),("eng","language")) as [NSObject : AnyObject]
 
         // Create multipart form body
-        private var data: Data = self.createBodyWithBoundary(boundary: boundary, parameters: parametersDictionary, imageData: (imageData as Data) as Data, filename: "test") as Data
+        var data: Data = self.createBodyWithBoundary(boundary: boundary, parameters: parametersDictionary, imageData: (imageData as Data) as Data, filename: "test") as Data
         request.httpBody = data as Data
 
          // Start data session
-        private var task: URLSessionDataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data, response: URLResponse, error: NSError) in
+        var task: URLSessionDataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data, response: URLResponse, error: NSError) in
             var myError: NSError
             do {
                 let results = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [NSObject: String]
@@ -557,7 +557,7 @@ class Scanner
    
     class func createBodyWithBoundary(boundary: String, parameters: [NSObject : AnyObject], imageData data: Data, filename: String) -> Data {
        
-        private var body: Data = Data()
+        var body: Data = Data()
        
         if !data.isEmpty {
             body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
@@ -592,10 +592,14 @@ class Search
 	// Params:   searchText is a string designating what should be searched for 
 	//			 scope is an integer indicating the scope that should be searched
 	// Returns:  an array of all recipes that fit the search parameters
-	func searchRecipes(text: String, scope: Int) -> Set<UnsafePointer<Recipe> >
+	func searchRecipes(text: String, scope: Int) -> [Recipe]
 	{
-		var searchResults = Set<UnsafePointer<Recipe> >()
-		if user.pointee.recipes.count == 0 {return searchResults}
+		var searchResults = [Recipe:Float]()
+		if user.pointee.recipes.count == 0 
+		{
+		    let answer = [Recipe] (searchResults.keys)
+		    return answer
+		}
 
 		// Call the appropriate function according to what we are searching for
 		switch (scope)
@@ -623,7 +627,12 @@ class Search
 				searchResults = searchAll(searchText: text)
 		}
 
-		return searchResults
+		var recipes = [Recipe] (searchResults.keys)
+		recipes.sort {
+			searchResults[$0]! > searchResults[$1]!
+		}
+
+		return recipes
 	}
 
 	// compares two strings for any matching words
@@ -631,31 +640,39 @@ class Search
 	//			 arr1 is the second string to be compared
 	// Returns:  true if the two strings share any words (which are assumed to be seperated by spaces)
 	//			 false if the two strings share no words
-	func compareStrings(str: String, arr1: [String]) -> Bool
+	func compareStrings(str: String, arr1: [String]) -> (Bool, Float)
 	{
 		let arr2 = str.components(separatedBy: " ")
+		let numWords = Float(arr2.count)
+		var wordsFound: Float = 0
+		var anyMatches = false
 
 		for word in arr1
 		{
-			if arr2.contains(word) {return true}
+			if arr2.contains(word) 
+			{
+				wordsFound += 1
+				anyMatches = true
+			}
 		}
 
-		return false
+		return (anyMatches, wordsFound/numWords)
 	}
 
 	// Searches for all recipes with searchText in the recipe name
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchName(searchText: String) -> Set<UnsafePointer<Recipe> >
+	func searchName(searchText: String) -> [Recipe:Float]
 	{
-		var results = Set<UnsafePointer<Recipe> >()
+		var results = [Recipe:Float]()
 		if user.pointee.recipes.count == 0 {return results}
 
 		for recipe in user.pointee.recipes
 		{
-			if compareStrings(str: searchText, arr1: recipe.pointee.name.components(separatedBy: " "))
+			let pair = compareStrings(str: searchText, arr1: recipe.pointee.name.components(separatedBy: " "))
+			if pair.0
 			{
-				results.insert(recipe)
+				results[recipe.pointee] = pair.1
 			}
 		}
 
@@ -665,16 +682,17 @@ class Search
 	// Searches for all recipes with searchText in the ingredients list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchIngredient(searchText: String) -> Set<UnsafePointer<Recipe> >
+	func searchIngredient(searchText: String) -> [Recipe:Float]
 	{
-		var results = Set<UnsafePointer<Recipe> >()
+		var results = [Recipe:Float]()
 		if user.pointee.recipes.count == 0 {return results}
 
 		for recipe in user.pointee.recipes
 		{
-			if compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
+			let pair = compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
+			if pair.0
 			{
-				results.insert(recipe)
+				results[recipe.pointee] = pair.1
 			}
 		}
 
@@ -684,14 +702,18 @@ class Search
 	// Searches for all recipes with searchText in the tags list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchTag(searchText: String) -> Set<UnsafePointer<Recipe> >
+	func searchTag(searchText: String) -> [Recipe:Float]
 	{
-		var results = Set<UnsafePointer<Recipe> >()
+		var results = [Recipe:Float]()
 		if user.pointee.recipes.count == 0 {return results}
 
 		for recipe in user.pointee.recipes
 		{
-			if compareStrings(str: searchText, arr1: recipe.pointee.returnTags())	{results.insert(recipe)}
+			let pair = compareStrings(str: searchText, arr1: recipe.pointee.returnTags())	
+			if pair.0
+			{
+				results[recipe.pointee] = pair.1
+			}
 		}
 
 		return results
@@ -700,16 +722,17 @@ class Search
 	// Searches for all recipes that do not have searchText in their ingredients
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoIngredient(searchText: String) -> Set<UnsafePointer<Recipe> >
+	func searchNoIngredient(searchText: String) -> [Recipe:Float]
 	{
-		var results = Set<UnsafePointer<Recipe> >()
+		var results = [Recipe:Float]()
 		if user.pointee.recipes.count == 0 {return results}
 
 		for recipe in user.pointee.recipes
 		{
-			if !compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
+			let pair = compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
+			if !pair.0
 			{
-				results.insert(recipe)
+				results[recipe.pointee] = pair.1
 			}
 		}
 
@@ -719,16 +742,17 @@ class Search
 	// Searches for all recipes with searchText in the tags list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoTag(searchText: String) -> Set<UnsafePointer<Recipe> >
+	func searchNoTag(searchText: String) -> [Recipe:Float]
 	{
-		var results = Set<UnsafePointer<Recipe> >()
+		var results = [Recipe:Float]()
 		if user.pointee.recipes.count == 0 {return results}
 
 		for recipe in user.pointee.recipes
 		{
-			if !compareStrings(str: searchText, arr1: recipe.pointee.returnTags()) 
+			let pair = compareStrings(str: searchText, arr1: recipe.pointee.returnTags())
+			if !pair.0 
 			{
-				results.insert(recipe)
+				results[recipe.pointee] = pair.1
 			}
 		}
 
@@ -738,16 +762,18 @@ class Search
 	// Searches for all recipes that do not have searchText in their tags or ingredients
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchNoIngrTag(searchText: String) -> Set<UnsafePointer<Recipe> >
+	func searchNoIngrTag(searchText: String) -> [Recipe:Float]
 	{
-		var results = Set<UnsafePointer<Recipe> >()
+		var results = [Recipe:Float]()
 		if user.pointee.recipes.count == 0 {return results}
 
 		for recipe in user.pointee.recipes
 		{
-			if !compareStrings(str: searchText, arr1: recipe.pointee.returnTags()) && !compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
+			let pairA = compareStrings(str: searchText, arr1: recipe.pointee.returnTags())
+			let pairB = compareStrings(str: searchText, arr1: recipe.pointee.returnIngredients())
+			if !pairA.0 && !pairB.0
 			{
-				results.insert(recipe)
+				results[recipe.pointee] = 0
 			}
 		}
 
@@ -757,16 +783,40 @@ class Search
 	// Searches for all recipes with searchText in the name, tags list, or ingredients list for that recipe
 	// Params:   searchText is a string designating what should be searched for
 	// Returns:  an array of all recipes that fit the search parameter
-	func searchAll(searchText: String) -> Set<UnsafePointer<Recipe> >
+	func searchAll(searchText: String) -> [Recipe:Float]
 	{
-		var results = Set<UnsafePointer<Recipe> >()
-		if user.pointee.recipes.count == 0 {return results}
+		var finalResults = [Recipe:Float]()
+		if user.pointee.recipes.count == 0 {return finalResults}
 
-		results = results.union(searchName(searchText: searchText))
-		results = results.union(searchIngredient(searchText: searchText))
-		results = results.union(searchTag(searchText: searchText))
+		finalResults = searchName(searchText: searchText)
+		let resultsA = searchIngredient(searchText: searchText)
+		let resultsB = searchTag(searchText: searchText)
 
-		return results
+		for (recipe,score) in resultsA
+		{
+			if finalResults[recipe] != nil
+			{
+				finalResults[recipe]! += score
+			}
+			else 
+			{
+				finalResults[recipe] = score
+			}
+		}
+
+		for (recipe,score) in resultsB
+		{
+			if finalResults[recipe] != nil
+			{
+				finalResults[recipe]! += score
+			}
+			else 
+			{
+				finalResults[recipe] = score
+			}
+		}
+
+		return finalResults
 	}
 
 	// Initializer for the class, only need a user to search for
