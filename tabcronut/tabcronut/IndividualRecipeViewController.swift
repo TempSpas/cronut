@@ -270,9 +270,11 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             // Attempt to add location based alarm
             let structuredLocation = EKStructuredLocation(title: "Walmart")
             //            structuredLocation.geoLocation = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
-            // This is the latitude/longitude of Walmart
+            
+            // This is the latitude/longitude of the nearby Walmart
             structuredLocation.geoLocation = CLLocation(latitude: 42.7457131, longitude: -73.6410101)
             structuredLocation.radius = 5.0 // No idea what the units are
+            
             let alarm = EKAlarm()
             alarm.structuredLocation = structuredLocation
             alarm.proximity = .enter
