@@ -264,6 +264,21 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             event.startDate = dateFormatter.date( from: textStart.text! )!
             event.endDate = dateFormatter.date( from: textEnd.text! )!
             event.calendar = eventStore.defaultCalendarForNewEvents
+            
+            
+            /*********/
+            // Attempt to add location based alarm
+            let structuredLocation = EKStructuredLocation(title: "Walmart")
+            //            structuredLocation.geoLocation = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
+            // This is the latitude/longitude of Walmart
+            structuredLocation.geoLocation = CLLocation(latitude: 42.7457131, longitude: -73.6410101)
+            structuredLocation.radius = 5.0 // No idea what the units are
+            let alarm = EKAlarm()
+            alarm.structuredLocation = structuredLocation
+            alarm.proximity = .enter
+            event.addAlarm(alarm)
+            /*********/
+            
             do {
                 try eventStore.save(event, span: .thisEvent)
                 self.savedEventId = event.eventIdentifier
@@ -283,18 +298,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             //print("The user entered:%@ & %@",textUser.text!,textPW.text!);
             
             
-            /*********/
-            // Attempt to add location based alarm
-            let structuredLocation = EKStructuredLocation(title: "Walmart")
-//            structuredLocation.geoLocation = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
-            // This is the latitude/longitude of Walmart
-            structuredLocation.geoLocation = CLLocation(latitude: 42.7457131, longitude: -73.6410101)
-            structuredLocation.radius = 5.0 // No idea what the units are
-            let alarm = EKAlarm()
-            alarm.structuredLocation = structuredLocation
-            alarm.proximity = .enter
-            event.addAlarm(alarm)
-            /*********/
+            
         }
         
         alertController.addTextField { (textField) -> Void in
