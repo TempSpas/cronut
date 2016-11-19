@@ -524,7 +524,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" image="Map44.png" id="Bj3-6a-mo0"/>
+                    <tabBarItem key="tabBarItem" title="" image="map" id="Bj3-6a-mo0"/>
                     <connections>
                         <outlet property="mapView" destination="i7E-Z4-0ua" id="RFB-KR-d8v"/>
                     </connections>
@@ -533,11 +533,11 @@
             </objects>
             <point key="canvasLocation" x="772" y="1700.5997001499252"/>
         </scene>
-        <!--Recipes-->
+        <!--Split View Controller-->
         <scene sceneID="6hU-Eb-dkq">
             <objects>
                 <splitViewController id="hgv-XL-h3y" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Recipes" image="44carrot_360.png" id="4pp-ek-z7H"/>
+                    <tabBarItem key="tabBarItem" title="" image="notepad" id="4pp-ek-z7H"/>
                     <connections>
                         <segue destination="ZNg-JM-aYm" kind="relationship" relationship="masterViewController" id="pw0-mi-A3x"/>
                     </connections>
@@ -589,17 +589,22 @@
                                     <outlet property="delegate" destination="21b-yn-Ukq" id="1II-NX-GKb"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inventory List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhL-cq-gWI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Shopping List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhL-cq-gWI">
                                 <frame key="frameInset" minX="16" minY="20" width="322" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfZ-Qc-OAp">
+                                <frame key="frameInset" minX="313" minY="28" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Export"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" image="basket" selectedImage="inventory.png" id="IZ2-Dw-yxq"/>
+                    <tabBarItem key="tabBarItem" image="shopping_cart" selectedImage="shopping_cart" id="IZ2-Dw-yxq"/>
                     <connections>
                         <outlet property="invTable" destination="BsX-1z-bAb" id="UEc-qB-kpr"/>
                     </connections>
@@ -630,7 +635,7 @@
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
-        <!--Add-->
+        <!--Add Recipe View Controller-->
         <scene sceneID="gQN-ZA-GwX">
             <objects>
                 <viewController id="5pI-1u-rOd" customClass="AddRecipeViewController" customModule="tabcronut" customModuleProvider="target" sceneMemberID="viewController">
@@ -852,7 +857,7 @@
                             <constraint firstItem="GW8-G5-ELM" firstAttribute="height" relation="greaterThanOrEqual" secondItem="IVa-m2-h3a" secondAttribute="height" id="t1j-Ur-ORS"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Add" image="44plus.png" id="KhO-Wz-5lu"/>
+                    <tabBarItem key="tabBarItem" title="" image="notepad_add" id="KhO-Wz-5lu"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1500"/>
                     <connections>
@@ -879,13 +884,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="44carrot_360.png" width="44" height="44"/>
-        <image name="44plus.png" width="44" height="44"/>
-        <image name="Map44.png" width="44" height="44"/>
-        <image name="basket" width="32" height="32"/>
         <image name="camera" width="32" height="32"/>
-        <image name="inventory.png" width="44" height="44"/>
         <image name="location" width="32" height="32"/>
+        <image name="map" width="32" height="32"/>
+        <image name="notepad" width="32" height="32"/>
+        <image name="notepad_add" width="32" height="32"/>
+        <image name="shopping_cart" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Euy-4E-jla"/>
