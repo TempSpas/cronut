@@ -40,7 +40,7 @@ class Recipe
     // Maps an Ingredient to a pair (Amount, Measurement Type)
     var ingredients: [String: (Float, String)]
     // Map of tags, associates them with a text color and a category indicator
-    var tags: [String: (UIColor, Character)]
+    var tags: [String: (UIColor, String)]
     var ID: Int
     static var NumRecipes: Int = 0
     
@@ -88,7 +88,7 @@ class Recipe
     // Modifies: tags
     // Effects:  a new tag is added to the tags map
     // Returns:  false if a tag with the same name already exists for this recipe, else true
-    func addTag(newTag: String, newColor: UIColor? = nil, newCat: Character? = nil) -> Bool
+    func addTag(newTag: String, newColor: UIColor? = nil, newCat: String? = nil) -> Bool
     {
         if tags[newTag] == nil
         {

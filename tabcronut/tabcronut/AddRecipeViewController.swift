@@ -28,14 +28,20 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     var pre_title: String?
     var pre_ingredients: [String: (Float, String)]?
     var pre_directions: [String]?
+    var pre_tags: [String: (UIColor, String)]?
     var numIngrs: Int?
+    var numTags: Int?
+
     
     var ingredients: [String: (Float, String)] = [:]
     var directions: [String] = []
     var test: [String] = []
+    var tags: [String: (UIColor, String)] = [:]
     var temp_ingredient: String = ""
     var temp_amount: Float = 0.0
     var temp_unit: String = ""
+    var num_newtags: Int = 0
+
     
     
     @IBOutlet weak var ingrName: UITextField!
@@ -53,6 +59,9 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var direction: UITextField!
     
     @IBOutlet weak var directionTable: UITableView!
+    
+    @IBOutlet weak var tagTable: UITableView!
+    
     
     
 //    @IBOutlet var ingredientTable: UITableView!
@@ -154,13 +163,22 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         direction.text=""
         self.directionTable.endUpdates()
     }
-
+    
+    
+    @IBAction func addTags(_ sender: Any) {
+        print("HERE")
+        self.tagTable.beginUpdates()
+        let d = self.tagTable.numberOfRows(inSection: 0)
+        num_newtags += 1
+        tagTable.insertRows(at: [NSIndexPath(row: d, section: 0) as IndexPath], with: .bottom)
+        self.tagTable.endUpdates()
+    }
 
     var recipe: Recipe?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.contentSize.height = 1000
+        //scrollView.contentSize.height = 1500
         self.hideKeyboardWhenTappedAround()
         
         if pre_ingredients != nil   {
@@ -180,6 +198,14 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         self.ingredientTable.dataSource = self
         self.directionTable.delegate = self
         self.directionTable.dataSource = self
+        self.tagTable.delegate = self
+        self.tagTable.dataSource = self
+        
+        
+       
+
+        //self.view.addSubview(textf)
+        
         //self.ingredientTable.delegate = self
         //self.ingredientTable.datasource = self
         //checkValidRecipeName()
@@ -200,6 +226,9 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         }
         if tableView == self.directionTable{
             return directions.count
+        }
+        if tableView == self.tagTable   {
+            return tags.count + num_newtags
         }
         return count!
     }
@@ -248,6 +277,18 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             let cell = directionTable.dequeueReusableCell(withIdentifier: "DirCell", for: indexPath) as! DirectionTableViewCell
             let row = indexPath.row
             cell.directionName.text = directions[row]
+            return cell
+        }
+        if tableView == self.tagTable   {
+            let cell = tagTable.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as! TagCell
+            let row = indexPath.row
+            //if (num_newtags) > (tags.count)    {
+                cell.tagName.text = ""
+                cell.tagColor.text = ""
+                cell.tagCategory.text = ""
+                //return cell
+            //}
+            
             return cell
         }
         return cell1!
@@ -308,6 +349,14 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
                 directions.remove(at: indexPath.row)
                 directionTable.deleteRows(at: [indexPath], with: .fade)
             }
+            if tableView == self.tagTable   {
+                let currentCell = tableView.cellForRow(at: indexPath)! as! TagCell
+                print(currentCell.tagName.text)
+                ingredients.removeValue(forKey: currentCell.tagName.text!)
+                //print(ingredients(at: indexPath.row))
+                //ingredients.remove(at: indexPath.row)
+                tagTable.deleteRows(at: [indexPath], with: .fade)
+            }
             
             //add code here for when you hit delete
         }
@@ -343,8 +392,10 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         direction.text = ""
         ingredients.removeAll()
         directions.removeAll()
+        tags.removeAll()
         self.ingredientTable.reloadData()
         self.directionTable.reloadData()
+        self.tagTable.reloadData()
 //        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
 //        
 //        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "RecipeTableViewController") as! RecipeTableViewController
@@ -361,12 +412,62 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             recipe = Recipe(title: title!)
             recipe?.ingredients = ingredients
             recipe?.directions = directions
+            for r in 0...(num_newtags-1)   {
+                let ip = IndexPath(row: r, section: 0)
+                print(ip)
+                let currentCell = tagTable.cellForRow(at: ip)! as! TagCell
+                if currentCell.tagName.text != ""  {
+                    if currentCell.tagColor.text == "" && currentCell.tagColor.text == "" {
+                        recipe?.addTag(newTag: currentCell.tagName.text!)
+                    }
+                    else if currentCell.tagColor.text == ""  {
+                        recipe?.addTag(newTag: currentCell.tagName.text!, newCat: currentCell.tagCategory.text)
+                    }
+                    else if currentCell.tagCategory.text == "" {
+                        if currentCell.tagColor.text == "blue"  {
+                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.blue)
+                        }
+                        if currentCell.tagColor.text == "green" {
+                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.green)
+                        }
+                    }
+                    else    {
+                        if currentCell.tagColor.text == "blue"  {
+                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.blue, newCat: currentCell.tagCategory.text)
+                        }
+                        if currentCell.tagColor.text == "green" {
+                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.green, newCat: currentCell.tagCategory.text)
+                        }
+                    }
+                }
+            }
+            //recipe?.tags = tags
             recipeTitle.text=""
             ingredients.removeAll()
             directions.removeAll()
+            tags.removeAll()
             self.ingredientTable.reloadData()
             self.directionTable.reloadData()
+            self.tagTable.reloadData()
         }
         
+    }
+}
+
+class TagCell: UITableViewCell  {
+    
+    @IBOutlet weak var tagName: UITextField!
+    @IBOutlet weak var tagColor: UITextField!
+    @IBOutlet weak var tagCategory: UITextField!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
     }
 }

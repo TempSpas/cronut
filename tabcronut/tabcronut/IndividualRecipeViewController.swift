@@ -179,6 +179,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         title = self.passedValue?.name
         print(self.passedValue?.name)
         print(self.passedValue?.ingredients)
+        print(self.passedValue?.tags)
 
         // Do any additional setup after loading the view.
     }
