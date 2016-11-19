@@ -596,15 +596,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfZ-Qc-OAp">
-                                <frame key="frameInset" minX="313" minY="28" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfZ-Qc-OAp">
+                                <frame key="frameInset" minX="320" minY="27" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Export"/>
+                                <state key="normal" image="calendar_add">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" image="shopping_cart" selectedImage="shopping_cart" id="IZ2-Dw-yxq"/>
+                    <tabBarItem key="tabBarItem" title="" image="shopping_cart" id="IZ2-Dw-yxq"/>
                     <connections>
                         <outlet property="invTable" destination="BsX-1z-bAb" id="UEc-qB-kpr"/>
                     </connections>
@@ -884,6 +886,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="calendar_add" width="32" height="32"/>
         <image name="camera" width="32" height="32"/>
         <image name="location" width="32" height="32"/>
         <image name="map" width="32" height="32"/>
