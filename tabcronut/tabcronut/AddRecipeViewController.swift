@@ -280,7 +280,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             return cell
         }
         if tableView == self.tagTable   {
-            let cell = tagTable.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as! TagCell
+            let cell = tagTable.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as! TagCellTableViewCell
             let row = indexPath.row
             //if (num_newtags) > (tags.count)    {
                 cell.tagName.text = ""
@@ -350,7 +350,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
                 directionTable.deleteRows(at: [indexPath], with: .fade)
             }
             if tableView == self.tagTable   {
-                let currentCell = tableView.cellForRow(at: indexPath)! as! TagCell
+                let currentCell = tableView.cellForRow(at: indexPath)! as! TagCellTableViewCell
                 print(currentCell.tagName.text)
                 ingredients.removeValue(forKey: currentCell.tagName.text!)
                 //print(ingredients(at: indexPath.row))
@@ -393,6 +393,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         ingredients.removeAll()
         directions.removeAll()
         tags.removeAll()
+        num_newtags = 0
         self.ingredientTable.reloadData()
         self.directionTable.reloadData()
         self.tagTable.reloadData()
@@ -415,9 +416,9 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             for r in 0...(num_newtags-1)   {
                 let ip = IndexPath(row: r, section: 0)
                 print(ip)
-                let currentCell = tagTable.cellForRow(at: ip)! as! TagCell
+                let currentCell = tagTable.cellForRow(at: ip)! as! TagCellTableViewCell
                 if currentCell.tagName.text != ""  {
-                    if currentCell.tagColor.text == "" && currentCell.tagColor.text == "" {
+                    if currentCell.tagColor.text == "" && currentCell.tagCategory.text == "" {
                         recipe?.addTag(newTag: currentCell.tagName.text!)
                     }
                     else if currentCell.tagColor.text == ""  {
@@ -427,16 +428,28 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
                         if currentCell.tagColor.text == "blue"  {
                             recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.blue)
                         }
-                        if currentCell.tagColor.text == "green" {
+                        else if currentCell.tagColor.text == "green" {
                             recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.green)
+                        }
+                        else if currentCell.tagColor.text == "red" {
+                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.red)
+                        }
+                        else    {
+                            recipe?.addTag(newTag: currentCell.tagName.text!)
                         }
                     }
                     else    {
                         if currentCell.tagColor.text == "blue"  {
                             recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.blue, newCat: currentCell.tagCategory.text)
                         }
-                        if currentCell.tagColor.text == "green" {
+                        else if currentCell.tagColor.text == "green" {
                             recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.green, newCat: currentCell.tagCategory.text)
+                        }
+                        else if currentCell.tagColor.text == "red" {
+                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.red, newCat: currentCell.tagCategory.text)
+                        }
+                        else    {
+                            recipe?.addTag(newTag: currentCell.tagName.text!, newCat: currentCell.tagCategory.text)
                         }
                     }
                 }
@@ -454,20 +467,3 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     }
 }
 
-class TagCell: UITableViewCell  {
-    
-    @IBOutlet weak var tagName: UITextField!
-    @IBOutlet weak var tagColor: UITextField!
-    @IBOutlet weak var tagCategory: UITextField!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
-}

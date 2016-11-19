@@ -27,6 +27,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBOutlet weak var ingrTable: UITableView!
     @IBOutlet weak var dirTable: UITableView!
+    @IBOutlet weak var tagTable: UITableView!
     
     
     
@@ -176,6 +177,8 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         self.ingrTable.dataSource = self
         self.dirTable.delegate = self
         self.dirTable.dataSource = self
+        self.tagTable.delegate = self
+        self.tagTable.dataSource = self
         title = self.passedValue?.name
         print(self.passedValue?.name)
         print(self.passedValue?.ingredients)
@@ -202,6 +205,9 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         }
         if tableView == self.dirTable   {
             return (self.passedValue?.directions.count)!
+        }
+        if tableView == self.tagTable   {
+            return (self.passedValue?.tags.count)!
         }
         return count!
     }
@@ -234,6 +240,21 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             let row = indexPath.row
             let dirs = self.passedValue?.directions
             cell.directionName2.text = dirs![row]
+            return cell
+        }
+        if tableView == self.tagTable   {
+            let cell = tagTable.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as! TagCellTableViewCell
+            
+            let row = indexPath.row
+            let tags = self.passedValue?.tags
+            let tagNames = [String](tags!.keys)
+            let tagVals = [(UIColor, String)](tags!.values)
+            
+            cell.tagName2.text = String(tagNames[row])
+            //            cell.ingrAmount2.text = String(ingredientValues[row].0)
+            cell.tagCategory2.text = tagVals[row].1
+            cell.tagName2.textColor = tagVals[row].0
+            cell.tagCategory2.textColor = tagVals[row].0
             return cell
         }
         return cell1!
@@ -420,3 +441,4 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
 }
+
