@@ -69,7 +69,7 @@ class RecipeTableViewController: UITableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
 		
-//        return 0
+        // return 0
 		return 1
 	}
 
@@ -97,22 +97,7 @@ class RecipeTableViewController: UITableViewController {
 //        performSegue(withIdentifier: "viewDetails", sender: self)
 //        
 //    }
-	
-	
-	
-//    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        
-//        if (segue.identifier == "viewDetails") {
-//            
-//            // initialize new view controller and cast it as your view controller
-//            let viewController = segue.destination as! IndividualRecipeViewController
-//            // your new view controller should have property that will store passed value
-//            viewController.passedValue = valueToPass
-//        }
-//        
-//    }
-//
-	
+		
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		/*
 		let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeTableCell", for: indexPath) as! RecipeViewCell
@@ -131,10 +116,12 @@ class RecipeTableViewController: UITableViewController {
 		let recipe: Recipe
 		if searchController.isActive && searchController.searchBar.text != "" {
 			recipe = filteredRecipes[indexPath.row]
+			cell.recipeLabel.text = filteredRecipes[indexPath.row].name
 		} else {
 			recipe = recipes[indexPath.row]
+			cell.recipeLabel.text = recipes[indexPath.row].name
 		}
-		cell.recipeLabel.text = recipes[indexPath.row].name
+		// cell.recipeLabel.text = recipes[indexPath.row].name
 		// cell.detailTextLabel?.text = candy.category
 		
 		return cell
@@ -161,6 +148,7 @@ class RecipeTableViewController: UITableViewController {
 	{
 		filteredRecipes = recipes.filter { recipe in
 			// return recipe.name.lowercaseString.containsString(searchText.lowercaseString)
+			print(filteredRecipes)
 			return (recipe.name.lowercased().range(of: searchText.lowercased()) != nil)
 			// Swift 3.0
 		}
@@ -193,13 +181,22 @@ class RecipeTableViewController: UITableViewController {
 		if segue.identifier == "viewDetails" {
 			//print("here!")
 			if let indexPath = self.tableView.indexPathForSelectedRow {
-				let recipe = recipes[indexPath.row]
+				// let recipe = recipes[indexPath.row]
+				let recipe: Recipe
+				if searchController.isActive && searchController.searchBar.text != "" {
+					recipe = filteredRecipes[indexPath.row]
+				} else {
+					recipe = recipes[indexPath.row]
+				}
+				
+				/*****/
+				// DEPRECATED CODE:
 				//let row = self.table.indexPathForSelectedRow?.row
 				//let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell!;
 				//
 				//        valueToPass = currentCell?.textLabel?.text
 				//let controller = (segue.destination as! UINavigationController).topViewController as! IndividualRecipeViewController
-				
+				/*****/
 				
 				let controller = (segue.destination as! IndividualRecipeViewController)
 
