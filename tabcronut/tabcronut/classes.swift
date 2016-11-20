@@ -114,6 +114,27 @@ class Recipe
         return false
     }
     
+    //modifies a tag
+    func modTag(tag: String, color: UIColor? = nil, category: String? = nil) -> Bool
+    {
+        var col: UIColor
+        var cat: String
+        if tags[tag] != nil
+        {
+            if color == nil {col = (tags[tag]?.0)!}
+            else {
+                col = color!
+            }
+            if category == nil {cat = (tags[tag]?.1)!}
+            else    {
+                cat = category!
+            }
+            tags[tag] = (col, cat)
+            return true
+        }
+        return false
+    }
+    
     // Removes a tag from the tag map for this recipe
     // Params:   oldTag is the name of the tag to be removed from this recipe
     // Modifies: tags

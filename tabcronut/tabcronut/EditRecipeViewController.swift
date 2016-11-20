@@ -298,7 +298,10 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                     }
                     let keyExists = ts?[cell.tagName.text!]
                     if keyExists != nil {
-                        continue
+                        let col = cell.tagColor.text?.components(separatedBy: " ")
+                        let returnedColor = UIColor(red: CGFloat(Float((col?[1])!)!), green: CGFloat(Float(col![2])!), blue: CGFloat(Float(col![3])!), alpha: CGFloat(Float(col![4])!))
+                        self.recipeValue?.modTag(tag: cell.tagName.text!, color: returnedColor, category: cell.tagCategory.text)
+                        workingKeys.append(cell.tagName.text!)
                     }
                     else  {
                         print("let them eat cake")
