@@ -241,10 +241,9 @@ class Recipe
 
     func checkTags(str: String) -> Bool
     {
-        // let arr2 = str.components(separatedBy: " ")
-        for word in tags
+        for word in tags.keys
         {
-            if word.lowercased().range(of: searchText.lowercased()) != nil
+            if word.lowercased().range(of: str.lowercased()) != nil
             {
                 return true
             }
@@ -254,10 +253,9 @@ class Recipe
 
     func checkIngredients(str: String) -> Bool
     {
-        // let arr2 = str.components(separatedBy: " ")
         for ingr in ingredients.keys
         {
-            if ingr.lowercased().range(of: searchText.lowercased()) != nil
+            if ingr.lowercased().range(of: str.lowercased()) != nil
             {
                 return true
             }

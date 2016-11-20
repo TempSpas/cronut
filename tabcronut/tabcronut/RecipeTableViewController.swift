@@ -148,7 +148,7 @@ class RecipeTableViewController: UITableViewController {
 	{
 		filteredRecipes = recipes.filter { recipe in
 			return ((recipe.name.lowercased().range(of: searchText.lowercased()) != nil) ||
-					recipe.checkTags(searchText) || recipe.checkIngredients(searchText))
+					recipe.checkTags(str: searchText) || recipe.checkIngredients(str: searchText))
 		}
  
 		tableView.reloadData()
