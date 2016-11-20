@@ -66,7 +66,7 @@ class RecipeTableViewController: UITableViewController {
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
-        // return 0
+		// return 0
 		return 1
 	}
 
@@ -146,13 +146,20 @@ class RecipeTableViewController: UITableViewController {
 	// Ceate the filtered array to display according to the user's search query.
 	func filterContentForSearchText(searchText: String, scope: String = "All")
 	{
-        if searchText != "" {
-            let firstChar = searchText[searchText.startIndex]
-	        let negChar: Character = "-"
+		// Search the titles, tags, and ingredients for the string
+		// and return relevant results.
+		filteredRecipes = recipes.filter { recipe in
+					return ((recipe.name.lowercased().range(of: searchText.lowercased()) != nil) ||
+							recipe.checkTags(str: searchText) || recipe.checkIngredients(str: searchText))
+		}
+
+		if searchText != "" {
+			let firstChar = searchText[searchText.startIndex]
+			let negChar: Character = "-"
 			
-	        // If the user begins the search with the "-" character, this
-	        // indicates they wish to filter that string out of the results.
-	        // Search for items without the following string.
+			// If the user begins the search with the "-" character, this
+			// indicates they wish to filter that string out of the results.
+			// Search for items without the string following the "-".
 			if firstChar == negChar {
 				var newSearch = searchText
 				newSearch.remove(at: newSearch.startIndex)
@@ -162,15 +169,7 @@ class RecipeTableViewController: UITableViewController {
 							!recipe.checkTags(str: newSearch) && !recipe.checkIngredients(str: newSearch))
 				}
 			}
-			// Otherwise, search the titles, tags, and ingredients for the string
-			// and return relevant results.
-			else {
-				filteredRecipes = recipes.filter { recipe in
-					return ((recipe.name.lowercased().range(of: searchText.lowercased()) != nil) ||
-							recipe.checkTags(str: searchText) || recipe.checkIngredients(str: searchText))
-				}
-			}
-        }
+		}
  
 		tableView.reloadData()
 	}
@@ -291,7 +290,7 @@ extension UIViewController {
 
 // Allow the class to respond to the search bar
 extension RecipeTableViewController: UISearchResultsUpdating {
-    func updateSearchResults(for: UISearchController) {
+	func updateSearchResults(for: UISearchController) {
 		filterContentForSearchText(searchText: searchController.searchBar.text!)
 	}
 }
