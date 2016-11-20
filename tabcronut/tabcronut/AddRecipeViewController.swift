@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class AddRecipeViewController: //UITableViewController, UITextFieldDelegate {
-UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     var numRows = 1
 //    @available(iOS 2.0, *)
 //    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -24,6 +25,9 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 
 
     // MARK: Properties
+    
+    @IBOutlet weak var imageView: UIImageView!
+    var newMedia: Bool?
     
     var pre_title: String?
     var pre_ingredients: [String: (Float, String)]?
@@ -402,6 +406,73 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 //        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "RecipeTableViewController") as! RecipeTableViewController
 //        self.present(nextViewController, animated:true, completion:nil)
     }
+    
+    @IBAction func useCamera(_ sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.allowsEditing = false
+            self.present(imagePicker,animated: true, completion: nil)
+            newMedia = true
+        }
+    }
+    
+    @IBAction func useCameraRoll(_ sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+            newMedia = false
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        
+        self.dismiss(animated: true, completion: nil)
+        
+        if mediaType.isEqual(to: kUTTypeImage as String) {
+            let image = info[UIImagePickerControllerOriginalImage]
+                as! UIImage
+            
+            imageView.image = image
+            
+            if (newMedia == true) {
+                UIImageWriteToSavedPhotosAlbum(image, self,
+                                               #selector(CameraViewController.image(image:didFinishSavingWithError:contextInfo:)), nil)
+            } else if mediaType.isEqual(to: kUTTypeMovie as String) {
+                // Code to support video here
+            }
+            
+        }
+    }
+    
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafeRawPointer) {
+        
+        if error != nil {
+            let alert = UIAlertController(title: "Save Failed",
+                                          message: "Failed to save image",
+                                          preferredStyle: UIAlertControllerStyle.alert)
+            
+            let cancelAction = UIAlertAction(title: "OK",
+                                             style: .cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true,
+                         completion: nil)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
