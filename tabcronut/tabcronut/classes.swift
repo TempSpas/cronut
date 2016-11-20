@@ -321,15 +321,14 @@ extension Recipe: Hashable {
     }
 }
 
-final class User: NSObject, NSCoding
+class User: NSObject, NSCoding
 {
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.nameKey)
     }
-
-    static let shared = MyClass()
     
     // MARK: Properties
+    var name: String
     var longitude: Float?
     var latitude: Float?
     var recipes: [UnsafePointer<Recipe>]
@@ -353,8 +352,14 @@ final class User: NSObject, NSCoding
     // Params:
     // Modifies:
     // Effects:
-    private init()
+    init(user: String)
     {
+        name = user
+        longitude = nil
+        latitude = nil
+        recipes = []
+        groceries = [:]
+        inventory = [:]
         
         super.init()
     }
@@ -452,7 +457,7 @@ final class User: NSObject, NSCoding
         let name = aDecoder.decodeObject(forKey: PropertyKey.nameKey) as! String
         //		let recipes = aDecoder.decodeObject(forKey: PropertyKey.recipesKey) as! [Recipe]
         // Must call designated rnitializer
-        self.init()
+        self.init(user: name)
     }
     
 }
