@@ -146,16 +146,38 @@ class RecipeTableViewController: UITableViewController {
 	// Check if recipe names contain the user's search query.
 	func filterContentForSearchText(searchText: String, scope: String = "All")
 	{
-		let firstChar = searchText[searchText.startIndex]
-		let negChar = '-'
-		
-		if firstChar == negChar {
-			filteredRecipes = recipes.filter { recipe in
-				return (!(recipe.name.lowercased().range(of: searchText.lowercased()) != nil) &&
-						!recipe.checkTags(str: searchText) && !recipe.checkIngredients(str: searchText))
+        var negSearch = false
+
+        if searchText != "" {
+            let firstChar = searchText[searchText.startIndex]
+	        let negChar: Character = "-"
+			
+			if firstChar == negChar {
+				negSearch = true
+				var newSearch = searchText
+				newSearch.remove(at: newSearch.startIndex)
+
+				filteredRecipes = recipes.filter { recipe in
+					return (!(recipe.name.lowercased().range(of: newSearch.lowercased()) != nil) &&
+							!recipe.checkTags(str: newSearch) && !recipe.checkIngredients(str: newSearch))
+				}
 			}
-		}
-		else {
+        }
+        
+  //       let firstChar = searchText[searchText.startIndex]
+  //       let negChar: Character = "-"
+		
+		// if firstChar == negChar {
+		// 	var newSearch = searchText
+		// 	newSearch.remove(at: newSearch.startIndex)
+
+		// 	filteredRecipes = recipes.filter { recipe in
+		// 		return (!(recipe.name.lowercased().range(of: newSearch.lowercased()) != nil) &&
+		// 				!recipe.checkTags(str: newSearch) && !recipe.checkIngredients(str: newSearch))
+		// 	}
+		// }
+		
+		if !negSearch {
 			filteredRecipes = recipes.filter { recipe in
 				return ((recipe.name.lowercased().range(of: searchText.lowercased()) != nil) ||
 						recipe.checkTags(str: searchText) || recipe.checkIngredients(str: searchText))
