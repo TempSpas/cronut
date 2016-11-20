@@ -12,6 +12,7 @@
 
 import UIKit
 import EventKit
+import MobileCoreServices
 
 //@objc
 //protocol IndividualRecipeViewControllerDelegate {
@@ -24,11 +25,14 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     
     var recipeTitle: String = ""
     var savedEventId : String = ""
+    var newMedia: Bool?
     
     @IBOutlet weak var ingrTable: UITableView!
     @IBOutlet weak var dirTable: UITableView!
     @IBOutlet weak var tagTable: UITableView!
     
+    
+    @IBOutlet weak var imageView: UIImageView!
     
     
 //    var delegate: IndividualRecipeViewControllerDelegate?
@@ -52,8 +56,8 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         let edRecipe = UIAlertAction(title: "Edit", style: .default)    { (action:UIAlertAction) in
             self.performSegue(withIdentifier: "editRecipeSegue", sender: self)
         }
-        let modRecipe = UIAlertAction(title: "Mod", style: .default) { (action:UIAlertAction) in
-            let alertController = UIAlertController(title: "Mod Recipe", message: "Write the factor by which you want to modify this recipe", preferredStyle: .alert)
+        let modRecipe = UIAlertAction(title: "Scale", style: .default) { (action:UIAlertAction) in
+            let alertController = UIAlertController(title: "Scale Recipe", message: "Write the factor by which you want to scale this recipe", preferredStyle: .alert)
             let actionCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
                 //This is called when the user presses the cancel button.
                 print("You've pressed the cancel button");
@@ -62,7 +66,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
                 //This is called when the user presses the login button.
                 let textTitle = alertController.textFields![0] as UITextField;
                 //print(textTitle.text);
-                if textTitle.text != "" {
+                if textTitle.text != "" && Float(textTitle.text!)! > Float(0) {
                     self.changeRecipe(factor: Float(textTitle.text!)!);
                 }
             }
@@ -181,9 +185,9 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         self.tagTable.dataSource = self
         navigationItem.title = "recipe"
         title = self.passedValue?.name
-        print(self.passedValue?.name)
-        print(self.passedValue?.ingredients)
-        print(self.passedValue?.tags)
+        print(self.passedValue?.image)
+        self.imageView.image = self.passedValue?.image?.image
+        print(self.passedValue?.image)
 
         // Do any additional setup after loading the view.
     }

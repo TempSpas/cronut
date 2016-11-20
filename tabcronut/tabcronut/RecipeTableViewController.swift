@@ -18,12 +18,48 @@ class RecipeTableViewController: UITableViewController {
     var recipes = [Recipe]()
     var objects = [AnyObject]()
     var filteredRecipes = [Recipe]()
+    var ingredients: [String: (Float, String)] = [:]
+    var directions: [String] = []
+    var tags: [String: (UIColor, String)] = [:]
     
     // Display search results in the same view controller
     let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // initial cronut recipe
+        ingredients["canola oil"] = (0.0,"")
+        ingredients["frozen dough"] = (16.0, "oz")
+        ingredients["vanilla pudding"] = (4.0, "oz")
+        ingredients["powdered sugar"] = (6.0, "cups")
+        ingredients["vanilla extract"] = (1.0, "tsp")
+        ingredients["milk"] = (1.0, "cup")
+        ingredients["granulated sugar"] = (0.25, "cup")
+        ingredients["cinnamon"] = (0.5, "tsp")
+        ingredients["lemon juice"] = (0.0,"")
+        
+        directions.append("fill large pot with canola oil; heat over medium")
+        directions.append("fry the dough in the oil for 45-90s")
+        directions.append("mix sugar, vanilla, and milk")
+        directions.append("mix cinnamon and sugar")
+        directions.append("enjoy")
+        
+        tags["dessert"] = (UIColor.purple, "pastry")
+        tags["unhealthy"] = (UIColor.brown, "nutrition")
+        tags["foodporn"] = (UIColor.red, "sex appeal")
+        
+        let imageName = "OtherBackground.jpg"
+        let image = UIImage(named: imageName)
+        let imageView = UIImageView(image: image!)
+        
+        
+        var recipe = Recipe(title: "Cronut Recipe")
+        recipe.ingredients = ingredients
+        recipe.directions = directions
+        recipe.tags = tags
+        recipe.image = imageView
+        recipes.append(recipe)
         
         navigationItem.leftBarButtonItem = editButtonItem
         
@@ -226,6 +262,8 @@ class RecipeTableViewController: UITableViewController {
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 controller.navigationItem.title = "recipe"
+                controller.navigationItem.rightBarButtonItem = self.splitViewController?.displayModeButtonItem
+                //controller.navigationItem.rightBarButtonItem
                 //controller.navigationItem.rightBarButtonItem = controller.showOptions()
                 self.table.reloadData()
             }
