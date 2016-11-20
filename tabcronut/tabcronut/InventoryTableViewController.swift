@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import EventKit
 
 class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var total_ingreds: [String] = []
     var ingreds: [String]?
     
+    var eventStore = EKEventStore()
     
     @IBOutlet weak var invTable: UITableView!
     
@@ -22,7 +24,7 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         self.invTable.dataSource = self
         self.invTable.delegate = self
-        self.title = "Inventory List"
+        //self.title = "Inventory List"
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -102,6 +104,48 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func addReminder(_ sender: Any) {
+        self.eventStore.requestAccess(to: EKEntityType.reminder, completion:
+            {(granted, error) in
+                if !granted {
+                    print("Access to store not granted")
+                }
+        })
+        let reminder = EKReminder(eventStore: self.eventStore)
+        reminder.title = "Shopping List"
+        reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
+        var ls = ""
+        for i in 1...self.total_ingreds.count {
+            ls += self.total_ingreds[i-1] + "\n"
+        }
+        reminder.notes = ls
+        
+        let location = EKStructuredLocation(title: "Walmart")
+        location.geoLocation = CLLocation(latitude: 42.745602, longitude: -73.638805)
+        let alarm = EKAlarm()
+        alarm.structuredLocation = location
+        alarm.proximity = EKAlarmProximity.enter
+        
+        reminder.addAlarm(alarm)
+        
+        do {
+            try self.eventStore.save(reminder,
+                                     commit: true)
+        } catch let error {
+            print("Reminder failed with error \(error.localizedDescription)")
+        }
+        
+        
+        let alertController = UIAlertController(title: "Just to let you know", message: "Reminder was added successfully, yay!", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+            print("You've pressed OK button");
+        }
+        
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion:nil)
+    }
+
     
     @IBAction func unwindToInventoryList(sender: UIStoryboardSegue)
     {

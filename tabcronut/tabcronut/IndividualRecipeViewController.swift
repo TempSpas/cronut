@@ -179,6 +179,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         self.dirTable.dataSource = self
         self.tagTable.delegate = self
         self.tagTable.dataSource = self
+        navigationItem.title = "recipe"
         title = self.passedValue?.name
         print(self.passedValue?.name)
         print(self.passedValue?.ingredients)

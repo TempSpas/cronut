@@ -264,6 +264,32 @@ class Recipe
         return false
     }
     
+    func checkTags(str: String) -> Bool
+    {
+        // let arr2 = str.components(separatedBy: " ")
+        for word in tags.keys
+        {
+            if word.lowercased().range(of: str.lowercased()) != nil
+            {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func checkIngredients(str: String) -> Bool
+    {
+        // let arr2 = str.components(separatedBy: " ")
+        for ingr in ingredients.keys
+        {
+            if ingr.lowercased().range(of: str.lowercased()) != nil
+            {
+                return true
+            }
+        }
+        return false
+    }
+    
     // Changes a direction in this ingredient object
     // Params:   direction is a string to be changed in the directions array
     //           newDirection is the direction to take its place
@@ -363,6 +389,7 @@ class User: NSObject, NSCoding
             return true
         }
     }
+    
     
     // Attempts to remove a grocery item from the grocery map
     // Params:   ingredient is the name of the ingredient to be removed from the map
