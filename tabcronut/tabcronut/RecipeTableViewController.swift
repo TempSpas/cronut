@@ -15,7 +15,6 @@ class RecipeTableViewController: UITableViewController {
 	@IBOutlet weak var addRecipeButton: UIBarButtonItem!
 	@IBOutlet var table: UITableView!
 	
-	//var attractionNames = [String]()
 	var recipes = [Recipe]()
 	var objects = [AnyObject]()
 	var filteredRecipes = [Recipe]()
@@ -48,8 +47,7 @@ class RecipeTableViewController: UITableViewController {
 		// Finally, you add the searchBar to your table view’s tableHeaderView.
 		// Remember that Interface Builder is not yet compatible with 
 		// UISearchController, making this necessary (?????)
-		tableView.tableHeaderView = searchController.searchBar
-		
+		tableView.tableHeaderView = searchController.searchBar		
 		/*****/
 
 		// Uncomment the following line to preserve selection between presentations
@@ -68,15 +66,13 @@ class RecipeTableViewController: UITableViewController {
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
-		
         // return 0
 		return 1
 	}
 
+	// Displays the recipes in the table.
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		// #warning Incomplete implementation, return the number of rows
-		// return 0
-		// return attractionNames.count
+		// If the user has entered text in the search, display the filtered results.
 		if searchController.isActive && searchController.searchBar.text != "" {
 			return filteredRecipes.count
 		}
@@ -112,6 +108,7 @@ class RecipeTableViewController: UITableViewController {
 		return cell
 		*/
 
+		// Populate the cells with the correct names based on search results.
 		let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeTableCell", for: indexPath) as! RecipeViewCell
 		let recipe: Recipe
 		if searchController.isActive && searchController.searchBar.text != "" {
@@ -141,16 +138,16 @@ class RecipeTableViewController: UITableViewController {
 			tableView.deleteRows(at: [indexPath], with: .fade)
 		} else if editingStyle == .insert {
 			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-		}    
+
+			// ????????????
+		}
 	}
 
+	// Check if recipe names contain the user's search query.
 	func filterContentForSearchText(searchText: String, scope: String = "All")
 	{
 		filteredRecipes = recipes.filter { recipe in
-			// return recipe.name.lowercaseString.containsString(searchText.lowercaseString)
-			print(filteredRecipes)
 			return (recipe.name.lowercased().range(of: searchText.lowercased()) != nil)
-			// Swift 3.0
 		}
  
 		tableView.reloadData()
@@ -182,6 +179,9 @@ class RecipeTableViewController: UITableViewController {
 			//print("here!")
 			if let indexPath = self.tableView.indexPathForSelectedRow {
 				// let recipe = recipes[indexPath.row]
+				
+				// Ensure that the correct pages are accessed after search
+				// filters out irrelevant recipes.
 				let recipe: Recipe
 				if searchController.isActive && searchController.searchBar.text != "" {
 					recipe = filteredRecipes[indexPath.row]
@@ -199,10 +199,7 @@ class RecipeTableViewController: UITableViewController {
 				/*****/
 				
 				let controller = (segue.destination as! IndividualRecipeViewController)
-
-				controller.passedValue = recipe
-				//controller.passedValue = "hi" as String!
-			   
+				controller.passedValue = recipe			   
 				controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
 				controller.navigationItem.leftItemsSupplementBackButton = true
 				self.table.reloadData()
@@ -239,8 +236,6 @@ class RecipeTableViewController: UITableViewController {
 			recipes.append(r)
 			
 			tableView.insertRows(at: [newIndexPath as IndexPath], with: .bottom)
-			
-			
 		}
 	}
  
