@@ -143,17 +143,17 @@ class RecipeTableViewController: UITableViewController {
 		}
 	}
 
-	// Check if recipe names contain the user's search query.
+	// Ceate the filtered array to display according to the user's search query.
 	func filterContentForSearchText(searchText: String, scope: String = "All")
 	{
-        var negSearch = false
-
         if searchText != "" {
             let firstChar = searchText[searchText.startIndex]
 	        let negChar: Character = "-"
 			
+	        // If the user begins the search with the "-" character, this
+	        // indicates they wish to filter that string out of the results.
+	        // Search for items without the following string.
 			if firstChar == negChar {
-				negSearch = true
 				var newSearch = searchText
 				newSearch.remove(at: newSearch.startIndex)
 
@@ -162,27 +162,15 @@ class RecipeTableViewController: UITableViewController {
 							!recipe.checkTags(str: newSearch) && !recipe.checkIngredients(str: newSearch))
 				}
 			}
-        }
-        
-  //       let firstChar = searchText[searchText.startIndex]
-  //       let negChar: Character = "-"
-		
-		// if firstChar == negChar {
-		// 	var newSearch = searchText
-		// 	newSearch.remove(at: newSearch.startIndex)
-
-		// 	filteredRecipes = recipes.filter { recipe in
-		// 		return (!(recipe.name.lowercased().range(of: newSearch.lowercased()) != nil) &&
-		// 				!recipe.checkTags(str: newSearch) && !recipe.checkIngredients(str: newSearch))
-		// 	}
-		// }
-		
-		if !negSearch {
-			filteredRecipes = recipes.filter { recipe in
-				return ((recipe.name.lowercased().range(of: searchText.lowercased()) != nil) ||
-						recipe.checkTags(str: searchText) || recipe.checkIngredients(str: searchText))
+			// Otherwise, search the titles, tags, and ingredients for the string
+			// and return relevant results.
+			else {
+				filteredRecipes = recipes.filter { recipe in
+					return ((recipe.name.lowercased().range(of: searchText.lowercased()) != nil) ||
+							recipe.checkTags(str: searchText) || recipe.checkIngredients(str: searchText))
+				}
 			}
-		}
+        }
  
 		tableView.reloadData()
 	}
