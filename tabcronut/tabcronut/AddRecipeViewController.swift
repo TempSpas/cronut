@@ -413,6 +413,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             recipe = Recipe(title: title!)
             recipe?.ingredients = ingredients
             recipe?.directions = directions
+            if num_newtags > 0  {
             for r in 0...(num_newtags-1)   {
                 let ip = IndexPath(row: r, section: 0)
                 print(ip)
@@ -453,6 +454,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
                         }
                     }
                 }
+            }
             }
             //recipe?.tags = tags
             recipeTitle.text=""

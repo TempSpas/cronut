@@ -96,7 +96,6 @@ class Recipe
             {
                 var newC = UIColor()
                 newC = .randomColor()
-                print(newC)
                 tags[newTag] = (newC, newCat!)
                 return true
             }
