@@ -146,9 +146,20 @@ class RecipeTableViewController: UITableViewController {
 	// Check if recipe names contain the user's search query.
 	func filterContentForSearchText(searchText: String, scope: String = "All")
 	{
-		filteredRecipes = recipes.filter { recipe in
-			return ((recipe.name.lowercased().range(of: searchText.lowercased()) != nil) ||
-					recipe.checkTags(str: searchText) || recipe.checkIngredients(str: searchText))
+		let firstChar = searchText[searchText.startIndex]
+		let negChar = '-'
+		
+		if firstChar == negChar {
+			filteredRecipes = recipes.filter { recipe in
+				return (!(recipe.name.lowercased().range(of: searchText.lowercased()) != nil) &&
+						!recipe.checkTags(str: searchText) && !recipe.checkIngredients(str: searchText))
+			}
+		}
+		else {
+			filteredRecipes = recipes.filter { recipe in
+				return ((recipe.name.lowercased().range(of: searchText.lowercased()) != nil) ||
+						recipe.checkTags(str: searchText) || recipe.checkIngredients(str: searchText))
+			}
 		}
  
 		tableView.reloadData()
