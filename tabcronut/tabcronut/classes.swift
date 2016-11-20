@@ -238,6 +238,32 @@ class Recipe
         
         return false
     }
+
+    func checkTags(str: String) -> Bool
+    {
+        // let arr2 = str.components(separatedBy: " ")
+        for word in tags
+        {
+            if word.lowercased().range(of: searchText.lowercased()) != nil
+            {
+                return true
+            }
+        }
+        return false
+    }
+
+    func checkIngredients(str: String) -> Bool
+    {
+        // let arr2 = str.components(separatedBy: " ")
+        for ingr in ingredients.keys
+        {
+            if ingr.lowercased().range(of: searchText.lowercased()) != nil
+            {
+                return true
+            }
+        }
+        return false
+    }
     
     // Changes a direction in this ingredient object
     // Params:   direction is a string to be changed in the directions array
