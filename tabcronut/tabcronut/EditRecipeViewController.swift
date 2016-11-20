@@ -15,13 +15,15 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var numIngreds: Int?
     var numDirs: Int?
-    
+    var numTags: Int?
     
     
     @IBOutlet weak var saveEditButton: UIBarButtonItem!
     @IBOutlet weak var dirTable: UITableView!
     @IBOutlet weak var ingrTable: UITableView!
     @IBOutlet weak var editRecipeName: UITextField!
+    @IBOutlet weak var tagTable: UITableView!
+    
     
     @IBAction func addEmptyIngredientRow(_ sender: AnyObject) {
         
@@ -45,6 +47,14 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
+    @IBAction func addEmptyTagRow(_ sender: Any) {
+        self.tagTable.beginUpdates()
+        let t = self.tagTable.numberOfRows(inSection: 0)
+        numTags? += 1
+        tagTable.insertRows(at:[NSIndexPath(row: t, section: 0) as IndexPath], with: .bottom)
+        self.tagTable.endUpdates()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,6 +65,8 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         self.dirTable.delegate = self
         self.ingrTable.dataSource = self
         self.ingrTable.delegate = self
+        self.tagTable.delegate = self
+        self.tagTable.dataSource = self
         
         self.editRecipeName.text = self.recipeValue?.name
         
@@ -85,6 +97,9 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         if tableView == self.dirTable{
             return (numDirs)!
             //return (self.recipeValue?.directions.count)!
+        }
+        if tableView == self.tagTable   {
+            return (numTags)!
         }
         return count!
     }
@@ -130,6 +145,27 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.editDir.text = dir
             return cell
         }
+        if tableView == self.tagTable   {
+            let cell = tagTable.dequeueReusableCell(withIdentifier: "tagcell", for: indexPath) as! EditTabTableViewCell
+            let row = indexPath.row
+            print("hi")
+            let tagz = self.recipeValue?.tags
+            if numTags! > (self.recipeValue?.tags.count)! {
+                cell.tagName.text = ""
+                cell.tagColor.text = ""
+                cell.tagCategory.text = ""
+                return cell
+            }
+            let tagNames = [String](tagz!.keys)
+            let tagValues = [(UIColor, String)](tagz!.values)
+            
+            //print(ingredientNames[row])
+            cell.tagName.text = String(tagNames[row])
+            cell.tagColor.text = String(describing: tagValues[row].0)
+            cell.tagCategory.text = tagValues[row].1
+            
+            return cell
+        }
         return cell1!
     }
     
@@ -157,6 +193,13 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                 numDirs? -= 1
                 dirTable.deleteRows(at: [indexPath], with: .fade)
             }
+            if tableView == self.tagTable   {
+                let currentCell = tableView.cellForRow(at: indexPath)! as! EditTabTableViewCell
+                recipeValue?.removeTag(oldTag: currentCell.tagName.text!)
+                numTags? -= 1
+                tagTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            
             
             //add code here for when you hit delete
         }
@@ -244,12 +287,52 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
             
+            let t = tagTable.numberOfRows(inSection: 0)
+            let ts = self.recipeValue?.tags
+            if t != 0   {
+                for index in 0...(t-1)  {
+                    let iPath = IndexPath(row: index, section: 0)
+                    let cell = tagTable.cellForRow(at: iPath) as! EditTabTableViewCell
+                    if cell.tagName.text == nil    {
+                        continue
+                    }
+                    let keyExists = ts?[cell.tagName.text!]
+                    if keyExists != nil {
+                        continue
+                    }
+                    else  {
+                        print("let them eat cake")
+                        if cell.tagColor.text == "" && cell.tagCategory.text == ""  {
+                            self.recipeValue?.addTag(newTag: cell.tagName.text!)
+                        }
+                        else if cell.tagColor.text != "" && cell.tagCategory.text == ""  {
+                            
+                            let col = cell.tagColor.text?.components(separatedBy: " ")
+                            let returnedColor = UIColor(red: CGFloat(Float((col?[1])!)!), green: CGFloat(Float((col?[2])!)!), blue: CGFloat(Float((col?[3])!)!), alpha: CGFloat(Float((col?[4])!)!))
+                            self.recipeValue?.addTag(newTag: cell.tagName.text!, newColor: returnedColor)
+                        }
+                        else if cell.tagColor.text == "" && cell.tagCategory.text != ""  {
+                            print("CAKE")
+                            let x = self.recipeValue?.addTag(newTag: cell.tagName.text!, newCat: cell.tagCategory.text)
+                            print(x)
+                        }
+                        else    {
+                            let col = cell.tagColor.text?.components(separatedBy: " ")
+                            let returnedColor = UIColor(red: CGFloat(Float((col?[1])!)!), green: CGFloat(Float(col![2])!), blue: CGFloat(Float(col![3])!), alpha: CGFloat(Float(col![4])!))
+                            self.recipeValue?.addTag(newTag: cell.tagName.text!, newColor: returnedColor, newCat: cell.tagCategory.text!)
+                        }
+                        workingKeys.append(cell.tagName.text!)
+                    }
+
+                }
+            }
             
             if self.recipeValue?.name != editRecipeName.text    {
                 self.recipeValue?.name = editRecipeName.text!
             }
             self.ingrTable.reloadData()
             self.dirTable.reloadData()
+            self.tagTable.reloadData()
         }
         
     }

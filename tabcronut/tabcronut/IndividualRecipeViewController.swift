@@ -404,6 +404,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             controller.recipeValue = recipe
             controller.numIngreds = recipe?.ingredients.count
             controller.numDirs = recipe?.directions.count
+            controller.numTags = recipe?.tags.count
 //            controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
 //            controller.navigationItem.leftItemsSupplementBackButton = true
         
@@ -435,6 +436,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             passedValue = r
             ingrTable.reloadData()
             dirTable.reloadData()
+            tagTable.reloadData()
             self.title = r.name
             //tableView.insertRows(at: [newIndexPath as IndexPath], with: .bottom)
             
