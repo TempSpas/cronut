@@ -6,6 +6,8 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this file contains the map view 
+
 import UIKit
 import MapKit
 

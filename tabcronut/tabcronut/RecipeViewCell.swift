@@ -6,9 +6,13 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this file contains the elements that are shown in a recipe view table
+
 import UIKit
 
 class RecipeViewCell: UITableViewCell {
+    
+    // label for recipe cell
     @IBOutlet weak var recipeLabel: UILabel!
 
     override func awakeFromNib() {

@@ -6,6 +6,9 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this file has the direction name for the direction table
+// this is reused in the add scene and the individual recipe scene
+
 import UIKit
 
 class DirectionTableViewCell: UITableViewCell {

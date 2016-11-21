@@ -6,14 +6,15 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this is used for the edit scene for the tag table
+
 import UIKit
 
 class EditTabTableViewCell: UITableViewCell {
 
+    //keep track of all of the labels available for the tag table
     @IBOutlet weak var tagCategory: UITextField!
     @IBOutlet weak var tagName: UITextField!
-
-    
     @IBOutlet weak var tagColor: UITextField!
     
     override func awakeFromNib() {

@@ -10,52 +10,52 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// individual recipe view controller
+// manages the view for each individual recipe
+// allows the user to modify the recipe with the press of a button
+
 import UIKit
 import EventKit
 import MobileCoreServices
 
-//@objc
-//protocol IndividualRecipeViewControllerDelegate {
-//    @objc optional func toggleLeftPanel()
-//    @objc optional func collapseSidePanels()
-//}
 
 
 class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // saves variables
     var recipeTitle: String = ""
     var savedEventId : String = ""
     var newMedia: Bool?
     
+    
+    // connects outlets to the storyboard
     @IBOutlet weak var ingrTable: UITableView!
     @IBOutlet weak var dirTable: UITableView!
     @IBOutlet weak var tagTable: UITableView!
     
     
     @IBOutlet weak var imageView: UIImageView!
-    
-    
-//    var delegate: IndividualRecipeViewControllerDelegate?
-//
-//    @IBAction func revealMenu(_ sender: AnyObject) {
-//        print("HERE!")
-//        print(delegate)
-//        delegate?.toggleLeftPanel?()
-//    }
+
     
     var passedValue: Recipe?
     
+    // menu button to show all the options for the user
     @IBAction func showOptions(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "Hey man", message: "What do you want to do?", preferredStyle: .actionSheet)
         
         let defaultAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-        //let dupRecipe = UIAlertAction(title: "Duplicate", style: .default, handler: nil)
+        
+        // add recipe segue
         let dupRecipe = UIAlertAction(title: "Duplicate", style: .default) { (action:UIAlertAction) in
             self.performSegue(withIdentifier: "addRecipeSegue", sender: self)
         }
+        
+        // edit recipe segue
         let edRecipe = UIAlertAction(title: "Edit", style: .default)    { (action:UIAlertAction) in
             self.performSegue(withIdentifier: "editRecipeSegue", sender: self)
         }
+        
+        // scale recipe segue
         let modRecipe = UIAlertAction(title: "Scale", style: .default) { (action:UIAlertAction) in
             let alertController = UIAlertController(title: "Scale Recipe", message: "Write the factor by which you want to scale this recipe", preferredStyle: .alert)
             let actionCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
@@ -81,9 +81,13 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             //Present the alert controller
             self.present(alertController, animated: true, completion:nil)
         }
+        
+        // add inventory segue
         let addToInventoryList = UIAlertAction(title: "Add Ingredients to Inventory", style: .default)  { (action:UIAlertAction) in
             self.performSegue(withIdentifier: "addToInventory", sender:self)
         }
+        
+        // add event
         let addEvent = UIAlertAction(title: "Add Calendar Event", style: .default)  { (action:UIAlertAction) in
             let eventStore = EKEventStore()
             
@@ -100,6 +104,8 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
                 self.createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
             }
         }
+        
+        // remove event
         let remEvent = UIAlertAction(title: "Remove Calendar Event", style: .default)   { (action:UIAlertAction) in
             let eventStore = EKEventStore()
             
@@ -120,6 +126,8 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             alertController.addAction(OKAction)
             self.present(alertController, animated: true, completion:nil)
         }
+        
+        // add all of these actions to the action sheet
         alertController.addAction(dupRecipe)
         alertController.addAction(edRecipe)
         alertController.addAction(modRecipe)
@@ -128,16 +136,16 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         alertController.addAction(remEvent)
         alertController.addAction(defaultAction)
         
-        
+        // present the action view
         present(alertController, animated: true, completion: nil)
     }
     
+    // helper recipe to change the recipe
     func changeRecipe(factor: Float) {
         if (self.passedValue?.ingredients.count)! > 0   {
             let ingreds = self.passedValue?.ingredients
             let ingr_list = [String](ingreds!.keys)
             for index in 0...(ingr_list.count-1)   {
-                print("here");
                 let curr = ingr_list[index]
                 self.passedValue?.ingredients[curr]?.0 = factor*(self.passedValue?.ingredients[curr]?.0)!
                 ingrTable.reloadData()
@@ -145,29 +153,9 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             
         }
     }
-    
-    
-//    var detailItem: AnyObject? {
-//        didSet {
-//            // Update the view.
-//            self.configureView()
-//        }
-//    }
-//    
-//    func configureView() {
-//        // Update the user interface for the detail item.
-//        if let detail = self.detailItem {
-//            if let label = self.detailDescriptionLabel {
-//                label.text = detail.description
-//            }
-//        }
-//    }
 
     @IBOutlet weak var exportRecipe: UIButton!
     @IBOutlet weak var editRecipe: UIButton!
-    
-    
-    
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -177,6 +165,8 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        // set delegate and data source
         self.ingrTable.delegate = self
         self.ingrTable.dataSource = self
         self.dirTable.delegate = self
@@ -185,11 +175,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         self.tagTable.dataSource = self
         navigationItem.title = "recipe"
         title = self.passedValue?.name
-        print(self.passedValue?.image)
         self.imageView.image = self.passedValue?.image?.image
-        print(self.passedValue?.image)
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -197,6 +183,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         // Dispose of any resources that can be recreated.
     }
     
+    // number of sections
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -204,7 +191,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     // Loads correct number of rows in each table based on number of ingredients
     // and directions in the recipe.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count:Int?
+        let count:Int = 0
         if tableView == self.ingrTable  {
             return (self.passedValue?.ingredients.count)!
         }
@@ -214,12 +201,14 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         if tableView == self.tagTable   {
             return (self.passedValue?.tags.count)!
         }
-        return count!
+        return count
     }
     
     // Sets up cell values for ingredient and direction tables
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell1: UITableViewCell?
+        
+        // ingredient table view
         if tableView == self.ingrTable  {
             let cell = ingrTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath) as! IngredientTableViewCell
             
@@ -230,7 +219,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             
             print(ingredientNames[row])
             cell.ingrLabel2.text = String(ingredientNames[row])
-//            cell.ingrAmount2.text = String(ingredientValues[row].0)
             if String(ingredientValues[row].0) != "0.0" {
                 cell.ingrAmount2.text = String(ingredientValues[row].0)
             }
@@ -240,6 +228,8 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             cell.ingrUnit2.text = ingredientValues[row].1
             return cell
         }
+        
+        // direction table view
         if tableView == self.dirTable   {
             let cell = dirTable.dequeueReusableCell(withIdentifier: "DirCell", for: indexPath) as! DirectionTableViewCell
             let row = indexPath.row
@@ -247,6 +237,8 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             cell.directionName2.text = dirs![row]
             return cell
         }
+        
+        // tag table view
         if tableView == self.tagTable   {
             let cell = tagTable.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as! TagCellTableViewCell
             
@@ -256,7 +248,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             let tagVals = [(UIColor, String)](tags!.values)
             
             cell.tagName2.text = String(tagNames[row])
-            //            cell.ingrAmount2.text = String(ingredientValues[row].0)
             cell.tagCategory2.text = tagVals[row].1
             cell.tagName2.textColor = tagVals[row].0
             cell.tagCategory2.textColor = tagVals[row].0
@@ -352,51 +343,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    // Responds to button to add event. This checks that we have permission first, before adding the
-    // event
-//    @IBAction func addEvent(_ sender: UIButton) {
-//        let eventStore = EKEventStore()
-//        
-//        let startDate = Date()
-//        let endDate = startDate.addingTimeInterval(60 * 60) // One hour
-//        
-//        // Checks for user permission to access iOS calendar.
-//        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-//            eventStore.requestAccess(to: .event, completion: {
-//                granted, error in
-//                self.createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
-//            })
-//        } else {
-//            createEvent(eventStore, title: "Test Event", startDate: startDate, endDate: endDate)
-//        }
-//        
-//    }
-    
-    
-    // Responds to button to remove event. This checks that we have permission first, before removing the
-    // event
-//    @IBAction func removeEvent(_ sender: UIButton) {
-//        let eventStore = EKEventStore()
-//        
-//        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-//            eventStore.requestAccess(to: .event, completion: { (granted, error) -> Void in
-//                self.deleteEvent(eventStore, eventIdentifier: self.savedEventId)
-//            })
-//        } else {
-//            deleteEvent(eventStore, eventIdentifier: savedEventId)
-//        }
-//        
-//        let alertController = UIAlertController(title: "Just to let you know", message: "Reminder was removed successfully, yay!", preferredStyle: .alert)
-//        
-//        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
-//            print("You've pressed OK button");
-//        }
-//        
-//        alertController.addAction(OKAction)
-//        self.present(alertController, animated: true, completion:nil)
-//        
-//    }
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -410,8 +356,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             controller.numIngreds = recipe?.ingredients.count
             controller.numDirs = recipe?.directions.count
             controller.numTags = recipe?.tags.count
-//            controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-//            controller.navigationItem.leftItemsSupplementBackButton = true
         
         }
         if segue.identifier == "addRecipeSegue"  {
@@ -436,14 +380,11 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     {
         if let sourceViewController = sender.source as? EditRecipeViewController, let r = sourceViewController.recipeValue
         {
-            //let newIndexPath = NSIndexPath(row: recipes.count, section: 0)
-            //recipes.append(r)
             passedValue = r
             ingrTable.reloadData()
             dirTable.reloadData()
             tagTable.reloadData()
             self.title = r.name
-            //tableView.insertRows(at: [newIndexPath as IndexPath], with: .bottom)
             
         }
     }

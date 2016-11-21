@@ -6,6 +6,12 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+/***
+ 
+ DEPRECATED CODE
+ 
+ ***/
+
 import UIKit
 
 class SecondViewController: UIViewController {

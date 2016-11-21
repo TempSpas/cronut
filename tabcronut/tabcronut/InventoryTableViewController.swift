@@ -6,16 +6,22 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// inventory table view file
+// ingredients that have been added to the inventory table
+
 import UIKit
 import EventKit
 
 class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    
+    // initialize variables
     var total_ingreds: [String] = []
     var ingreds: [String]?
     
     var eventStore = EKEventStore()
     
+    // connect outlets to the storyboard
     @IBOutlet weak var invTable: UITableView!
     
     //@IBOutlet var invTable: UITableView!
@@ -78,33 +84,8 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+    // add shopping list to the reminders app
     @IBAction func addReminder(_ sender: Any) {
         self.eventStore.requestAccess(to: EKEntityType.reminder, completion:
             {(granted, error) in
@@ -146,7 +127,7 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
         self.present(alertController, animated: true, completion:nil)
     }
 
-    
+    // receive values from the inventory list
     @IBAction func unwindToInventoryList(sender: UIStoryboardSegue)
     {
         if let sourceViewController = sender.source as? AddInventoryViewController
@@ -162,21 +143,13 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
             }
             print(self.total_ingreds)
             self.invTable.reloadData()
-            //let newIndexPath = NSIndexPath(row: recipes.count, section: 0)
-            //recipes.append(r)
-            //self.title = r.name
-            //tableView.insertRows(at: [newIndexPath as IndexPath], with: .bottom)
             
         }
     }
 
 }
 
-class InventoryActualTableViewController    {
-    
-}
-
-
+// inventory table view cell
 class InventoryTableViewCell: UITableViewCell {
     
     

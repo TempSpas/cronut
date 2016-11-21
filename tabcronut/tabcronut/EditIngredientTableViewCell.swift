@@ -6,6 +6,9 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this file contains the name, unit, and amount
+// of ingredients in the edit ingredient table
+
 import UIKit
 
 class EditIngredientTableViewCell: UITableViewCell {

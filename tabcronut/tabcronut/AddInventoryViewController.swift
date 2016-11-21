@@ -6,11 +6,14 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this file represents the add inventory page where
+// the user can add ingredients to their inventory
+
 import UIKit
 
 class AddInventoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    
+    // initialize variables
     var recipeValue: Recipe?
     var numIngreds: Int?
     
@@ -27,7 +30,7 @@ class AddInventoryViewController: UIViewController, UITableViewDelegate, UITable
         self.ingredTable.delegate = self
         self.ingredTable.dataSource = self
         self.ingredTable.allowsMultipleSelection = true
-        title = "Add to Inventory List"
+        title = "Add to Shopping List"
 
         // Do any additional setup after loading the view.
     }
@@ -41,16 +44,11 @@ class AddInventoryViewController: UIViewController, UITableViewDelegate, UITable
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("okokok")
-        print(self.recipeValue?.name)
         return (numIngreds)!
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ingredTable.dequeueReusableCell(withIdentifier: "ingredCell", for: indexPath) as! AddIngredTableViewCell
-        //cell.accessoryType = .checkmark
-        //cell.accessoryType = (self.lastSelectedIndexPath?.row == indexPath.row) ? .Checkmark : .None
-        //recipeValue?.modIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!), measurement: cell.ingrUnit.text)
         let row = indexPath.row
         let ingreds = self.recipeValue?.ingredients
         
@@ -62,17 +60,16 @@ class AddInventoryViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     
+    // allows a user to select multiple rows in the table
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //ingredTable.cellForRow(at: indexPath as IndexPath)?.accessoryType = .checkmark
-        //ingredTable.cellForRow(at: indexPath as IndexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
         let currentCell = tableView.cellForRow(at: indexPath)! as! AddIngredTableViewCell
         currentCell.accessoryType = .checkmark
         selected_ingredients.append(currentCell.ingrName.text!)
         num_selected = num_selected+1
     }
     
+    // allows a user to deselect a row by tapping
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        //ingredTable.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
         let currentCell = tableView.cellForRow(at: indexPath)! as! AddIngredTableViewCell
         currentCell.accessoryType = .none
         let ingrInd = selected_ingredients.index(of: currentCell.ingrName.text!)
@@ -80,29 +77,20 @@ class AddInventoryViewController: UIViewController, UITableViewDelegate, UITable
         print(selected_ingredients)
     }
     
+    // make sure that the sender is chosen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if addButton === sender as AnyObject?
         {
             print("here!")
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 
+// class for each cell of the inventory table
 class AddIngredTableViewCell: UITableViewCell {
     
-    
+    // ingredient label
     @IBOutlet weak var ingrName: UILabel!
     
     override func awakeFromNib() {

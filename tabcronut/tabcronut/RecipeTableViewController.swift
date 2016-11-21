@@ -6,6 +6,10 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this file shows the recipe table view where the user can see all recipes
+// after a recipe is added, the user is navigated to this page
+// where they can see their newly added recipe
+
 import UIKit
 import Foundation
 

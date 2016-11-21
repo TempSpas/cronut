@@ -6,10 +6,17 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// edit recipe view controller
+// manages edit scene
+// allows a user to edit an existing recipe
+
 import UIKit
 
 class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    
+    // initialize variables
+    // all of the following recipes are passed in from the individual recipe scene
     var recipeValue: Recipe?
     var sample: String?
     
@@ -17,7 +24,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
     var numDirs: Int?
     var numTags: Int?
     
-    
+    // initialize outlets to the storyboard
     @IBOutlet weak var saveEditButton: UIBarButtonItem!
     @IBOutlet weak var dirTable: UITableView!
     @IBOutlet weak var ingrTable: UITableView!
@@ -25,6 +32,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var tagTable: UITableView!
     
     
+    // add an empty ingredient row to the ingredient table
     @IBAction func addEmptyIngredientRow(_ sender: AnyObject) {
         
         self.ingrTable.beginUpdates()
@@ -32,10 +40,9 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         numIngreds? += 1
         ingrTable.insertRows(at: [NSIndexPath(row: r, section: 0) as IndexPath], with: .bottom)
         self.ingrTable.endUpdates()
-        
-        
     }
 
+    // add an empty direction row to the direction table
     @IBAction func addEmptyDirectionRow(_ sender: AnyObject) {
         
         self.dirTable.beginUpdates()
@@ -46,7 +53,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
-    
+    // add an empty tag row to the tag table
     @IBAction func addEmptyTagRow(_ sender: Any) {
         self.tagTable.beginUpdates()
         let t = self.tagTable.numberOfRows(inSection: 0)
@@ -55,12 +62,14 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tagTable.endUpdates()
     }
     
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print(self.sample)
+        // Do any additional setup after loading the view.
         self.hideKeyboardWhenTappedAround()
         
+        // set data source and delegates for all the tables
         self.dirTable.dataSource = self
         self.dirTable.delegate = self
         self.ingrTable.dataSource = self
@@ -69,11 +78,8 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tagTable.dataSource = self
         
         self.editRecipeName.text = self.recipeValue?.name
-        
-        //print(self.recipeValue?.name)
-        //print(self.recipeValue?.ingredients)
 
-        // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,27 +87,24 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    
+    //number of rows in each of the table sections
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
+    // number of rows in each of the sections
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count: Int?
+        let count: Int = 0
         if tableView == self.ingrTable {
-            print("okokok")
-            print(self.recipeValue?.name)
             return (numIngreds)!
-            //return (self.recipeValue?.ingredients.count)!
         }
         if tableView == self.dirTable{
             return (numDirs)!
-            //return (self.recipeValue?.directions.count)!
         }
         if tableView == self.tagTable   {
             return (numTags)!
         }
-        return count!
+        return count
     }
     
     
@@ -109,13 +112,14 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
     // direction table.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell1: UITableViewCell?
+        
+        // ingredient table
         if tableView == self.ingrTable  {
             let cell = ingrTable.dequeueReusableCell(withIdentifier: "EditIngrCell", for: indexPath) as! EditIngredientTableViewCell
-            //recipeValue?.modIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!), measurement: cell.ingrUnit.text)
             let row = indexPath.row
             let ingreds = self.recipeValue?.ingredients
             
-            // Fill with blanks
+            // return the cell if nothing is set
             if numIngreds! > (self.recipeValue?.ingredients.count)!    {
                 cell.ingrName.text = ""
                 cell.ingrAmt.text = ""
@@ -125,7 +129,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             let ingredientNames = [String](ingreds!.keys)
             let ingredientValues = [(Float, String)](ingreds!.values)
             
-            print(ingredientNames[row])
+            // otherwise set the text to what it's supposed to be
             cell.ingrName.text = String(ingredientNames[row])
             cell.ingrAmt.text = String(ingredientValues[row].0)
             cell.ingrUnit.text = ingredientValues[row].1
@@ -133,18 +137,24 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             return cell
             
         }
+        
+        //direction table
         if tableView == self.dirTable   {
             let cell = dirTable.dequeueReusableCell(withIdentifier: "EditDirCell", for: indexPath) as! EditDirectionsTableViewCell
             let row = indexPath.row
+            
+            // same idea: set the text if the passed recipe has values
+            // otherwise, leave it blank
             if numDirs! > (self.recipeValue?.directions.count)! {
                 cell.editDir.text = ""
                 return cell
             }
             let dir = recipeValue?.directions[row]
-//            recipeValue?.changeDirection(direction: dir!, newDirection: cell.editDir.text!)
             cell.editDir.text = dir
             return cell
         }
+        
+        // tags table
         if tableView == self.tagTable   {
             let cell = tagTable.dequeueReusableCell(withIdentifier: "tagcell", for: indexPath) as! EditTabTableViewCell
             let row = indexPath.row
@@ -159,7 +169,6 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             let tagNames = [String](tagz!.keys)
             let tagValues = [(UIColor, String)](tagz!.values)
             
-            //print(ingredientNames[row])
             cell.tagName.text = String(tagNames[row])
             cell.tagColor.text = String(describing: tagValues[row].0)
             cell.tagCategory.text = tagValues[row].1
@@ -169,39 +178,49 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell1!
     }
     
-    
+    // allows a user to delete a row if necessary from any table
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
+    // delete from local storage if the user deletes a value
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            
+            // ingredient table specifics
             if tableView == self.ingrTable    {
                 let currentCell = tableView.cellForRow(at: indexPath)! as! EditIngredientTableViewCell
-                print(currentCell.ingrName.text)
                 self.recipeValue?.removeIngredient(ingredient: currentCell.ingrName.text!)
-                //self.recipeValue?.ingredients.removeValue(forKey: currentCell.ingrLabel.text!)
-                //print(ingredients(at: indexPath.row))
-                //ingredients.remove(at: indexPath.row)
                 numIngreds? -= 1
                 ingrTable.deleteRows(at: [indexPath], with: .fade)
             }
+            
+            // direction table specifics
             if tableView == self.dirTable {
                 let currentCell = tableView.cellForRow(at: indexPath)! as! EditDirectionsTableViewCell
-                self.recipeValue?.removeDirection(direction: currentCell.editDir.text!)
-                //directions.remove(at: indexPath.row)
-                numDirs? -= 1
-                dirTable.deleteRows(at: [indexPath], with: .fade)
+                let success = self.recipeValue?.removeDirection(direction: currentCell.editDir.text!)
+                if success == false   {
+                    print("failed to remove direction")
+                }
+                else    {
+                    numDirs? -= 1
+                    dirTable.deleteRows(at: [indexPath], with: .fade)
+                }
+                
             }
+            
+            // tag table specifics
             if tableView == self.tagTable   {
                 let currentCell = tableView.cellForRow(at: indexPath)! as! EditTabTableViewCell
-                recipeValue?.removeTag(oldTag: currentCell.tagName.text!)
-                numTags? -= 1
-                tagTable.deleteRows(at: [indexPath], with: .fade)
+                let success = recipeValue?.removeTag(oldTag: currentCell.tagName.text!)
+                if success == false {
+                    print("failed to remove tag")
+                }
+                else    {
+                    numTags? -= 1
+                    tagTable.deleteRows(at: [indexPath], with: .fade)
+                }
             }
-            
-            
-            //add code here for when you hit delete
         }
     }
 
@@ -213,53 +232,61 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
+        // save button for edit view
         if saveEditButton === sender as AnyObject?
         {
             let r = ingrTable.numberOfRows(inSection: 0)
-            //let r1 = r-1
-            //print(r1)
             let ingreds = self.recipeValue?.ingredients
-            let ingredientNames = [String](ingreds!.keys)
             var workingKeys: [String] = []
             
             // Saves information to the ingredient table
             if r != 0   {
                 for index in 0...(r-1)  {
                     let iPath = IndexPath(row: index, section: 0)
-                    //print(iPath)
-                    //print(ingrTable.cellForRow(at: iPath))
                     let cell = ingrTable.cellForRow(at: iPath) as! EditIngredientTableViewCell
                     if cell.ingrName.text == nil    {
                         continue
                     }
                     let keyExists = ingreds?[cell.ingrName.text!]
+                    
+                    // just in case the ingredient key already exists
                     if keyExists != nil {
-                        self.recipeValue?.modIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!), measurement: cell.ingrUnit.text)
-                        workingKeys.append(cell.ingrName.text!)
+                        let success = self.recipeValue?.modIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!), measurement: cell.ingrUnit.text)
+                        if success == false {
+                            print("failed to mod ingredient")
+                        }
+                        else    {
+                            workingKeys.append(cell.ingrName.text!)
+                        }
                     }
+                        
+                    // if the ingredient does not exist
+                    // do checks about the ingredient unit and amount
                     else  {
-//                        self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!)!, measurement: cell.ingrUnit.text!)
+                        let success: Bool?
                         if cell.ingrAmt.text == "" && cell.ingrUnit.text == ""  {
-                            self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(0), measurement: "")
+                            success = self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(0), measurement: "")
                         }
                         else if cell.ingrAmt.text != "" && cell.ingrUnit.text == ""  {
-                            self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!)!, measurement: "")
+                            success = self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!)!, measurement: "")
                         }
                         else if cell.ingrAmt.text == "" && cell.ingrUnit.text != ""  {
                             continue
                         }
                         else    {
-                            self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!)!, measurement: cell.ingrUnit.text!)
+                            success = self.recipeValue?.addIngredient(ingredient: cell.ingrName.text!, amount: Float(cell.ingrAmt.text!)!, measurement: cell.ingrUnit.text!)
+                        }
+                        if success == false {
+                            print("error with new ingredient")
                         }
                         workingKeys.append(cell.ingrName.text!)
                     }
                 }
+                
+                // check to see if any of the ingredients have been removed by the user
                 let allingreds = self.recipeValue?.ingredients
                 let allNames = [String](allingreds!.keys)
-                print(allNames)
-                print(workingKeys)
                 for index in 0...(allNames.count-1) {
-                    //index = itemList.index(of: item)
                     let keyExists = workingKeys.index(of: allNames[index])
                     if keyExists == nil {
                         self.recipeValue?.removeIngredient(ingredient: allNames[index])
@@ -269,24 +296,31 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             
             
             // Saves information to the direction table
+            // either change or add direction if necessary
             let d = dirTable.numberOfRows(inSection: 0)
             let dirs = self.recipeValue?.directions
             if d != 0   {
                 for index in 0...(d-1) {
                     let iPath = IndexPath(row: index, section: 0)
                     let cell = dirTable.cellForRow(at: iPath) as! EditDirectionsTableViewCell
+                    let success: Bool?
                     if index >= (dirs?.count)!-1 {
-                        self.recipeValue?.addDirection(direction: cell.editDir.text!)
+                        success = self.recipeValue?.addDirection(direction: cell.editDir.text!)
+                        if success == false {
+                            print("error adding dir")
+                        }
                         continue
                     }
-                    print(index)
-                    print(dirs)
                     if dirs?[index] != cell.editDir.text {
-                        self.recipeValue?.changeDirection(direction: (dirs?[index])!, newDirection: cell.editDir.text!)
+                        success = self.recipeValue?.changeDirection(direction: (dirs?[index])!, newDirection: cell.editDir.text!)
+                        if success == false {
+                            print("error changing dir")
+                        }
                     }
                 }
             }
             
+            // do the same for the tags table
             let t = tagTable.numberOfRows(inSection: 0)
             let ts = self.recipeValue?.tags
             if t != 0   {
@@ -297,39 +331,44 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                         continue
                     }
                     let keyExists = ts?[cell.tagName.text!]
+                    let success: Bool?
                     if keyExists != nil {
                         let col = cell.tagColor.text?.components(separatedBy: " ")
                         let returnedColor = UIColor(red: CGFloat(Float((col?[1])!)!), green: CGFloat(Float(col![2])!), blue: CGFloat(Float(col![3])!), alpha: CGFloat(Float(col![4])!))
-                        self.recipeValue?.modTag(tag: cell.tagName.text!, color: returnedColor, category: cell.tagCategory.text)
+                        success = self.recipeValue?.modTag(tag: cell.tagName.text!, color: returnedColor, category: cell.tagCategory.text)
                         workingKeys.append(cell.tagName.text!)
                     }
                     else  {
                         print("let them eat cake")
                         if cell.tagColor.text == "" && cell.tagCategory.text == ""  {
-                            self.recipeValue?.addTag(newTag: cell.tagName.text!)
+                            success = self.recipeValue?.addTag(newTag: cell.tagName.text!)
                         }
                         else if cell.tagColor.text != "" && cell.tagCategory.text == ""  {
                             
                             let col = cell.tagColor.text?.components(separatedBy: " ")
                             let returnedColor = UIColor(red: CGFloat(Float((col?[1])!)!), green: CGFloat(Float((col?[2])!)!), blue: CGFloat(Float((col?[3])!)!), alpha: CGFloat(Float((col?[4])!)!))
-                            self.recipeValue?.addTag(newTag: cell.tagName.text!, newColor: returnedColor)
+                            success = self.recipeValue?.addTag(newTag: cell.tagName.text!, newColor: returnedColor)
                         }
                         else if cell.tagColor.text == "" && cell.tagCategory.text != ""  {
                             print("CAKE")
-                            let x = self.recipeValue?.addTag(newTag: cell.tagName.text!, newCat: cell.tagCategory.text)
-                            print(x)
+                            success = self.recipeValue?.addTag(newTag: cell.tagName.text!, newCat: cell.tagCategory.text)
                         }
                         else    {
                             let col = cell.tagColor.text?.components(separatedBy: " ")
                             let returnedColor = UIColor(red: CGFloat(Float((col?[1])!)!), green: CGFloat(Float(col![2])!), blue: CGFloat(Float(col![3])!), alpha: CGFloat(Float(col![4])!))
-                            self.recipeValue?.addTag(newTag: cell.tagName.text!, newColor: returnedColor, newCat: cell.tagCategory.text!)
+                            success = self.recipeValue?.addTag(newTag: cell.tagName.text!, newColor: returnedColor, newCat: cell.tagCategory.text!)
                         }
                         workingKeys.append(cell.tagName.text!)
+                    }
+                    if success == false {
+                        print("error with editing tags")
                     }
 
                 }
             }
             
+            // reload all of the tables
+            // change the name of the recipe if necessary
             if self.recipeValue?.name != editRecipeName.text    {
                 self.recipeValue?.name = editRecipeName.text!
             }

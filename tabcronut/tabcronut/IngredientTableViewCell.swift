@@ -6,13 +6,16 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this file contains the value for the label, amount, and unit
+// of each ingredient.  this is reused for the add scene and the
+// individual recipe scene
+
 import UIKit
 
 class IngredientTableViewCell: UITableViewCell {
 
-    
+    // all the labels for the name, amount, and unit
     @IBOutlet weak var ingrLabel: UILabel!
-    //@IBOutlet weak var ingrLabel: UILabel!
     @IBOutlet weak var ingrAmount: UILabel!
     @IBOutlet weak var ingrUnit: UILabel!
     

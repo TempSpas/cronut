@@ -6,6 +6,10 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
+// this file has code for the add recipe view controller
+// this file allows a user to manually add a new recipe
+// to the recipe book.
+
 import UIKit
 import MobileCoreServices
 
