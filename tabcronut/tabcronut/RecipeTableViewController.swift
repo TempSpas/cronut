@@ -216,7 +216,7 @@ class RecipeTableViewController: UITableViewController {
         }
     }
 
-    // receives values from add recipes view
+    // Receives values from add recipes view
     @IBAction func unwindToMealList(sender: UIStoryboardSegue)
     {
         if let sourceViewController = sender.source as? AddRecipeViewController, let r = sourceViewController.recipe
@@ -229,7 +229,7 @@ class RecipeTableViewController: UITableViewController {
     }
 }
 
-// allows user to tap anywhere but a textfield to hide the keyboard
+// Allows user to tap anywhere but a textfield to hide the keyboard
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
