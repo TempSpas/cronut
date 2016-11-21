@@ -6,7 +6,7 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
-// this file contains the edit label for the direction table
+// This file contains the edit label for the direction table
 
 import UIKit
 

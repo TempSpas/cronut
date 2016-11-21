@@ -14,9 +14,8 @@ import UIKit
 
 class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    
-    // initialize variables
-    // all of the following recipes are passed in from the individual recipe scene
+    // Initialize variables.
+    // All of the following recipes are passed in from the individual recipe scene.
     var recipeValue: Recipe?
     var sample: String?
     
@@ -32,7 +31,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var tagTable: UITableView!
     
     
-    // add an empty ingredient row to the ingredient table
+    // Add an empty ingredient row to the ingredient table
     @IBAction func addEmptyIngredientRow(_ sender: AnyObject) {
         
         self.ingrTable.beginUpdates()
@@ -42,7 +41,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         self.ingrTable.endUpdates()
     }
 
-    // add an empty direction row to the direction table
+    // Add an empty direction row to the direction table
     @IBAction func addEmptyDirectionRow(_ sender: AnyObject) {
         
         self.dirTable.beginUpdates()
@@ -53,7 +52,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
-    // add an empty tag row to the tag table
+    // Add an empty tag row to the tag table
     @IBAction func addEmptyTagRow(_ sender: Any) {
         self.tagTable.beginUpdates()
         let t = self.tagTable.numberOfRows(inSection: 0)
@@ -62,24 +61,21 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tagTable.endUpdates()
     }
     
-    //
+    // Initialize the view
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         self.hideKeyboardWhenTappedAround()
         
-        // set data source and delegates for all the tables
+        // Set data source and delegates for all the tables
         self.dirTable.dataSource = self
         self.dirTable.delegate = self
         self.ingrTable.dataSource = self
         self.ingrTable.delegate = self
         self.tagTable.delegate = self
         self.tagTable.dataSource = self
-        
         self.editRecipeName.text = self.recipeValue?.name
-
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,23 +83,24 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    //number of rows in each of the table sections
+    // Return number of rows in each of the table sections
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    // number of rows in each of the sections
+    // Return number of rows in each of the sections
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count: Int = 0
         if tableView == self.ingrTable {
             return (numIngreds)!
         }
-        if tableView == self.dirTable{
+        if tableView == self.dirTable {
             return (numDirs)!
         }
-        if tableView == self.tagTable   {
+        if tableView == self.tagTable {
             return (numTags)!
         }
+
         return count
     }
     
@@ -113,7 +110,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell1: UITableViewCell?
         
-        // ingredient table
+        // Ingredient table
         if tableView == self.ingrTable  {
             let cell = ingrTable.dequeueReusableCell(withIdentifier: "EditIngrCell", for: indexPath) as! EditIngredientTableViewCell
             let row = indexPath.row
@@ -126,6 +123,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.ingrUnit.text = ""
                 return cell
             }
+
             let ingredientNames = [String](ingreds!.keys)
             let ingredientValues = [(Float, String)](ingreds!.values)
             
@@ -138,7 +136,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             
         }
         
-        //direction table
+        // Direction table
         if tableView == self.dirTable   {
             let cell = dirTable.dequeueReusableCell(withIdentifier: "EditDirCell", for: indexPath) as! EditDirectionsTableViewCell
             let row = indexPath.row
@@ -154,7 +152,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             return cell
         }
         
-        // tags table
+        // Tags table
         if tableView == self.tagTable   {
             let cell = tagTable.dequeueReusableCell(withIdentifier: "tagcell", for: indexPath) as! EditTabTableViewCell
             let row = indexPath.row
@@ -224,7 +222,6 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
 
-    
     // MARK: - Navigation
 
     // Function that saves recipe changes
@@ -283,7 +280,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                     }
                 }
                 
-                // check to see if any of the ingredients have been removed by the user
+                // Check to see if any of the ingredients have been removed by the user
                 let allingreds = self.recipeValue?.ingredients
                 let allNames = [String](allingreds!.keys)
                 for index in 0...(allNames.count-1) {
@@ -299,7 +296,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             // either change or add direction if necessary
             let d = dirTable.numberOfRows(inSection: 0)
             let dirs = self.recipeValue?.directions
-            if d != 0   {
+            if d != 0 {
                 for index in 0...(d-1) {
                     let iPath = IndexPath(row: index, section: 0)
                     let cell = dirTable.cellForRow(at: iPath) as! EditDirectionsTableViewCell
@@ -320,7 +317,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
             
-            // do the same for the tags table
+            // Do the same for the tags table
             let t = tagTable.numberOfRows(inSection: 0)
             let ts = self.recipeValue?.tags
             if t != 0   {
@@ -330,8 +327,10 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                     if cell.tagName.text == nil    {
                         continue
                     }
+                    
                     let keyExists = ts?[cell.tagName.text!]
                     let success: Bool?
+                    
                     if keyExists != nil {
                         let col = cell.tagColor.text?.components(separatedBy: " ")
                         let returnedColor = UIColor(red: CGFloat(Float((col?[1])!)!), green: CGFloat(Float(col![2])!), blue: CGFloat(Float(col![3])!), alpha: CGFloat(Float(col![4])!))
@@ -339,7 +338,6 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                         workingKeys.append(cell.tagName.text!)
                     }
                     else  {
-                        print("let them eat cake")
                         if cell.tagColor.text == "" && cell.tagCategory.text == ""  {
                             success = self.recipeValue?.addTag(newTag: cell.tagName.text!)
                         }
@@ -350,7 +348,6 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                             success = self.recipeValue?.addTag(newTag: cell.tagName.text!, newColor: returnedColor)
                         }
                         else if cell.tagColor.text == "" && cell.tagCategory.text != ""  {
-                            print("CAKE")
                             success = self.recipeValue?.addTag(newTag: cell.tagName.text!, newCat: cell.tagCategory.text)
                         }
                         else    {
@@ -360,24 +357,22 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                         workingKeys.append(cell.tagName.text!)
                     }
+                    
                     if success == false {
                         print("error with editing tags")
                     }
-
                 }
             }
             
             // reload all of the tables
             // change the name of the recipe if necessary
-            if self.recipeValue?.name != editRecipeName.text    {
+            if self.recipeValue?.name != editRecipeName.text {
                 self.recipeValue?.name = editRecipeName.text!
             }
+
             self.ingrTable.reloadData()
             self.dirTable.reloadData()
             self.tagTable.reloadData()
-        }
-        
+        }   
     }
-    
-
 }

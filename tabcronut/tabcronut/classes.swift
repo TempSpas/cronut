@@ -264,9 +264,11 @@ class Recipe
         return false
     }
     
+    // Helper function for use in the search functionality.
+    // Params:   String representing a search query
+    // Returns:  true if the string is contained in the tags, else false
     func checkTags(str: String) -> Bool
     {
-        // let arr2 = str.components(separatedBy: " ")
         for word in tags.keys
         {
             if word.lowercased().range(of: str.lowercased()) != nil
@@ -274,12 +276,15 @@ class Recipe
                 return true
             }
         }
+        
         return false
     }
     
+    // Helper function for use in the search functionality.
+    // Params:   String representing a search query
+    // Returns:  true if the string is contained in the ingredients, else false
     func checkIngredients(str: String) -> Bool
     {
-        // let arr2 = str.components(separatedBy: " ")
         for ingr in ingredients.keys
         {
             if ingr.lowercased().range(of: str.lowercased()) != nil
@@ -287,6 +292,7 @@ class Recipe
                 return true
             }
         }
+
         return false
     }
     

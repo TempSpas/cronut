@@ -1,4 +1,4 @@
-//
+-//
 //  EditIngredientTableViewCell.swift
 //  tabcronut
 //
@@ -6,17 +6,17 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
-// this file contains the name, unit, and amount
+// This file contains the name, unit, and amount
 // of ingredients in the edit ingredient table
 
 import UIKit
 
 class EditIngredientTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var ingrName: UITextField!
-    
+    @IBOutlet weak var ingrName: UITextField!  
     @IBOutlet weak var ingrUnit: UITextField!
     @IBOutlet weak var ingrAmt: UITextField!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

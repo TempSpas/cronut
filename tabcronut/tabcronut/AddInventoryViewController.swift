@@ -6,8 +6,8 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
-// this file represents the add inventory page where
-// the user can add ingredients to their inventory
+// This file represents the add inventory page where
+// the user can add ingredients to their inventory.
 
 import UIKit
 
@@ -21,18 +21,15 @@ class AddInventoryViewController: UIViewController, UITableViewDelegate, UITable
     var num_selected: Int = 0
     
     @IBOutlet weak var ingredTable: UITableView!
-    
-    
     @IBOutlet weak var addButton: UIButton!
     
     override func viewDidLoad() {
+        // Do any additional setup after loading the view.
         super.viewDidLoad()
         self.ingredTable.delegate = self
         self.ingredTable.dataSource = self
         self.ingredTable.allowsMultipleSelection = true
         title = "Add to Shopping List"
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,7 +57,7 @@ class AddInventoryViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     
-    // allows a user to select multiple rows in the table
+    // Allows a user to select multiple rows in the table
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currentCell = tableView.cellForRow(at: indexPath)! as! AddIngredTableViewCell
         currentCell.accessoryType = .checkmark
@@ -68,7 +65,7 @@ class AddInventoryViewController: UIViewController, UITableViewDelegate, UITable
         num_selected = num_selected+1
     }
     
-    // allows a user to deselect a row by tapping
+    // Allows a user to deselect a row by tapping
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let currentCell = tableView.cellForRow(at: indexPath)! as! AddIngredTableViewCell
         currentCell.accessoryType = .none
