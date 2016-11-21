@@ -15,6 +15,7 @@ class RecipeTableViewController: UITableViewController {
     @IBOutlet weak var addRecipeButton: UIBarButtonItem!
     @IBOutlet var table: UITableView!
     
+    // initialize variables that will be populated
     var recipes = [Recipe]()
     var objects = [AnyObject]()
     var filteredRecipes = [Recipe]()
@@ -39,11 +40,11 @@ class RecipeTableViewController: UITableViewController {
         ingredients["cinnamon"] = (0.5, "tsp")
         ingredients["lemon juice"] = (0.0,"")
         
-        directions.append("fill large pot with canola oil; heat over medium")
-        directions.append("fry the dough in the oil for 45-90s")
-        directions.append("mix sugar, vanilla, and milk")
-        directions.append("mix cinnamon and sugar")
-        directions.append("enjoy")
+        directions.append("1. fill large pot with canola oil; heat over medium")
+        directions.append("2. fry the dough in the oil for 45-90s")
+        directions.append("3. mix sugar, vanilla, and milk")
+        directions.append("4. mix cinnamon and sugar")
+        directions.append("5. enjoy")
         
         tags["dessert"] = (UIColor.purple, "pastry")
         tags["unhealthy"] = (UIColor.brown, "nutrition")
@@ -54,7 +55,7 @@ class RecipeTableViewController: UITableViewController {
         let imageView = UIImageView(image: image!)
         
         
-        var recipe = Recipe(title: "Cronut Recipe")
+        let recipe = Recipe(title: "Cronut Recipe")
         recipe.ingredients = ingredients
         recipe.directions = directions
         recipe.tags = tags
@@ -63,6 +64,7 @@ class RecipeTableViewController: UITableViewController {
         
         navigationItem.leftBarButtonItem = editButtonItem
         
+        // set delegate and datasource for table
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
@@ -117,46 +119,15 @@ class RecipeTableViewController: UITableViewController {
     
     var valueToPass:String!
     
-    //    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-    //        print("HERE")
-    //        //print("You selected cell #\(indexPath.row)!")
-    //
-    //        // Get Cell Label
-    //        let indexPath = tableView.indexPathForSelectedRow
-    //        let currentCell = tableView.cellForRow(at: indexPath!) as UITableViewCell!;
-    //
-    //        valueToPass = currentCell?.textLabel?.text
-    //        performSegue(withIdentifier: "viewDetails", sender: self)
-    //
-    //    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        /*
-         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeTableCell", for: indexPath) as! RecipeViewCell
-         // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-         
-         // Configure the cell...
-         let row = indexPath.row
-         // cell.recipeLabel.text = attractionNames[row]
-         cell.recipeLabel.text = recipes[row].name
-         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-         
-         return cell
-         */
         
         // Populate the cells with the correct names based on search results.
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeTableCell", for: indexPath) as! RecipeViewCell
-        let recipe: Recipe
         if searchController.isActive && searchController.searchBar.text != "" {
-            recipe = filteredRecipes[indexPath.row]
             cell.recipeLabel.text = filteredRecipes[indexPath.row].name
         } else {
-            recipe = recipes[indexPath.row]
             cell.recipeLabel.text = recipes[indexPath.row].name
         }
-        // cell.recipeLabel.text = recipes[indexPath.row].name
-        // cell.detailTextLabel?.text = candy.category
-        
         return cell
     }
     
@@ -172,10 +143,6 @@ class RecipeTableViewController: UITableViewController {
             // Delete the row from the data source
             recipes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-            
-            // ????????????
         }
     }
     
@@ -220,24 +187,22 @@ class RecipeTableViewController: UITableViewController {
      }
      */
     
-    /*
+    
      // Override to support conditional rearranging of the table view.
      override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
      // Return false if you do not want the item to be re-orderable.
-     return true
+        return true
      }
-     */
+ 
     
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //print("here?")
-        //print(segue.identifier)
+
         if segue.identifier == "viewDetails" {
             //print("here!")
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                // let recipe = recipes[indexPath.row]
                 
                 // Ensure that the correct pages are accessed after search
                 // filters out irrelevant recipes.
@@ -257,40 +222,19 @@ class RecipeTableViewController: UITableViewController {
                 //let controller = (segue.destination as! UINavigationController).topViewController as! IndividualRecipeViewController
                 /*****/
                 
+                // show back button
                 let controller = (segue.destination as! IndividualRecipeViewController)
                 controller.passedValue = recipe
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 controller.navigationItem.title = "recipe"
                 controller.navigationItem.rightBarButtonItem = self.splitViewController?.displayModeButtonItem
-                //controller.navigationItem.rightBarButtonItem
-                //controller.navigationItem.rightBarButtonItem = controller.showOptions()
                 self.table.reloadData()
             }
         }
     }
-    
-    //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    //        print("here")
-    //        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-    //        let recipesViewController = storyboard?.instantiateViewController(withIdentifier: "IndividualRecipeViewController") as! IndividualRecipeViewController
-    //        recipesViewController.passedValue = "hi"
-    //        navigationController?.pushViewController(recipesViewController, animated: true)
-    //
-    //
-    //    }
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        // Get the new view controller using segue.destinationViewController.
-    //        // Pass the selected object to the new view controller.
-    //
-    //        if addRecipeButton === sender
-    //        {
-    //            let user = rec
-    //        }
-    //    }
-    
+
+    // receives values from add recipes view
     @IBAction func unwindToMealList(sender: UIStoryboardSegue)
     {
         if let sourceViewController = sender.source as? AddRecipeViewController, let r = sourceViewController.recipe
@@ -301,24 +245,9 @@ class RecipeTableViewController: UITableViewController {
             tableView.insertRows(at: [newIndexPath as IndexPath], with: .bottom)
         }
     }
-    
-    // MARK: NSCoding
-    
-    // func saveRecipes()
-    // {
-    //     let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(user, toFile: User.ArchiveURL.path!)
-    
-    //     if!isSuccessfulSave {
-    //         print("Failed to save recipes...")
-    //     }
-    // }
-    
-    // func loadUserData() -> User?
-    // {
-    //     return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURl.path!) as? User
-    // }
 }
 
+// allows user to tap anywhere but a textfield to hide the keyboard
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))

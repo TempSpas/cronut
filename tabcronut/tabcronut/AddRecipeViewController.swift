@@ -12,23 +12,14 @@ import MobileCoreServices
 class AddRecipeViewController: //UITableViewController, UITextFieldDelegate {
 UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     var numRows = 1
-//    @available(iOS 2.0, *)
-//    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-//        return cell
-//    }
-//
-//    @available(iOS 2.0, *)
-//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 1
-//    }
-
 
     // MARK: Properties
     
     @IBOutlet weak var imageView: UIImageView!
     var newMedia: Bool?
     
+    //initialize the variables that might be passed in the case of 
+    // copying an existing recipe
     var pre_title: String?
     var pre_ingredients: [String: (Float, String)]?
     var pre_directions: [String]?
@@ -36,7 +27,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     var numIngrs: Int?
     var numTags: Int?
 
-    
+    // also keep track of variables that will be added
     var ingredients: [String: (Float, String)] = [:]
     var directions: [String] = []
     var test: [String] = []
@@ -48,6 +39,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 
     
     
+    // properties: connections to all of the UI components
     @IBOutlet weak var ingrName: UITextField!
     @IBOutlet weak var ingrAmt: UITextField!
     @IBOutlet weak var ingrUnit: UITextField!
@@ -68,15 +60,13 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     
     
     
-//    @IBOutlet var ingredientTable: UITableView!
-    
-    
+    // Mark: Action for pressing "Add" button next to ingredients
+    // function: adds the user-inputted values to the ingredients table
     @IBAction func addIngrs(_ sender: AnyObject) {
         self.ingredientTable.beginUpdates()
-        print(ingrName.text)
-        print(ingrAmt.text)
-        print(ingrUnit.text)
-        if let tester = ingredients[ingrName.text!]  {
+        
+        // error checking for existing ingredient
+        if ingredients[ingrName.text!] != nil  {
             ingrName.text=""
             ingrAmt.text=""
             ingrUnit.text=""
@@ -87,10 +77,14 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             self.ingredientTable.endUpdates()
             return
         }
+        
+        // error checking for empty ingredient amount
         if ingrAmt.text != ""  {
-            if let isfloat = Float(ingrAmt.text!)    {
+            if Float(ingrAmt.text!) != nil    {
                 print("got float")
             }
+            
+            // we don't want an amount that is not a float
             else    {
             
                 let alertController = UIAlertController(title: "Error", message: "PLEASE enter a FLOAT value for AMOUNT you IDIOT", preferredStyle: .alert)
@@ -101,12 +95,10 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
                 self.ingredientTable.endUpdates()
                 return
             }
-//            let alertController = UIAlertController(title: "Error", message:
-//                "Please enter float amount", preferredStyle: UIAlertControllerStyle.alert)
-            
         }
-        //test.append(ingrName.text!)
-//        ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
+        
+        // error checking for empty amount and unit values
+        // can't have a unit if there is no amount
         let emptyThings = (ingrAmt.text == nil || ingrAmt.text == "" || ingrUnit.text == nil || ingrUnit.text == "")
         let badThings = (ingrAmt.text == "" && ingrUnit.text != "")
         let someFilled = (ingrAmt.text != "" && ingrUnit.text == "")
@@ -128,15 +120,12 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         else    {
             ingredients[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
         }
-        //ingredientTable.beginUpdates()
+        
+        // add new rows to the table
         ingredientTable.insertRows(at: [
             NSIndexPath(row: ingredients.count-1, section: 0) as IndexPath
             ], with: .bottom)
-        
-        print(ingredients)
         temp_ingredient = ingrName.text!
-        //temp_amount = Float(ingrAmt.text!)!
-        //temp_unit = ingrUnit.text!
         if emptyThings != true {
             temp_amount = Float(ingrAmt.text!)!
             temp_unit = ingrUnit.text!
@@ -144,6 +133,8 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         if someFilled == true   {
             temp_amount = Float(ingrAmt.text!)!
         }
+        
+        // reset values of labels
         ingrName.text=""
         ingrAmt.text=""
         ingrUnit.text=""
@@ -151,16 +142,11 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
     }
     
     
+    // add new direction to the direction table
     @IBAction func addDirection(_ sender: AnyObject) {
         self.directionTable.beginUpdates()
-        var dirtext = String(directions.count+1) + ". " +  direction.text!
+        let dirtext = String(directions.count+1) + ". " +  direction.text!
         directions.append(dirtext)
-        print(direction.text)
-        //directions.append()
-        //print(ingrName.text)
-        //test.append(ingrName.text!)
-        //direction[ingrName.text!] = (Float(ingrAmt.text!)!, ingrUnit.text!)
-        //ingredientTable.beginUpdates()
         directionTable.insertRows(at: [
             NSIndexPath(row: directions.count-1, section: 0) as IndexPath
             ], with: .bottom)
@@ -168,7 +154,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         self.directionTable.endUpdates()
     }
     
-    
+    // add new tag to the tag table
     @IBAction func addTags(_ sender: Any) {
         print("HERE")
         self.tagTable.beginUpdates()
@@ -180,6 +166,8 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 
     var recipe: Recipe?
     
+    // primary load view for the table
+    // set delegates & data sources
     override func viewDidLoad() {
         super.viewDidLoad()
         //scrollView.contentSize.height = 1500
@@ -205,26 +193,16 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         self.tagTable.delegate = self
         self.tagTable.dataSource = self
         
-        
-       
-
-        //self.view.addSubview(textf)
-        
-        //self.ingredientTable.delegate = self
-        //self.ingredientTable.datasource = self
-        //checkValidRecipeName()
-        // Do any additional setup after loading the view.
     }
     
-//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        return 1
-//    }
-    
+    // number of sections in the table
      func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
+    // number of rows in each section for the table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count: Int?
+        let count: Int = 0
         if tableView == self.ingredientTable {
             return ingredients.count
         }
@@ -234,13 +212,15 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         if tableView == self.tagTable   {
             return tags.count + num_newtags
         }
-        return count!
+        return count
     }
     
+    // each cell for each row
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell1: UITableViewCell?
         
+        // ingredient table view
         if tableView == self.ingredientTable    {
             let cell = ingredientTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath) as! IngredientTableViewCell
             
@@ -252,7 +232,6 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             print(ingredientNames[row])
             if numIngrs != nil && numIngrs == ingredients.count {
                 cell.ingrLabel.text = String(ingredientNames[row])
-//                cell.ingrAmount.text = String(ingredientValues[row].0)
                 if String(ingredientValues[row].0) != "0.0" {
                     cell.ingrAmount.text = String(ingredientValues[row].0)
                 }
@@ -262,8 +241,6 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             
             
             cell.ingrLabel.text = temp_ingredient
-//            cell.ingrAmount.text = String(temp_amount)
-            print(String(temp_amount))
             if String(temp_amount) != "0.0" {
                 cell.ingrAmount.text = String(temp_amount)
             }
@@ -277,49 +254,26 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             temp_unit = ""
             return cell
         }
+        
+        //direction table view
         if tableView == self.directionTable    {
             let cell = directionTable.dequeueReusableCell(withIdentifier: "DirCell", for: indexPath) as! DirectionTableViewCell
             let row = indexPath.row
             cell.directionName.text = directions[row]
             return cell
         }
+        
+        //tag table view
         if tableView == self.tagTable   {
             let cell = tagTable.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as! TagCellTableViewCell
-            let row = indexPath.row
-            //if (num_newtags) > (tags.count)    {
-                cell.tagName.text = ""
-                cell.tagColor.text = ""
-                cell.tagCategory.text = ""
-                //return cell
-            //}
+            //var row = indexPath.row
+            cell.tagName.text = ""
+            cell.tagColor.text = ""
+            cell.tagCategory.text = ""
             
             return cell
         }
         return cell1!
-        
-        
-//        cell.ingrLabel.text = ingredientNames[row]
-//        cell.ingrAmount.text = String(ingredientValues[row].0)
-//        cell.ingrUnit.text = ingredientValues[row].1
-        
-        
-        //let ingredient = ingredients[row]
-        
-//        print(test[row])
-//        let label = cell.ingrLabel
-//        label!.text = test[row]
-        
-        //cell.ingrLabel.text = ingredient[row][
-        
-        
-//        if let label = cell.ingrLabel   {
-//            label.text = test[row]
-//            print(label.text)
-//        }
-//        print(cell.ingrLabel.text)
-       // cell.ingrLabel.text = test[row]
-//        print(cell.ingrLabel.text)
-        
     }
 
 
@@ -339,14 +293,12 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         return true
     }
     
+    // enable editing for all three tables
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             if tableView == self.ingredientTable    {
                 let currentCell = tableView.cellForRow(at: indexPath)! as! IngredientTableViewCell
-                print(currentCell.ingrLabel.text)
                 ingredients.removeValue(forKey: currentCell.ingrLabel.text!)
-                //print(ingredients(at: indexPath.row))
-                //ingredients.remove(at: indexPath.row)
                 ingredientTable.deleteRows(at: [indexPath], with: .fade)
             }
             if tableView == self.directionTable {
@@ -355,39 +307,15 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
             }
             if tableView == self.tagTable   {
                 let currentCell = tableView.cellForRow(at: indexPath)! as! TagCellTableViewCell
-                print(currentCell.tagName.text)
                 ingredients.removeValue(forKey: currentCell.tagName.text!)
-                //print(ingredients(at: indexPath.row))
-                //ingredients.remove(at: indexPath.row)
                 tagTable.deleteRows(at: [indexPath], with: .fade)
             }
-            
-            //add code here for when you hit delete
         }
     }
     
-//    func textFieldDidEndEditing(textField: UITextField) {
-//        checkValidRecipeName()
-//        print(saveRecipeButton.isEnabled)
-//        navigationItem.title = recipeTitle.text
-//    }
-//    
-//    func textFieldDidBeginEditing(textField: UITextField) {
-//        // Disable the Save button while editing.
-//        saveRecipeButton.isEnabled = false
-//    }
-//    
-//    func checkValidRecipeName() {
-//        // Disable the Save button if the text field is empty.
-//        let text = recipeTitle.text ?? ""
-//        saveRecipeButton.isEnabled = !text.isEmpty
-//    }
-    
-    
-
-    
     // MARK: Navigation
     
+    // when the cancel recipe button is hit
     @IBAction func cancelRecipe(_ sender: UIBarButtonItem) {
         recipeTitle.text = ""
         ingrName.text = ""
@@ -401,12 +329,9 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         self.ingredientTable.reloadData()
         self.directionTable.reloadData()
         self.tagTable.reloadData()
-//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-//        
-//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "RecipeTableViewController") as! RecipeTableViewController
-//        self.present(nextViewController, animated:true, completion:nil)
     }
     
+    // allows the use of the camera
     @IBAction func useCamera(_ sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
             let imagePicker = UIImagePickerController()
@@ -419,6 +344,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         }
     }
     
+    // allows user to use camera roll
     @IBAction func useCameraRoll(_ sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) {
             let imagePicker = UIImagePickerController()
@@ -431,6 +357,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         }
     }
     
+    // allows user to pick an image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         let mediaType = info[UIImagePickerControllerMediaType] as! NSString
@@ -453,6 +380,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         }
     }
     
+    // image helper function
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafeRawPointer) {
         
         if error != nil {
@@ -469,6 +397,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
         }
     }
     
+    // image picker helper function
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -491,45 +420,51 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
                 let ip = IndexPath(row: r, section: 0)
                 print(ip)
                 let currentCell = tagTable.cellForRow(at: ip)! as! TagCellTableViewCell
+                var success: Bool?
                 if currentCell.tagName.text != ""  {
                     if currentCell.tagColor.text == "" && currentCell.tagCategory.text == "" {
-                        recipe?.addTag(newTag: currentCell.tagName.text!)
+                        success = (recipe?.addTag(newTag: currentCell.tagName.text!))!
                     }
                     else if currentCell.tagColor.text == ""  {
-                        recipe?.addTag(newTag: currentCell.tagName.text!, newCat: currentCell.tagCategory.text)
+                        success = recipe?.addTag(newTag: currentCell.tagName.text!, newCat: currentCell.tagCategory.text)
                     }
                     else if currentCell.tagCategory.text == "" {
                         if currentCell.tagColor.text == "blue"  {
-                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.blue)
+                            success = recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.blue)
                         }
                         else if currentCell.tagColor.text == "green" {
-                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.green)
+                            success = recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.green)
                         }
                         else if currentCell.tagColor.text == "red" {
-                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.red)
+                            success = recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.red)
                         }
                         else    {
-                            recipe?.addTag(newTag: currentCell.tagName.text!)
+                            success = recipe?.addTag(newTag: currentCell.tagName.text!)
                         }
                     }
                     else    {
                         if currentCell.tagColor.text == "blue"  {
-                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.blue, newCat: currentCell.tagCategory.text)
+                            success = recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.blue, newCat: currentCell.tagCategory.text)
                         }
                         else if currentCell.tagColor.text == "green" {
-                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.green, newCat: currentCell.tagCategory.text)
+                            success = recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.green, newCat: currentCell.tagCategory.text)
                         }
                         else if currentCell.tagColor.text == "red" {
-                            recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.red, newCat: currentCell.tagCategory.text)
+                            success = recipe?.addTag(newTag: currentCell.tagName.text!, newColor: UIColor.red, newCat: currentCell.tagCategory.text)
                         }
                         else    {
-                            recipe?.addTag(newTag: currentCell.tagName.text!, newCat: currentCell.tagCategory.text)
+                            success = recipe?.addTag(newTag: currentCell.tagName.text!, newCat: currentCell.tagCategory.text)
                         }
+                    }
+                    if success == false   {
+                        print("error adding tags")
                     }
                 }
             }
             }
-            //recipe?.tags = tags
+            
+            
+            // clear table and text values and reload the table
             recipeTitle.text=""
             ingredients.removeAll()
             directions.removeAll()
