@@ -6,19 +6,18 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
-// inventory table view file
-// ingredients that have been added to the inventory table
+// Inventory table view file
+// Display ingredients that have been added to the inventory
+// table.
 
 import UIKit
 import EventKit
 
 class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    
+ 
     // initialize variables
     var total_ingreds: [String] = []
     var ingreds: [String]?
-    
     var eventStore = EKEventStore()
     
     // connect outlets to the storyboard
@@ -65,15 +64,11 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
         return cell
     }
  
-
-    
     // Override to support conditional editing of the table view.
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    
-
     
     // Override to support editing the table view.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -85,7 +80,7 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
         }    
     }
 
-    // add shopping list to the reminders app
+    // Add shopping list to the reminders app
     @IBAction func addReminder(_ sender: Any) {
         self.eventStore.requestAccess(to: EKEntityType.reminder, completion:
             {(granted, error) in
@@ -93,6 +88,7 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
                     print("Access to store not granted")
                 }
         })
+
         let reminder = EKReminder(eventStore: self.eventStore)
         reminder.title = "Shopping List"
         reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
@@ -102,6 +98,8 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
         }
         reminder.notes = ls
         
+        // Add an alarm to the calendar event that will trigger
+        // when within a certain proximity to Walmart.
         let location = EKStructuredLocation(title: "Walmart")
         location.geoLocation = CLLocation(latitude: 42.745602, longitude: -73.638805)
         let alarm = EKAlarm()
@@ -127,7 +125,7 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
         self.present(alertController, animated: true, completion:nil)
     }
 
-    // receive values from the inventory list
+    // Receive values from the inventory list
     @IBAction func unwindToInventoryList(sender: UIStoryboardSegue)
     {
         if let sourceViewController = sender.source as? AddInventoryViewController
@@ -143,16 +141,12 @@ class InventoryTableViewController:  UIViewController, UITableViewDelegate, UITa
             }
             print(self.total_ingreds)
             self.invTable.reloadData()
-            
         }
     }
-
 }
 
-// inventory table view cell
+// Inventory table view cell
 class InventoryTableViewCell: UITableViewCell {
-    
-    
     
     @IBOutlet weak var inventoryItem: UILabel!
     

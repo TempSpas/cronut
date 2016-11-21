@@ -18,24 +18,18 @@ class IngredientTableViewCell: UITableViewCell {
     @IBOutlet weak var ingrLabel: UILabel!
     @IBOutlet weak var ingrAmount: UILabel!
     @IBOutlet weak var ingrUnit: UILabel!
-    
-    
     @IBOutlet weak var ingrLabel2: UILabel!
-    
     @IBOutlet weak var ingrAmount2: UILabel!
-    
     @IBOutlet weak var ingrUnit2: UILabel!
     
    
+    // Initialization code
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
-
 }

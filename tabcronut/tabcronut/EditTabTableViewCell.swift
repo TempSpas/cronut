@@ -6,7 +6,8 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
-// this is used for the edit scene for the tag table
+// This is used for the edit scene for the tag table, representing
+// a cell being displayed.
 
 import UIKit
 

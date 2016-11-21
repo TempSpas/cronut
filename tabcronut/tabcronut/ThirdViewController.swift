@@ -6,14 +6,14 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
-// this file contains the map view 
+// This file contains the map view 
 
 import UIKit
 import MapKit
 
 class ThirdViewController: UIViewController {
 
-
+    // MARK: properties
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
@@ -21,7 +21,6 @@ class ThirdViewController: UIViewController {
 
         mapView.showsUserLocation = true
     }
-    
     
     @IBAction func currentLoc(_ sender: AnyObject) {
         let userLocation = mapView.userLocation

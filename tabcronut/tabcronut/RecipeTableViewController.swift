@@ -6,9 +6,9 @@
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
-// this file shows the recipe table view where the user can see all recipes
-// after a recipe is added, the user is navigated to this page
-// where they can see their newly added recipe
+// This file shows the recipe table view where the user can see all recipes
+// after a recipe is added, the user is brought to this page
+// where they can see their newly added recipe.
 
 import UIKit
 import Foundation
@@ -33,7 +33,8 @@ class RecipeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // initial cronut recipe
+        // Initial cronut recipe
+        // TODO: Put this in a function.
         ingredients["canola oil"] = (0.0,"")
         ingredients["frozen dough"] = (16.0, "oz")
         ingredients["vanilla pudding"] = (4.0, "oz")
@@ -72,8 +73,9 @@ class RecipeTableViewController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        /*****/
-        // Search code:
+
+        // The following are used in the implementation of search
+        // functionality:
         
         // Allows results to update as the user types
         searchController.searchResultsUpdater = self
@@ -90,7 +92,6 @@ class RecipeTableViewController: UITableViewController {
         // Remember that Interface Builder is not yet compatible with
         // UISearchController, making this necessary (?????)
         tableView.tableHeaderView = searchController.searchBar
-        /*****/
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -183,31 +184,17 @@ class RecipeTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    // Return false if you do not want the item to be re-orderable.
         return true
-     }
+    }
  
-    
-    
     // MARK: - Navigation
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier == "viewDetails" {
-            //print("here!")
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                
+            if let indexPath = self.tableView.indexPathForSelectedRow {                
                 // Ensure that the correct pages are accessed after search
                 // filters out irrelevant recipes.
                 let recipe: Recipe
@@ -217,16 +204,7 @@ class RecipeTableViewController: UITableViewController {
                     recipe = recipes[indexPath.row]
                 }
                 
-                /*****/
-                // DEPRECATED CODE:
-                //let row = self.table.indexPathForSelectedRow?.row
-                //let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell!;
-                //
-                //        valueToPass = currentCell?.textLabel?.text
-                //let controller = (segue.destination as! UINavigationController).topViewController as! IndividualRecipeViewController
-                /*****/
-                
-                // show back button
+                // Show back button programatically.
                 let controller = (segue.destination as! IndividualRecipeViewController)
                 controller.passedValue = recipe
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem

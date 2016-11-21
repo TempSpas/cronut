@@ -4,44 +4,37 @@
 // 
 //  This file represents the detail view of the screen
 //  when the user taps one of their recipes. The code displays
-//  thhe ingredients and directions.
+//  the ingredients and directions.
 //
 //  Created by Aditi Nataraj on 10/27/16.
 //  Copyright © 2016 Cronut LLC. All rights reserved.
 //
 
-// individual recipe view controller
-// manages the view for each individual recipe
-// allows the user to modify the recipe with the press of a button
+// Individual recipe view controller.
+// Manages the view for each individual recipe
+// allows the user to modify the recipe with the press of a button.
 
 import UIKit
 import EventKit
 import MobileCoreServices
 
-
-
 class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    // saves variables
+    // Variables for use in 
     var recipeTitle: String = ""
     var savedEventId : String = ""
+    var passedValue: Recipe?
     var newMedia: Bool?
     
-    
-    // connects outlets to the storyboard
+    // Connects outlets to the storyboard
     @IBOutlet weak var ingrTable: UITableView!
     @IBOutlet weak var dirTable: UITableView!
     @IBOutlet weak var tagTable: UITableView!
-    
-    
     @IBOutlet weak var imageView: UIImageView!
 
-    
-    var passedValue: Recipe?
-    
-    // menu button to show all the options for the user
+    // Menu button to show all the options for the user
     @IBAction func showOptions(_ sender: AnyObject) {
-        let alertController = UIAlertController(title: "Hey man", message: "What do you want to do?", preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Menu", message: "What do you want to do?", preferredStyle: .actionSheet)
         
         let defaultAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         
@@ -57,37 +50,42 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         
         // scale recipe segue
         let modRecipe = UIAlertAction(title: "Scale", style: .default) { (action:UIAlertAction) in
-            let alertController = UIAlertController(title: "Scale Recipe", message: "Write the factor by which you want to scale this recipe", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Scale Recipe", 
+                                                    message: "Write the factor by which you want to scale this recipe",
+                                                    preferredStyle: .alert)
             let actionCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
-                //This is called when the user presses the cancel button.
+                // This is called when the user presses the cancel button.
                 print("You've pressed the cancel button");
             }
+
+            // This is called when the user presses the login button.
             let actionOK = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
-                //This is called when the user presses the login button.
                 let textTitle = alertController.textFields![0] as UITextField;
-                //print(textTitle.text);
+
                 if textTitle.text != "" && Float(textTitle.text!)! > Float(0) {
                     self.changeRecipe(factor: Float(textTitle.text!)!);
                 }
             }
+
+            // Configure the attributes of the first text box.
             alertController.addTextField { (textField) -> Void in
-                //Configure the attributes of the first text box.
                 textField.placeholder = "1.5"
             }
-            //Add the buttons
+
+            // Add the buttons
             alertController.addAction(actionCancel)
             alertController.addAction(actionOK)
             
-            //Present the alert controller
+            // Present the alert controller
             self.present(alertController, animated: true, completion:nil)
         }
         
-        // add inventory segue
+        // Add inventory segue
         let addToInventoryList = UIAlertAction(title: "Add Ingredients to Inventory", style: .default)  { (action:UIAlertAction) in
             self.performSegue(withIdentifier: "addToInventory", sender:self)
         }
         
-        // add event
+        // Adding a calendar event
         let addEvent = UIAlertAction(title: "Add Calendar Event", style: .default)  { (action:UIAlertAction) in
             let eventStore = EKEventStore()
             
@@ -105,7 +103,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             }
         }
         
-        // remove event
+        // Remove a calendar event
         let remEvent = UIAlertAction(title: "Remove Calendar Event", style: .default)   { (action:UIAlertAction) in
             let eventStore = EKEventStore()
             
@@ -127,7 +125,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             self.present(alertController, animated: true, completion:nil)
         }
         
-        // add all of these actions to the action sheet
+        // Add all of these actions to the action sheet
         alertController.addAction(dupRecipe)
         alertController.addAction(edRecipe)
         alertController.addAction(modRecipe)
@@ -136,11 +134,11 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         alertController.addAction(remEvent)
         alertController.addAction(defaultAction)
         
-        // present the action view
+        // Present the action view
         present(alertController, animated: true, completion: nil)
     }
     
-    // helper recipe to change the recipe
+    // Helper function to change the recipe
     func changeRecipe(factor: Float) {
         if (self.passedValue?.ingredients.count)! > 0   {
             let ingreds = self.passedValue?.ingredients
@@ -208,7 +206,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell1: UITableViewCell?
         
-        // ingredient table view
+        // Ingredient table view
         if tableView == self.ingrTable  {
             let cell = ingrTable.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath) as! IngredientTableViewCell
             
@@ -302,31 +300,29 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             }
             
             alertController.addAction(OKAction)
-            self.present(alertController, animated: true, completion:nil)
-            
-            //print("The user entered:%@ & %@",textUser.text!,textPW.text!);
+            self.present(alertController, animated: true, completion:nil)            
         }
         
+        // Configure the attributes of the first text box.
         alertController.addTextField { (textField) -> Void in
-            //Configure the attributes of the first text box.
             textField.placeholder = "Event Title"
         }
-        
+
+        // Configure the attributes of the second text box.        
         alertController.addTextField { (textField) -> Void in
-            //Configure the attributes of the second text box.
             textField.placeholder = "MM/dd/yyyy hh:mm AM(PM)"
         }
         
+        // Configure the attributes of the third text box.
         alertController.addTextField { (textField) -> Void in
-            //Configure the attributes of the third text box.
             textField.placeholder = "MM/dd/yyyy hh:mm AM(PM)"
         }
         
-        //Add the buttons
+        // Add the buttons
         alertController.addAction(actionCancel)
         alertController.addAction(actionOK)
         
-        //Present the alert controller
+        // Present the alert controller
         self.present(alertController, animated: true, completion:nil)
     }
     
@@ -345,7 +341,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -358,6 +353,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             controller.numTags = recipe?.tags.count
         
         }
+
         if segue.identifier == "addRecipeSegue"  {
             let controller = (segue.destination as! AddRecipeViewController)
             let recipe = passedValue
@@ -367,6 +363,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             controller.numIngrs = recipe?.ingredients.count
             
         }
+
         if segue.identifier == "addToInventory" {
             let controller = (segue.destination as! AddInventoryViewController)
             let recipe = passedValue
@@ -385,7 +382,6 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
             dirTable.reloadData()
             tagTable.reloadData()
             self.title = r.name
-            
         }
     }
 }
