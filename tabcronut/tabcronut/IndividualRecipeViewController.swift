@@ -81,7 +81,7 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
         }
         
         // Add inventory segue
-        let addToInventoryList = UIAlertAction(title: "Add Ingredients to Inventory", style: .default)  { (action:UIAlertAction) in
+        let addToInventoryList = UIAlertAction(title: "Add Ingredients to Shopping", style: .default)  { (action:UIAlertAction) in
             self.performSegue(withIdentifier: "addToInventory", sender:self)
         }
         

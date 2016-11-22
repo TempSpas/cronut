@@ -18,7 +18,6 @@
 		6D725A511DC6DF5000F987AD /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D725A501DC6DF5000F987AD /* IngredientTableViewCell.swift */; };
 		6D88C9981DE114F200FB16FD /* TagCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88C9971DE114F200FB16FD /* TagCellTableViewCell.swift */; };
 		6D88C99A1DE1482400FB16FD /* EditTabTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88C9991DE1482400FB16FD /* EditTabTableViewCell.swift */; };
-		6D88C99C1DE256CB00FB16FD /* OtherBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6D88C99B1DE256CB00FB16FD /* OtherBackground.jpg */; };
 		6DA7D7CF1DDE76790088BAB3 /* AddInventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA7D7CE1DDE76790088BAB3 /* AddInventoryViewController.swift */; };
 		6DBE1B4E1DDCFF17002D8E1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DBE1B4D1DDCFF17002D8E1A /* Main.storyboard */; };
 		6DCE3D411DDE96CF000C9E8E /* InventoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCE3D401DDE96CE000C9E8E /* InventoryTableViewController.swift */; };
@@ -26,6 +25,7 @@
 		6DE9DBAD1DC2B5F80018CB1A /* IndividualRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE9DBAC1DC2B5F80018CB1A /* IndividualRecipeViewController.swift */; };
 		A92A7FAC1DBED23E00099D71 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92A7FAB1DBED23E00099D71 /* MapKit.framework */; };
 		A92A7FAE1DBED2F500099D71 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */; };
+		A96386EC1DE3BF8C002CBB7D /* OtherBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A96386EB1DE3BF8C002CBB7D /* OtherBackground.jpg */; };
 		BA1EFE071DB69843009E892A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1EFE061DB69843009E892A /* AppDelegate.swift */; };
 		BA1EFE101DB69843009E892A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA1EFE0F1DB69843009E892A /* Assets.xcassets */; };
 		BA1EFE131DB69843009E892A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA1EFE111DB69843009E892A /* LaunchScreen.storyboard */; };
@@ -67,7 +67,6 @@
 		6D725A501DC6DF5000F987AD /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
 		6D88C9971DE114F200FB16FD /* TagCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCellTableViewCell.swift; sourceTree = "<group>"; };
 		6D88C9991DE1482400FB16FD /* EditTabTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTabTableViewCell.swift; sourceTree = "<group>"; };
-		6D88C99B1DE256CB00FB16FD /* OtherBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = OtherBackground.jpg; path = ../../../../../../Downloads/OtherBackground.jpg; sourceTree = "<group>"; };
 		6DA7D7CE1DDE76790088BAB3 /* AddInventoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInventoryViewController.swift; sourceTree = "<group>"; };
 		6DBE1B4D1DDCFF17002D8E1A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6DCE3D401DDE96CE000C9E8E /* InventoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryTableViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +74,7 @@
 		6DE9DBAC1DC2B5F80018CB1A /* IndividualRecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualRecipeViewController.swift; sourceTree = "<group>"; };
 		A92A7FAB1DBED23E00099D71 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		A96386EB1DE3BF8C002CBB7D /* OtherBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = OtherBackground.jpg; sourceTree = "<group>"; };
 		BA1EFE031DB69843009E892A /* tabcronut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tabcronut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA1EFE061DB69843009E892A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA1EFE0F1DB69843009E892A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -168,7 +168,6 @@
 				6DA7D7CE1DDE76790088BAB3 /* AddInventoryViewController.swift */,
 				A92A7FAD1DBED2F500099D71 /* ThirdViewController.swift */,
 				BADE0D661DDCF5B3006A1F80 /* CameraViewController.swift */,
-				6D88C99B1DE256CB00FB16FD /* OtherBackground.jpg */,
 				6D1E04DF1DCA772F0069AD62 /* EditDirectionsTableViewCell.swift */,
 				6D1E04DD1DCA65170069AD62 /* EditIngredientTableViewCell.swift */,
 				6D1E04D31DC983A60069AD62 /* DirectionTableViewCell.swift */,
@@ -177,6 +176,7 @@
 				BA1EFE0F1DB69843009E892A /* Assets.xcassets */,
 				BA1EFE111DB69843009E892A /* LaunchScreen.storyboard */,
 				BA1EFE141DB69843009E892A /* Info.plist */,
+				A96386EB1DE3BF8C002CBB7D /* OtherBackground.jpg */,
 				BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */,
 			);
 			path = tabcronut;
@@ -268,6 +268,7 @@
 				TargetAttributes = {
 					BA1EFE021DB69843009E892A = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = XNGUTAJ64R;
 						ProvisioningStyle = Automatic;
 					};
 					BA1EFE181DB69843009E892A = {
@@ -307,10 +308,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A96386EC1DE3BF8C002CBB7D /* OtherBackground.jpg in Resources */,
 				6DBE1B4E1DDCFF17002D8E1A /* Main.storyboard in Resources */,
 				BA1EFE131DB69843009E892A /* LaunchScreen.storyboard in Resources */,
 				BA7828CE1DBD487C00CA0767 /* 44plus.png in Resources */,
-				6D88C99C1DE256CB00FB16FD /* OtherBackground.jpg in Resources */,
 				6D1E04D81DCA5D1B0069AD62 /* RecipeList36.png in Resources */,
 				6D1E04D61DCA5CB50069AD62 /* Map44.png in Resources */,
 				BA1EFE101DB69843009E892A /* Assets.xcassets in Resources */,
@@ -500,10 +501,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = XNGUTAJ64R;
 				INFOPLIST_FILE = tabcronut/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.cs.tabcronut;
+				PRODUCT_BUNDLE_IDENTIFIER = shit.fuck.you.apple.go.to.hell;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -513,10 +514,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = XNGUTAJ64R;
 				INFOPLIST_FILE = tabcronut/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.rpi.cs.tabcronut;
+				PRODUCT_BUNDLE_IDENTIFIER = shit.fuck.you.apple.go.to.hell;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

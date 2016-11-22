@@ -411,6 +411,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 				for r in 0...(num_newtags-1)   {
 					let ip = IndexPath(row: r, section: 0)
 					print(ip)
+                    
 					let currentCell = tagTable.cellForRow(at: ip)! as! TagCellTableViewCell
 					var success: Bool?
 					if currentCell.tagName.text != ""  {
