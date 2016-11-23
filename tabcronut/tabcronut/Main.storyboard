@@ -613,6 +613,26 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="43T-q0-WUa">
+                                                <frame key="frameInset" minX="78" minY="1047" width="219" height="337"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Id-DP-BUt">
+                                                <frame key="frameInset" minX="31" minY="1046" width="32" height="32"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="camera"/>
+                                                <connections>
+                                                    <action selector="useCamera:" destination="bRn-WX-gUB" eventType="touchUpInside" id="Jjx-lz-jIh"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMb-gJ-gDT">
+                                                <frame key="frameInset" minX="320" minY="1046" width="32" height="32"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="picture"/>
+                                                <connections>
+                                                    <action selector="useCameraRoll:" destination="bRn-WX-gUB" eventType="touchUpInside" id="5yc-DO-ESW"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -649,6 +669,7 @@
                     <connections>
                         <outlet property="dirTable" destination="z0Y-4Z-N7B" id="lNn-uI-3fj"/>
                         <outlet property="editRecipeName" destination="OGK-pI-xAq" id="O8l-50-55o"/>
+                        <outlet property="imageView" destination="43T-q0-WUa" id="YZL-EE-80m"/>
                         <outlet property="ingrTable" destination="AWp-pb-zwq" id="J7t-Q3-5gg"/>
                         <outlet property="saveEditButton" destination="EMB-a4-j9e" id="qo5-ax-C2L"/>
                         <outlet property="tagTable" destination="fno-FR-JV3" id="BBK-Vl-SRE"/>

@@ -11,13 +11,17 @@
 // allows a user to edit an existing recipe
 
 import UIKit
+import MobileCoreServices
 
-class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // Initialize variables.
     // All of the following recipes are passed in from the individual recipe scene.
     var recipeValue: Recipe?
     var sample: String?
+    
+    @IBOutlet weak var imageView: UIImageView!
+    var newMedia: Bool?
     
     var numIngreds: Int?
     var numDirs: Int?
@@ -76,6 +80,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tagTable.delegate = self
         self.tagTable.dataSource = self
         self.editRecipeName.text = self.recipeValue?.name
+        self.imageView.image = self.recipeValue?.image?.image
     }
 
     override func didReceiveMemoryWarning() {
@@ -224,6 +229,74 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - Navigation
 
+    @IBAction func useCamera(_ sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.allowsEditing = false
+            self.present(imagePicker,animated: true, completion: nil)
+            newMedia = true
+        }
+    }
+    
+    @IBAction func useCameraRoll(_ sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+            newMedia = false
+        }
+    }
+    
+    // Allows user to pick an image from the camera roll
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        
+        self.dismiss(animated: true, completion: nil)
+        
+        if mediaType.isEqual(to: kUTTypeImage as String) {
+            let image = info[UIImagePickerControllerOriginalImage]
+                as! UIImage
+            
+            imageView.image = image
+            
+            if (newMedia == true) {
+                UIImageWriteToSavedPhotosAlbum(image, self,
+                                               #selector(CameraViewController.image(image:didFinishSavingWithError:contextInfo:)), nil)
+            } else if mediaType.isEqual(to: kUTTypeMovie as String) {
+                // Code to support video would go here
+            }
+            
+        }
+    }
+    
+    // image helper function
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafeRawPointer) {
+        
+        if error != nil {
+            let alert = UIAlertController(title: "Save Failed",
+                                          message: "Failed to save image",
+                                          preferredStyle: UIAlertControllerStyle.alert)
+            
+            let cancelAction = UIAlertAction(title: "OK",
+                                             style: .cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true,
+                         completion: nil)
+        }
+    }
+    
+    // image picker helper function
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     // Function that saves recipe changes
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
@@ -364,6 +437,10 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
             
+            if self.imageView.image != self.recipeValue?.image?.image   {
+                self.recipeValue?.image?.image = self.imageView.image
+            }
+            
             // reload all of the tables
             // change the name of the recipe if necessary
             if self.recipeValue?.name != editRecipeName.text {
@@ -373,6 +450,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             self.ingrTable.reloadData()
             self.dirTable.reloadData()
             self.tagTable.reloadData()
+            //self.imageView.reloadInputViews()
         }   
     }
 }
