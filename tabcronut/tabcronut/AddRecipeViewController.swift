@@ -70,6 +70,14 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 			self.ingredientTable.endUpdates()
 			return
 		}
+        
+        if ingrName.text == ""   {
+            let alertController = UIAlertController(title: "Error", message: "Please enter a NAME for the ingredient", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+            self.present(alertController, animated: true, completion:nil)
+            self.ingredientTable.endUpdates()
+            return
+        }
 		
 		// error checking for empty ingredient amount
 		if ingrAmt.text != ""  {
@@ -155,6 +163,17 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 		tagTable.insertRows(at: [NSIndexPath(row: d, section: 0) as IndexPath], with: .bottom)
 		self.tagTable.endUpdates()
 	}
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        checkValidMealName()
+        //navigationItem.title = textField.text
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print("here")
+        // Disable the Save button while editing.
+        saveRecipeButton.isEnabled = false
+    }
 
 	var recipe: Recipe?
 	
@@ -173,10 +192,12 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 		}
 		
 		recipeTitle.delegate = self
+        checkValidMealName()
 		
 		if pre_title != nil {
 			self.recipeTitle.text = pre_title!
 		}
+        
 		
 		self.ingredientTable.delegate = self
 		self.ingredientTable.dataSource = self
@@ -348,6 +369,18 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 			newMedia = false
 		}
 	}
+    
+    func checkValidMealName() {
+        // Disable the Save button if the text field is empty.
+        //let text = recipeTitle.text ?? ""
+        //saveRecipeButton.isEnabled = !text.isEmpty
+        if recipeTitle.text != "" {
+            saveRecipeButton.isEnabled = true
+        }
+        else    {
+            saveRecipeButton.isEnabled = false
+        }
+    }
 	
 	// Allows user to pick an image from the camera roll
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -402,6 +435,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 		{
 			let title = recipeTitle.text
 			recipe = Recipe(title: title!)
+            
 			recipe?.ingredients = ingredients
 			recipe?.directions = directions
 			

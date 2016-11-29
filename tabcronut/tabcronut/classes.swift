@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // Used to create random numbers
 extension CGFloat
