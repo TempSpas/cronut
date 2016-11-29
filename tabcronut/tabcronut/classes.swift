@@ -359,10 +359,7 @@ class User: NSObject, NSCoding
         static let recipesKey = "recipes"
     }
     
-    // Initializes a new user object
-    // Params:
-    // Modifies:
-    // Effects:
+    // Initializes a new user object with name 'user'
     init(user: String)
     {
         name = user
