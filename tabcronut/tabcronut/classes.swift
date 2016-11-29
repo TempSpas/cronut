@@ -46,11 +46,7 @@ class Recipe {
     //           allTags is the list of tags for the recipe (optional)
     // Modifies: name, image, tags
     // Effects:  name, image, and tags are all assigned their respective parameters
-    init?(title: String, picture: String? = nil) {
-        if (title == "" || !title[0].isAlpha())
-        {
-            return nil
-        }
+    init(title: String, picture: String? = nil) {
         name = title
         ingredients = [:]
         directions = []
