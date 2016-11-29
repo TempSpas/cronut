@@ -88,12 +88,9 @@ class Recipe {
                 newC = .randomColor()
                 tags[newTag] = (newC, newCat!)
                 return true
-            }
-             
-            else if newCat == nil {
+            } else if newCat == nil {
                 tags[newTag] = (newColor!, "")
-            }
-            else {
+            } else {
                 tags[newTag] = (newColor!, newCat!)
                 return true
             }
@@ -117,14 +114,12 @@ class Recipe {
         if tags[tag] != nil {
             if color == nil {
                 col = (tags[tag]?.0)!
-            }
-            else {
+            } else {
                 col = color!
             }
             if category == nil {
                 cat = (tags[tag]?.1)!
-            }
-            else {
+            } else {
                 cat = category!
             }
             tags[tag] = (col, cat)
@@ -207,14 +202,13 @@ class Recipe {
         if ingredients[ingredient] != nil {
             if amount == nil {
                 amt = (ingredients[ingredient]?.0)!
-            }
-            else {
+            } else {
                 amt = amount!
             }
 
             if measurement == nil {
-                mst = (ingredients[ingredient]?.1)!}
-            else {
+                mst = (ingredients[ingredient]?.1)!
+            } else {
                 mst = measurement!
             }
             ingredients[ingredient] = (amt, mst)
@@ -363,9 +357,7 @@ class User: NSObject, NSCoding {
         }
         if groceries[ingredient] != nil {
             return false
-        }
-            
-        else {
+        } else {
             groceries[ingredient] = (amount!, unit!)
             return true
         }
@@ -383,9 +375,7 @@ class User: NSObject, NSCoding {
         }
         if groceries[ingredient] == nil {
             return false
-        }
-        else
-        {
+        } else {
             groceries[ingredient] = nil
             return true
         }
@@ -406,9 +396,7 @@ class User: NSObject, NSCoding {
 
         if inventory[ingredient] != nil {
             return false
-        }
-            
-        else {
+        } else {
             inventory[ingredient] = (amount!, unit!)
             return true
         }
