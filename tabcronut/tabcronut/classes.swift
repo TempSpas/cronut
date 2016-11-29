@@ -7,21 +7,18 @@
 //
 
 import Foundation
+import UIKit
 
 // Used to create random numbers
-extension CGFloat
-{
-    static func random() -> CGFloat
-    {
+extension CGFloat {
+    static func random() -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UInt32.max)
     }
 }
 
 // Used to create a random color with the above extension for CGFloat
-extension UIColor
-{
-    static func randomColor() -> UIColor
-    {
+extension UIColor {
+    static func randomColor() -> UIColor {
         // If you wanted a random alpha, just create another
         // random number for that too.
         return UIColor(red:   .random(),
@@ -31,8 +28,7 @@ extension UIColor
     }
 }
 
-class Recipe
-{
+class Recipe {
     var name: String
     var image: UIImageView?=nil
     // Array of directions in order of use
@@ -50,13 +46,11 @@ class Recipe
     //           allTags is the list of tags for the recipe (optional)
     // Modifies: name, image, tags
     // Effects:  name, image, and tags are all assigned their respective parameters
-    init(title: String, picture: String? = nil)
-    {
+    init(title: String, picture: String? = nil) {
         name = title
         ingredients = [:]
         directions = []
-        if picture != nil
-        {
+        if picture != nil {
             image = UIImageView(image: UIImage(named: picture!)!)
         }
         id = Recipe.numRecipes + 1
@@ -69,8 +63,7 @@ class Recipe
     // Modifies: name, image, tags, ingredients, directions
     // Effects:  name, image, tags, ingredients, and directions are all assigned
     //           their respective values in oldRecipe
-    init(oldRecipe: Recipe)
-    {
+    init(oldRecipe: Recipe) {
         name = oldRecipe.name
         image = oldRecipe.image
         ingredients = oldRecipe.ingredients
@@ -88,24 +81,19 @@ class Recipe
     // Modifies: tags
     // Effects:  a new tag is added to the tags map
     // Returns:  false if a tag with the same name already exists for this recipe, else true
-    func addTag(newTag: String, newColor: UIColor? = nil, newCat: String? = nil) -> Bool
-    {
-        if tags[newTag] == nil
-        {
-            if newColor == nil
-            {
+    func addTag(newTag: String, newColor: UIColor? = nil, newCat: String? = nil) -> Bool {
+        if tags[newTag] == nil {
+            if newColor == nil {
                 var newC = UIColor()
                 newC = .randomColor()
                 tags[newTag] = (newC, newCat!)
                 return true
             }
              
-            else if newCat == nil
-            {
+            else if newCat == nil {
                 tags[newTag] = (newColor!, "")
             }
-            else
-            {
+            else {
                 tags[newTag] = (newColor!, newCat!)
                 return true
             }
@@ -126,14 +114,17 @@ class Recipe
     {
         var col: UIColor
         var cat: String
-        if tags[tag] != nil
-        {
-            if color == nil {col = (tags[tag]?.0)!}
+        if tags[tag] != nil {
+            if color == nil {
+                col = (tags[tag]?.0)!
+            }
             else {
                 col = color!
             }
-            if category == nil {cat = (tags[tag]?.1)!}
-            else    {
+            if category == nil {
+                cat = (tags[tag]?.1)!
+            }
+            else {
                 cat = category!
             }
             tags[tag] = (col, cat)
@@ -147,9 +138,10 @@ class Recipe
     // Modifies: tags
     // Effects:  oldTag is removed from the tags map if it is in it
     // Returns:  false if a tag with the same name already exists for this recipe, else true
-    func removeTag(oldTag: String) -> Bool
-    {
-        if tags[oldTag] == nil {return false}
+    func removeTag(oldTag: String) -> Bool {
+        if tags[oldTag] == nil {
+            return false
+        }
         tags[oldTag] = nil
         return true
     }
@@ -161,7 +153,9 @@ class Recipe
     // Returns:  true if successful, else false
     func rename(newName: String) -> Bool
     {
-        if newName == nil || newName == "" {return false}
+        if newName == nil || newName == "" {
+            return false
+        }
         name = newName
         return true
     }
@@ -170,8 +164,7 @@ class Recipe
     // Params:   picFileName is the file path to the new picture to be used
     // Modifies: image
     // Effects:  image is modified to take on the pic associated with picFileName
-    func changePic(picFileName: String)
-    {
+    func changePic(picFileName: String) {
         image = UIImageView(image: UIImage(named:picFileName)!)     //****check to make sure file exists****
     }
     
@@ -182,11 +175,11 @@ class Recipe
     // Modifies: ingredients
     // Effects:  ingredients is appended with the new ingredient and its information
     // Returns:  true if the information was added, else false
-    func addIngredient(ingredient: String, amount: Float? = nil, measurement: String? = nil) -> Bool
-    {
-        if ingredient == nil || ingredient == "" {return false}
-        if ingredients[ingredient] != nil
-        {
+    func addIngredient(ingredient: String, amount: Float? = nil, measurement: String? = nil) -> Bool {
+        if ingredient == nil || ingredient == "" {
+            return false
+        }
+        if ingredients[ingredient] != nil {
             return false
         }
         ingredients[ingredient] = (amount!, measurement!)
@@ -197,8 +190,7 @@ class Recipe
     // Params:   ingredient is the name of the ingredient
     // Modifies: ingredients
     // Effects:  ingredients has key ingredient and its info removed
-    func removeIngredient(ingredient: String)
-    {
+    func removeIngredient(ingredient: String) {
         ingredients[ingredient] = nil
     }
     
@@ -209,18 +201,20 @@ class Recipe
     // Modifies: ingredients
     // Effects:  ingredients[ingredient] is modified with its new data
     // Returns:  true if the information was changed, else false
-    func modIngredient(ingredient: String, amount: Float? = nil, measurement: String? = nil) -> Bool
-    {
+    func modIngredient(ingredient: String, amount: Float? = nil, measurement: String? = nil) -> Bool {
         var amt: Float
         var mst: String
-        if ingredients[ingredient] != nil
-        {
-            if amount == nil {amt = (ingredients[ingredient]?.0)!}
+        if ingredients[ingredient] != nil {
+            if amount == nil {
+                amt = (ingredients[ingredient]?.0)!
+            }
             else {
                 amt = amount!
             }
-            if measurement == nil {mst = (ingredients[ingredient]?.1)!}
-            else    {
+
+            if measurement == nil {
+                mst = (ingredients[ingredient]?.1)!}
+            else {
                 mst = measurement!
             }
             ingredients[ingredient] = (amt, mst)
@@ -235,17 +229,14 @@ class Recipe
     // Modifies: directions
     // Effects:  directions has the direction appended to it at the end or at index if specified
     // Returns:  true if the information was added, else false
-    func addDirection(direction: String, index1: Int? = nil) -> Bool
-    {
+    func addDirection(direction: String, index1: Int? = nil) -> Bool {
         
-        if directions.contains(direction)
-        {
+        if directions.contains(direction) {
             // The direction is already in the directions, don't do anything
             return false
         }
         
-        if index1 == nil || index1! < 0
-        {
+        if index1 == nil || index1! < 0 {
             directions.append(direction)
             return true
         }
@@ -259,10 +250,8 @@ class Recipe
     // Modifies: directions
     // Effects:  directions has the direction removed from it
     // Returns:  true if the information was removed, else false
-    func removeDirection(direction: String) -> Bool
-    {
-        if directions.contains(direction)
-        {
+    func removeDirection(direction: String) -> Bool {
+        if directions.contains(direction) {
             let index = directions.index(of: direction)
             directions.remove(at: index!)
             return true
@@ -274,12 +263,9 @@ class Recipe
     // Helper function for use in the search functionality.
     // Params:   String representing a search query
     // Returns:  true if the string is contained in the tags, else false
-    func checkTags(str: String) -> Bool
-    {
-        for word in tags.keys
-        {
-            if word.lowercased().range(of: str.lowercased()) != nil
-            {
+    func checkTags(str: String) -> Bool {
+        for word in tags.keys {
+            if word.lowercased().range(of: str.lowercased()) != nil {
                 return true
             }
         }
@@ -290,12 +276,9 @@ class Recipe
     // Helper function for use in the search functionality.
     // Params:   String representing a search query
     // Returns:  true if the string is contained in the ingredients, else false
-    func checkIngredients(str: String) -> Bool
-    {
-        for ingr in ingredients.keys
-        {
-            if ingr.lowercased().range(of: str.lowercased()) != nil
-            {
+    func checkIngredients(str: String) -> Bool {
+        for ingr in ingredients.keys {
+            if ingr.lowercased().range(of: str.lowercased()) != nil {
                 return true
             }
         }
@@ -309,11 +292,11 @@ class Recipe
     // Modifies: directions
     // Effects:  directions has the element direction changed to newDirection
     // Returns:  true if the information was added, else false
-    func changeDirection(direction: String, newDirection: String) -> Bool
-    {
-        if newDirection == nil || newDirection == "" {return false}
-        if directions.contains(direction)
-        {
+    func changeDirection(direction: String, newDirection: String) -> Bool {
+        if newDirection == nil || newDirection == "" {
+            return false
+        }
+        if directions.contains(direction) {
             let index = directions.index(of: direction)
             directions[index!] = newDirection
             return true
@@ -324,18 +307,17 @@ class Recipe
 }
 
 extension Recipe: Equatable {}
-func ==(lhs: Recipe, rhs: Recipe) -> Bool   {
+func ==(lhs: Recipe, rhs: Recipe) -> Bool {
     return lhs.id == rhs.id
 }
 
 extension Recipe: Hashable {
-    var hashValue:Int   {
+    var hashValue:Int {
         return id
     }
 }
 
-class User: NSObject, NSCoding
-{
+class User: NSObject, NSCoding {
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.nameKey)
     }
@@ -353,15 +335,13 @@ class User: NSObject, NSCoding
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("user")
     
     // MARK: Types
-    struct PropertyKey
-    {
+    struct PropertyKey {
         static let nameKey = "name"
         static let recipesKey = "recipes"
     }
     
     // Initializes a new user object with name 'user'
-    init(user: String)
-    {
+    init(user: String) {
         name = user
         recipes = []
         groceries = [:]
@@ -377,11 +357,9 @@ class User: NSObject, NSCoding
     // Modifies: groceries
     // Effects:  a new key-value pair is added to the grocery map
     // Returns:  false if the item was already in the map or one of the arguments is invalid, otherwise true
-    func addGrocery(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool
-    {
+    func addGrocery(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool {
         if ingredient == nil || ingredient == "" {return false}
-        if groceries[ingredient] != nil
-        {
+        if groceries[ingredient] != nil {
             /*
              Should we then skip adding? Prompt the user to choose a new amount/measurement and
              then call removeGrocery followed by addGrocery again?
@@ -389,8 +367,7 @@ class User: NSObject, NSCoding
             return false
         }
             
-        else
-        {
+        else {
             groceries[ingredient] = (amount!, unit!)
             return true
         }
@@ -402,9 +379,10 @@ class User: NSObject, NSCoding
     // Modifies: groceries
     // Effects:  the key 'ingredient' is removed from the groceries map if it exists
     // Returns:  true if the item was removed, otherwise false
-    func removeGrocery(ingredient: String) -> Bool
-    {
-        if ingredient == nil || ingredient == "" {return false}
+    func removeGrocery(ingredient: String) -> Bool {
+        if ingredient == nil || ingredient == "" {
+            return false
+        }
         if groceries[ingredient] == nil {return false}
         else
         {
@@ -423,8 +401,7 @@ class User: NSObject, NSCoding
     func addInventory(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool
     {
         if ingredient == nil || ingredient == "" {return false}
-        if inventory[ingredient] != nil
-        {
+        if inventory[ingredient] != nil {
             /* 
              Should we then skip adding? Prompt the user to choose a new amount/measurement and 
              then call removeInventory followed by addInventory again?
@@ -432,8 +409,7 @@ class User: NSObject, NSCoding
             return false
         }
             
-        else
-        {
+        else {
             inventory[ingredient] = (amount!, unit!)
             return true
         }
@@ -444,22 +420,19 @@ class User: NSObject, NSCoding
     // Modifies: inventory
     // Effects:  the key 'ingredient' is removed from the inventory map if it exists
     // Returns:  true if the item was removed, otherwise false
-    func removeInventory(ingredient: String) -> Bool
-    {
+    func removeInventory(ingredient: String) -> Bool {
         if ingredient == nil || ingredient == "" {return false}
         if inventory[ingredient] == nil {return false}
         inventory[ingredient] = nil 
         return true
     }
     
-    func encodeWithCoder(aCoder: NSCoder)
-    {
+    func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.nameKey)
         //		aCoder.encode(recipes, forKey: PropertyKey.recipesKey)
     }
     
-    required convenience init?(coder aDecoder: NSCoder)
-    {
+    required convenience init?(coder aDecoder: NSCoder) {
         let name = aDecoder.decodeObject(forKey: PropertyKey.nameKey) as! String
         //		let recipes = aDecoder.decodeObject(forKey: PropertyKey.recipesKey) as! [Recipe]
         // Must call designated rnitializer
