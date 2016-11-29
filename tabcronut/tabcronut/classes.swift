@@ -5,7 +5,7 @@
 //  Created by Jinxin Liu on 10/13/16.
 //  Copyright © 2016 Jinxin Liu. All rights reserved.
 //
-import UIKit
+
 import Foundation
 
 // Used to create random numbers
@@ -114,7 +114,14 @@ class Recipe
         return false
     }
     
-    //modifies a tag
+    // Modifies a tag
+    // Params:      tag is the string to be displayed by this tag 
+    //              color is the color of the background when the tag is displayed
+    //              category is the category of the tag (i.e. taste, origin, etc)
+    // Modifies:    tags[tag]
+    // Effects:     if color is not nil, the tag's color is assigned color 
+    //              if category is not nil, the tag's category is changed to category
+
     func modTag(tag: String, color: UIColor? = nil, category: String? = nil) -> Bool
     {
         var col: UIColor
@@ -335,8 +342,6 @@ class User: NSObject, NSCoding
     
     // MARK: Properties
     var name: String
-    var longitude: Float?
-    var latitude: Float?
     var recipes: [UnsafePointer<Recipe>]
     var groceries: [String: (Float, String)]
     var inventory: [String: (Float, String)]
@@ -361,8 +366,6 @@ class User: NSObject, NSCoding
     init(user: String)
     {
         name = user
-        longitude = nil
-        latitude = nil
         recipes = []
         groceries = [:]
         inventory = [:]
