@@ -46,7 +46,11 @@ class Recipe {
     //           allTags is the list of tags for the recipe (optional)
     // Modifies: name, image, tags
     // Effects:  name, image, and tags are all assigned their respective parameters
-    init(title: String, picture: String? = nil) {
+    init?(title: String, picture: String? = nil) {
+        if (title == "" || !title[0].isAlpha())
+        {
+            return nil
+        }
         name = title
         ingredients = [:]
         directions = []
@@ -420,12 +424,10 @@ class User: NSObject, NSCoding {
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.nameKey)
-        //		aCoder.encode(recipes, forKey: PropertyKey.recipesKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let name = aDecoder.decodeObject(forKey: PropertyKey.nameKey) as! String
-        //		let recipes = aDecoder.decodeObject(forKey: PropertyKey.recipesKey) as! [Recipe]
+        let name = aDecoder.decodeObject(forKey: PropertyKey.nameKey) as! String        
         // Must call designated rnitializer
         self.init(user: name)
     }
