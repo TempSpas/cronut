@@ -358,12 +358,10 @@ class User: NSObject, NSCoding {
     // Effects:  a new key-value pair is added to the grocery map
     // Returns:  false if the item was already in the map or one of the arguments is invalid, otherwise true
     func addGrocery(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool {
-        if ingredient == nil || ingredient == "" {return false}
+        if ingredient == nil || ingredient == "" {
+            return false
+        }
         if groceries[ingredient] != nil {
-            /*
-             Should we then skip adding? Prompt the user to choose a new amount/measurement and
-             then call removeGrocery followed by addGrocery again?
-             */
             return false
         }
             
@@ -383,7 +381,9 @@ class User: NSObject, NSCoding {
         if ingredient == nil || ingredient == "" {
             return false
         }
-        if groceries[ingredient] == nil {return false}
+        if groceries[ingredient] == nil {
+            return false
+        }
         else
         {
             groceries[ingredient] = nil
@@ -400,12 +400,11 @@ class User: NSObject, NSCoding {
     // Returns:  false if the item was already in the map, otherwise true
     func addInventory(ingredient: String, amount: Float? = nil, unit: String? = nil) -> Bool
     {
-        if ingredient == nil || ingredient == "" {return false}
+        if ingredient == nil || ingredient == "" {
+            return false
+        }
+
         if inventory[ingredient] != nil {
-            /* 
-             Should we then skip adding? Prompt the user to choose a new amount/measurement and 
-             then call removeInventory followed by addInventory again?
-             */
             return false
         }
             
@@ -421,8 +420,12 @@ class User: NSObject, NSCoding {
     // Effects:  the key 'ingredient' is removed from the inventory map if it exists
     // Returns:  true if the item was removed, otherwise false
     func removeInventory(ingredient: String) -> Bool {
-        if ingredient == nil || ingredient == "" {return false}
-        if inventory[ingredient] == nil {return false}
+        if ingredient == nil || ingredient == "" {
+            return false
+        }
+        if inventory[ingredient] == nil {
+            return false
+        }
         inventory[ingredient] = nil 
         return true
     }
