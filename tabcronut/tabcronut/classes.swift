@@ -41,8 +41,8 @@ class Recipe
     var ingredients: [String: (Float, String)]
     // Map of tags, associates them with a text color and a category indicator
     var tags: [String: (UIColor, String)]
-    var ID: Int
-    static var NumRecipes: Int = 0
+    var id: Int
+    static var numRecipes: Int = 0
     
     // Creates a new recipe object
     // Params:   dish is the name of the recipe
@@ -59,8 +59,8 @@ class Recipe
         {
             image = UIImageView(image: UIImage(named: picture!)!)
         }
-        ID = Recipe.NumRecipes + 1
-        Recipe.NumRecipes += 1
+        id = Recipe.numRecipes + 1
+        Recipe.numRecipes += 1
         tags = [:]
     }
     
@@ -75,8 +75,8 @@ class Recipe
         image = oldRecipe.image
         ingredients = oldRecipe.ingredients
         directions = oldRecipe.directions
-        ID = Recipe.NumRecipes + 1
-        Recipe.NumRecipes += 1
+        id = Recipe.numRecipes + 1
+        Recipe.numRecipes += 1
         tags = oldRecipe.tags
     }
     
@@ -318,12 +318,12 @@ class Recipe
 
 extension Recipe: Equatable {}
 func ==(lhs: Recipe, rhs: Recipe) -> Bool   {
-    return lhs.ID == rhs.ID
+    return lhs.id == rhs.id
 }
 
 extension Recipe: Hashable {
     var hashValue:Int   {
-        return ID
+        return id
     }
 }
 
