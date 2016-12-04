@@ -25,7 +25,13 @@ class RecipeTableViewController: UITableViewController {
     var filteredRecipes = [Recipe]()
     var ingredients: [String: (Float, String)] = [:]
     var directions: [String] = []
+    var ingredients2: [String: (Float, String)] = [:]
+    var directions2: [String] = []
+    var ingredients3: [String: (Float, String)] = [:]
+    var directions3: [String] = []
     var tags: [String: (UIColor, String)] = [:]
+    var tags2: [String: (UIColor, String)] = [:]
+    var tags3: [String: (UIColor, String)] = [:]
     
     // Display search results in the same view controller
     let searchController = UISearchController(searchResultsController: nil)
@@ -35,21 +41,21 @@ class RecipeTableViewController: UITableViewController {
         
         // Initial cronut recipe
         // TODO: Put this in a function.
-        ingredients["canola oil"] = (0.0,"")
-        ingredients["frozen dough"] = (16.0, "oz")
-        ingredients["vanilla pudding"] = (4.0, "oz")
-        ingredients["powdered sugar"] = (6.0, "cups")
-        ingredients["vanilla extract"] = (1.0, "tsp")
-        ingredients["milk"] = (1.0, "cup")
-        ingredients["granulated sugar"] = (0.25, "cup")
-        ingredients["cinnamon"] = (0.5, "tsp")
-        ingredients["lemon juice"] = (0.0,"")
+        ingredients["Canola oil"] = (0.0,"")
+        ingredients["Frozen dough"] = (16.0, "oz")
+        //ingredients["vanilla pudding"] = (4.0, "oz")
+        //ingredients["powdered sugar"] = (6.0, "cups")
+        ingredients["Vanilla extract"] = (1.0, "tsp")
+        ingredients["Milk"] = (1.0, "cup")
+        ingredients["Granulated sugar"] = (0.25, "cup")
+        //ingredients["cinnamon"] = (0.5, "tsp")
+        //ingredients["lemon juice"] = (0.0,"")
         
-        directions.append("1. fill large pot with canola oil; heat over medium")
-        directions.append("2. fry the dough in the oil for 45-90s")
-        directions.append("3. mix sugar, vanilla, and milk")
-        directions.append("4. mix cinnamon and sugar")
-        directions.append("5. enjoy")
+        directions.append("1. Fill large pot with canola oil")
+        directions.append("2. Fry the dough in the oil for 45-90s")
+        directions.append("3. Mix sugar, vanilla, and milk")
+        directions.append("4. Mix cinnamon and sugar")
+        directions.append("5. Enjoy")
         
         tags["dessert"] = (UIColor.purple, "pastry")
         tags["unhealthy"] = (UIColor.brown, "nutrition")
@@ -65,7 +71,53 @@ class RecipeTableViewController: UITableViewController {
         recipe.directions = directions
         recipe.tags = tags
         recipe.image = imageView
+        
+        ingredients2["Spaghetti"] = (1.0, "lbs")
+        ingredients2["Marinara sauce"] = (2.0, "cups")
+        ingredients2["Cheese"] = (0.0,"")
+        
+        directions2.append("1. Salt the water and bring water to a boil")
+        directions2.append("2. Add pasta to boiled water; cook")
+        directions2.append("3. Drain water, add sauce")
+        directions2.append("4. Add cheese. Serve hot. Enjoy")
+        
+        tags2["savory"] = (UIColor.green, "pasta")
+        tags2["carbs"] = (UIColor.purple, "tomatoes")
+        
+        let imageName2 = "spaghetti.jpg"
+        let image2 = UIImage(named: imageName2)
+        let imageView2 = UIImageView(image: image2!)
+        
+        let recipe2 = Recipe(title: "Spaghetti")
+        recipe2.ingredients = ingredients2
+        recipe2.directions = directions2
+        recipe2.tags = tags2
+        recipe2.image = imageView2
+        
+        ingredients3["Frozen cookie dough"] = (1.0, "can")
+        ingredients3["Peanut butter"] = (2.0, "cups")
+        ingredients3["Frosting"] = (1.0, "can")
+        
+        directions3.append("Bake frozen cookie dough")
+        directions3.append("add peanut butter to frosting")
+        directions3.append("frost the cookies")
+        
+        tags3["dessert"] = (UIColor.green, "cookie")
+        
+        let imageName3 = "pbcookie.JPG"
+        let image3 = UIImage(named: imageName3)
+        let imageView3 = UIImageView(image: image3!)
+        
+        let recipe3 = Recipe(title: "Cookies")
+        recipe3.ingredients = ingredients3
+        recipe3.directions = directions3
+        recipe3.tags = tags3
+        recipe3.image = imageView3
+        
+        //recipe.image = imageView
         recipes.append(recipe)
+        recipes.append(recipe2)
+        recipes.append(recipe3)
         
         navigationItem.leftBarButtonItem = editButtonItem
         

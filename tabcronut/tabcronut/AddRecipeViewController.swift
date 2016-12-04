@@ -242,12 +242,16 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 			let ingredientNames = [String](ingredients.keys)
 			let ingredientValues = [(Float, String)](ingredients.values)
 			
-			print(ingredientNames[row])
+			
 			if numIngrs != nil && numIngrs == ingredients.count {
 				cell.ingrLabel.text = String(ingredientNames[row])
+                print(String(ingredientValues[row].0))
 				if String(ingredientValues[row].0) != "0.0" {
 					cell.ingrAmount.text = String(ingredientValues[row].0)
 				}
+                else    {
+                    cell.ingrAmount.text = ""
+                }
 				cell.ingrUnit.text = ingredientValues[row].1
 				return cell
 			}
@@ -342,6 +346,7 @@ UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSourc
 		self.ingredientTable.reloadData()
 		self.directionTable.reloadData()
 		self.tagTable.reloadData()
+        dismiss(animated: true, completion: nil)
 	}
 	
 	// allows the use of the camera
