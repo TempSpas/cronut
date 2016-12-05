@@ -15,6 +15,8 @@
 		6D1E04DE1DCA65170069AD62 /* EditIngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1E04DD1DCA65170069AD62 /* EditIngredientTableViewCell.swift */; };
 		6D1E04E01DCA772F0069AD62 /* EditDirectionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1E04DF1DCA772F0069AD62 /* EditDirectionsTableViewCell.swift */; };
 		6D4EDE4F1DBE81E00038CB66 /* RecipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */; };
+		6D6C2C021DF4DE88005638E2 /* spaghetti.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6D6C2C011DF4DE88005638E2 /* spaghetti.jpg */; };
+		6D6C2C041DF4E320005638E2 /* pbcookie.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6D6C2C031DF4E320005638E2 /* pbcookie.JPG */; };
 		6D725A511DC6DF5000F987AD /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D725A501DC6DF5000F987AD /* IngredientTableViewCell.swift */; };
 		6D88C9981DE114F200FB16FD /* TagCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88C9971DE114F200FB16FD /* TagCellTableViewCell.swift */; };
 		6D88C99A1DE1482400FB16FD /* EditTabTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88C9991DE1482400FB16FD /* EditTabTableViewCell.swift */; };
@@ -66,6 +68,8 @@
 		6D1E04DD1DCA65170069AD62 /* EditIngredientTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditIngredientTableViewCell.swift; sourceTree = "<group>"; };
 		6D1E04DF1DCA772F0069AD62 /* EditDirectionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDirectionsTableViewCell.swift; sourceTree = "<group>"; };
 		6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeTableViewController.swift; sourceTree = "<group>"; };
+		6D6C2C011DF4DE88005638E2 /* spaghetti.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = spaghetti.jpg; sourceTree = "<group>"; };
+		6D6C2C031DF4E320005638E2 /* pbcookie.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pbcookie.JPG; sourceTree = "<group>"; };
 		6D725A501DC6DF5000F987AD /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
 		6D88C9971DE114F200FB16FD /* TagCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCellTableViewCell.swift; sourceTree = "<group>"; };
 		6D88C9991DE1482400FB16FD /* EditTabTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTabTableViewCell.swift; sourceTree = "<group>"; };
@@ -178,10 +182,12 @@
 				6D1E04D31DC983A60069AD62 /* DirectionTableViewCell.swift */,
 				BAED16011DBFDC0900BAABD4 /* RecipeViewCell.swift */,
 				6D4EDE4E1DBE81E00038CB66 /* RecipeTableViewController.swift */,
+				6D6C2C031DF4E320005638E2 /* pbcookie.JPG */,
 				BA1EFE0F1DB69843009E892A /* Assets.xcassets */,
 				BA1EFE111DB69843009E892A /* LaunchScreen.storyboard */,
 				BA1EFE141DB69843009E892A /* Info.plist */,
 				A96386EB1DE3BF8C002CBB7D /* OtherBackground.jpg */,
+				6D6C2C011DF4DE88005638E2 /* spaghetti.jpg */,
 				BA26B4CB1DBD43D500665E4C /* AddRecipeViewController.swift */,
 				A9EDAF161DF4D5F10065B7A1 /* Location.swift */,
 			);
@@ -316,9 +322,11 @@
 			files = (
 				A96386EC1DE3BF8C002CBB7D /* OtherBackground.jpg in Resources */,
 				6DBE1B4E1DDCFF17002D8E1A /* Main.storyboard in Resources */,
+				6D6C2C041DF4E320005638E2 /* pbcookie.JPG in Resources */,
 				BA1EFE131DB69843009E892A /* LaunchScreen.storyboard in Resources */,
 				BA7828CE1DBD487C00CA0767 /* 44plus.png in Resources */,
 				6D1E04D81DCA5D1B0069AD62 /* RecipeList36.png in Resources */,
+				6D6C2C021DF4DE88005638E2 /* spaghetti.jpg in Resources */,
 				6D1E04D61DCA5CB50069AD62 /* Map44.png in Resources */,
 				BA1EFE101DB69843009E892A /* Assets.xcassets in Resources */,
 				6DCE3D431DDEC48B000C9E8E /* inventory.png in Resources */,

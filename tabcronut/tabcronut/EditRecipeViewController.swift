@@ -119,6 +119,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
         if tableView == self.ingrTable  {
             let cell = ingrTable.dequeueReusableCell(withIdentifier: "EditIngrCell", for: indexPath) as! EditIngredientTableViewCell
             let row = indexPath.row
+            
             let ingreds = self.recipeValue?.ingredients
             
             // return the cell if nothing is set
@@ -313,6 +314,7 @@ class EditRecipeViewController: UIViewController, UITableViewDelegate, UITableVi
             if r != 0   {
                 for index in 0...(r-1)  {
                     let iPath = IndexPath(row: index, section: 0)
+                    print(iPath)
                     let cell = ingrTable.cellForRow(at: iPath) as! EditIngredientTableViewCell
                     if cell.ingrName.text == nil    {
                         continue

@@ -65,6 +65,11 @@ class IndividualRecipeViewController: UIViewController, UITableViewDelegate, UIT
                 if textTitle.text != "" && Float(textTitle.text!)! > Float(0) {
                     self.changeRecipe(factor: Float(textTitle.text!)!);
                 }
+                else    {
+                    let alertController = UIAlertController(title: "Error", message: "Please enter a VALID scalable value", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+                    self.present(alertController, animated: true, completion:nil)
+                }
             }
 
             // Configure the attributes of the first text box.
